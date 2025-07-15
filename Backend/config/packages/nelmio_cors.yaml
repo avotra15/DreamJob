@@ -9,3 +9,4 @@ nelmio_cors:
     paths:
             '^/api/':
             origin_regex: true
+            allow_origin: [http://localhost:4200/]

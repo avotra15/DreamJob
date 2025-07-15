@@ -18,7 +18,7 @@ import { ServicesComponent } from './pages/services/services.component';
 import { TestimonialsComponent } from './pages/testimonials/testimonials.component';
 
 export const routes: Routes = [
-    {path: '', component: AppComponent},
+    {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: 'home', component: HomeComponent},
     {path: 'login', component: LoginComponent},
     {path: 'about', component: AboutComponent},
