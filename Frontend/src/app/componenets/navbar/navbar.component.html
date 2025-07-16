@@ -7,25 +7,47 @@
         </div>
       </div>
       <div class="site-mobile-menu-body"></div>
-    </div> <!-- .site-mobile-menu -->
+    </div>
 
     <!-- NAVBAR -->
     <header class="site-navbar mt-3">
       <div class="container-fluid">
         <div class="row align-items-center" style="position: relative; min-height: 60px;">
-          
+                  <!-- Navigation centrée -->
+          <nav class="site-navigation">  
           <!-- Logo à gauche -->
+           <!--
           <div class="site-logo">
             <a routerLink="/index">JobBoard</a>
           </div>
-          <!-- Navigation centrée -->
-          <nav class="site-navigation">
+          -->
             <ul class="site-menu js-clone-nav d-none d-xl-block">
-              <!-- ... vos éléments de menu ... -->
+               <li><a routerLink="/home" class="nav-link active">Home</a></li>
+              <li><a routerLink="/about">About</a></li>
+              <li class="has-children">
+                <a routerLink="/job-listings">Job Listings</a>
+                <ul class="dropdown">
+                  <li><a routerLink="/job-single">Job Single</a></li>
+                  <li><a routerLink="/post-job">Post a Job</a></li>
+                </ul>
+              </li>
+              <li class="has-children">
+                <a routerLink="/services">Pages</a>
+                <ul class="dropdown">
+                  <li><a routerLink="/services">Services</a></li>
+                  <li><a routerLink="/service-single">Service Single</a></li>
+                  <li><a routerLink="/blog-single">Blog Single</a></li>
+                  <li><a routerLink="/portfolio">Portfolio</a></li>
+                  <li><a routerLink="/portfolio-single">Portfolio Single</a></li>
+                  <li><a routerLink="/testimonials">Testimonials</a></li>
+                  <li><a routerLink="/faq">Frequently Ask Questions</a></li>
+                  <li><a routerLink="/gallery">Gallery</a></li>
+                </ul>
+              </li>
+              <li><a routerLink="/blog">Blog</a></li>
+              <li><a routerLink="/contact">Contact</a></li>
             </ul>
-          </nav>
-          
-          <!-- Boutons à droite -->
+ 
           <div class="right-cta-menu">
             <div class="ml-auto">
               <a routerLink="/post-job" class="btn btn-outline-white border-width-2 d-none d-lg-inline-block">
@@ -39,7 +61,7 @@
               <span class="icon-menu h3 m-0 p-0 mt-2"></span>
             </a>
           </div>
-          
+        </nav>
         </div>
       </div>
     </header>
