@@ -18,7 +18,7 @@ final class RegistrerController extends AbstractController
     public function create(
         Request $request,
         EntityManagerInterface $entityManager,
-        UserPasswordHasherInterface $passwordHashed,
+        UserPasswordHasherInterface $passwordHasher,
         ValidatorInterface $validator
     ): JsonResponse
     {
@@ -27,9 +27,9 @@ final class RegistrerController extends AbstractController
         $user = new Users();
         $user->setNom($data['Nom'] ?? '');
         $user->setEmail($data['Email'] ?? '');
-        $user->setRoles($data['Roles'] ?? '');
+        $user->setRoles($data['Roles'] ?? ['ROLE_USER']);
         
-        $hashedPassword = $passwordHashed->hashPassword($user, $data['Password']);
+        $hashedPassword = $passwordHasher->hashPassword($user, $data['Password']);
         $user->setPassword($hashedPassword);
 
         $errors = $validator->validate($user);

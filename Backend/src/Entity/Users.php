@@ -20,9 +20,10 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank]
-    private ?string $roles = null;
+    #[ORM\Column(type: 'json')]
+    #[Assert\NotNull]
+    #[Assert\Count(min: 1)]
+    private ?array $roles = [];
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
@@ -50,7 +51,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function setRoles(string $roles): static
+    public function setRoles(array $roles): static
     {
         $this->roles = $roles;
 
@@ -86,8 +87,14 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getRoles(): array
     {
-        // Par défaut, tous les utilisateurs ont ROLE_USER
-        return ['ROLE_USER'];
+        $roles = $this->roles;
+
+        // Garantir que ROLE_USER est présent au minimum
+        if (!in_array('ROLE_USER', $roles, true)) {
+            $roles[] = 'ROLE_USER';
+        }
+
+        return array_unique($roles);
     }
 
     public function eraseCredentials(): void
