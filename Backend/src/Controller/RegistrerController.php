@@ -29,8 +29,8 @@ final class RegistrerController extends AbstractController
         $user->setNom($data['Nom'] ?? '');
         $user->setEmail($data['Email'] ?? '');
         
-        $roleName = $data['Role'] ?? null;
-        $role = $entityManager->getRepository(Roles::class)->findOneBy(['name' => $roleName]);
+        $roleName = $data['Roles'] ?? null;
+        $role = $entityManager->getRepository(Roles::class)->findOneBy(['roles' => $roleName]);
             if (!$role) {
                 return $this->json(['success' => false, 'message' => 'Rôle invalide'], 400);
             }
