@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Roles;
 use App\Entity\Users;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Id;
@@ -27,7 +28,14 @@ final class RegistrerController extends AbstractController
         $user = new Users();
         $user->setNom($data['Nom'] ?? '');
         $user->setEmail($data['Email'] ?? '');
-        $user->setRoles($data['Roles'] ?? ['ROLE_USER']);
+        
+        $roleName = $data['Role'] ?? null;
+        $role = $entityManager->getRepository(Roles::class)->findOneBy(['name' => $roleName]);
+            if (!$role) {
+                return $this->json(['success' => false, 'message' => 'Rôle invalide'], 400);
+            }
+
+        $user->setRole($role);
         
         $hashedPassword = $passwordHasher->hashPassword($user, $data['Password']);
         $user->setPassword($hashedPassword);

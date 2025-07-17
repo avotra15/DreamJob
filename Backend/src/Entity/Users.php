@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Roles;
 use App\Repository\UsersRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -20,12 +21,11 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank]
     private ?string $nom = null;
 
-    #[ORM\Column(type: 'json')]
-    #[Assert\NotNull]
-    #[Assert\Count(min: 1)]
-    private ?array $roles = [];
+    #[ORM\ManyToOne(targetEntity: Roles::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Roles $role = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank]
     #[Assert\Email]
     private ?string $email = null;
@@ -47,14 +47,17 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
-
         return $this;
     }
 
-    public function setRoles(array $roles): static
+    public function getRole(): Roles
     {
-        $this->roles = $roles;
+        return $this->role;
+    }
 
+    public function setRole(?Roles $role): static
+    {
+        $this->role = $role;
         return $this;
     }
 
@@ -66,7 +69,6 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): static
     {
         $this->email = $email;
-
         return $this;
     }
 
@@ -78,43 +80,27 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPassword(string $password): static
     {
         $this->password = $password;
-
         return $this;
-    }
-
-    /**
-     * @return array<string>
-     */
-    public function getRoles(): array
-    {
-        $roles = $this->roles;
-
-        // Garantir que ROLE_USER est présent au minimum
-        if (!in_array('ROLE_USER', $roles, true)) {
-            $roles[] = 'ROLE_USER';
-        }
-
-        return array_unique($roles);
     }
 
     public function eraseCredentials(): void
     {
-        // Si vous stockez des données temporaires sensibles sur l'utilisateur, effacez-les ici
-        // $this->plainPassword = null;
+        // Effacer les données sensibles temporaires si nécessaire
     }
 
     public function getUserIdentifier(): string
     {
-        // Retourne l'email comme identifiant unique (compatible avec la plupart des systèmes)
-        return (string) $this->email;
+        return $this->email;
     }
 
-    /**
-     * @deprecated since Symfony 5.3, use getUserIdentifier() instead
-     */
     public function getUsername(): string
     {
-        // Méthode conservée pour la compatibilité
         return $this->getUserIdentifier();
+    }
+
+    // ✅ Méthode requise par UserInterface
+    public function getRoles(): array
+    {
+        return [$this->role?->getRoles() ?? 'ROLE_USER'];
     }
 }
