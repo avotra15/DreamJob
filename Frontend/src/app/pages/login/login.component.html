@@ -13,28 +13,30 @@
     </section>
 
     <section class="site-section">
+      
       <div class="container">
         <div class="row">
+          <!--
           <div class="col-lg-6 mb-5">
             <h2 class="mb-4">Sign Up To JobBoard</h2>
             <form action="#" class="p-4 border rounded">
 
               <div class="row form-group">
                 <div class="col-md-12 mb-3 mb-md-0">
-                  <label class="text-black" for="fname">Name</label>
+                  <label class="text-black" for="fname" [(ngModel)]="this.nom">Name</label>
                   <input type="text" id="fname" class="form-control" placeholder="Name">
                 </div>
               </div>
               <div class="row form-group">
                 <div class="col-md-12 mb-3 mb-md-0">
-                  <label class="text-black" for="fname">Email</label>
+                  <label class="text-black" for="fname" [(ngModel)]="this.email">Email</label>
                   <input type="email" id="fname" class="form-control" placeholder="Email address">
                 </div>
               </div>
 
               <div class="row form-group">
                 <div class="col-md-12 mb-3 mb-md-0">
-                  <label class="text-black" for="fname">Roles</label>
+                  <label class="text-black" for="fname" [(ngModel)]="this.roles">Roles</label>
                   <select class="selectpicker" data-style="btn-white btn-lg" data-width="100%" data-live-search="true" title="Select Roles">
                       <option>Recruteur</option>
                       <option>Candidat</option>
@@ -44,7 +46,7 @@
 
               <div class="row form-group">
                 <div class="col-md-12 mb-3 mb-md-0">
-                  <label class="text-black" for="fname">Password</label>
+                  <label class="text-black" for="fname" [(ngModel)]="this.password">Password</label>
                   <input type="password" id="password1" class="form-control" placeholder="Password">
                 </div>
               </div>
@@ -57,20 +59,21 @@
 
             </form>
           </div>
+          -->
           <div class="col-lg-6">
             <h2 class="mb-4">Log In To JobBoard</h2>
-            <form action="#" class="p-4 border rounded">
+            <form #loginForm="ngForm" (ngSubmit)="onSubmit()" class="p-4 border rounded">
 
               <div class="row form-group">
                 <div class="col-md-12 mb-3 mb-md-0">
                   <label class="text-black" for="fname">Email</label>
-                  <input type="text" id="fname" class="form-control" placeholder="Email address">
+                  <input type="email" [(ngModel)]="this.email" [ngModelOptions]="{standalone: true}" id="fname" class="form-control" placeholder="Email address">
                 </div>
               </div>
               <div class="row form-group mb-4">
                 <div class="col-md-12 mb-3 mb-md-0">
                   <label class="text-black" for="fname">Password</label>
-                  <input type="password" id="fname" class="form-control" placeholder="Password">
+                  <input type="password" [(ngModel)]="this.password" [ngModelOptions]="{standalone: true}" id="fname" class="form-control" placeholder="Password">
                 </div>
               </div>
 
@@ -79,7 +82,6 @@
                   <input type="submit" value="Log In" class="btn px-4 btn-primary text-white">
                 </div>
               </div>
-
             </form>
           </div>
         </div>
