@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: symfony-app
+    env: php
+    region: oregon  # ou frankfurt selon ta région
+    plan: free
+    buildCommand: |
+      composer install --no-dev --optimize-autoloader
+      php bin/console doctrine:migrations:migrate --no-interaction
+    startCommand: php -S 0.0.0.0:8000 -t public
+    envVars:
+      - key: APP_ENV
+        value: prod
+      - key: APP_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        value: "postgresql://jobboard_hf20_user:QigLXRruEwBXCfxNxOr0FIgxECffrHuz@dpg-d1vjshadbo4c73fj169g-a.oregon-postgres.render.com/jobboard_hf20?sslmode=require"
