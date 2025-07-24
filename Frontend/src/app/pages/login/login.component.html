@@ -11,28 +11,27 @@
         </div>
       </div>
     </section>
-
-    <section class="site-section">
-      
+  
+    <section class="site-section"> 
       <div class="container">
         <div class="row">
-
-          <app-registrer></app-registrer>
           
-          <div class="col-lg-6">
-            <h2 class="mb-4">Log In To JobBoard</h2>
+          <app-registrer></app-registrer>
+
+          <div class="col-lg-6 mb-5">
+            <h2 class="mb-4">Log In</h2>
             <form #loginForm="ngForm" (ngSubmit)="onSubmit()" class="p-4 border rounded">
 
               <div class="row form-group">
                 <div class="col-md-12 mb-3 mb-md-0">
-                  <label class="text-black" for="fname">Email</label>
-                  <input type="email" [(ngModel)]="this.email" [ngModelOptions]="{standalone: true}" id="fname" class="form-control" placeholder="Email address">
+                  <label class="text-black">Email</label>
+                  <input type="email" name="email" [(ngModel)]="this.email" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Email address">
                 </div>
               </div>
               <div class="row form-group mb-4">
                 <div class="col-md-12 mb-3 mb-md-0">
-                  <label class="text-black" for="fname">Password</label>
-                  <input type="password" [(ngModel)]="this.password" [ngModelOptions]="{standalone: true}" id="fname" class="form-control" placeholder="Password">
+                  <label class="text-black">Password</label>
+                  <input type="password" name="password" [(ngModel)]="this.password" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Password">
                 </div>
               </div>
 
