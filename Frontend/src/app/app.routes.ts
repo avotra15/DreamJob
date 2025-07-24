@@ -16,11 +16,13 @@ import { PostJobComponent } from './pages/post-job/post-job.component';
 import { ServiceSingleComponent } from './pages/service-single/service-single.component';
 import { ServicesComponent } from './pages/services/services.component';
 import { TestimonialsComponent } from './pages/testimonials/testimonials.component';
+import { RegistrerComponent } from './pages/registrer/registrer.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: 'home', component: HomeComponent},
     {path: 'login', component: LoginComponent},
+    {path: 'registrer', component: RegistrerComponent},
     {path: 'about', component: AboutComponent},
     {path: 'blog', component: BlogComponent},
     {path: 'blog-single', component: BlogSingleComponent},

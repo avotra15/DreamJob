@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { RegistrerComponent } from '../registrer/registrer.component';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, RouterModule],
+  imports: [FormsModule, RouterModule, RegistrerComponent],
   templateUrl: './login.component.html'
 })
 export class LoginComponent {
