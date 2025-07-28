@@ -40,7 +40,8 @@ final class LoginController extends AbstractController
         }
 
         return $this->json([
+            'success' => true,
             'token' => $jwtManager->create($user)
-        ]);
+        ], 200);
     }
 }

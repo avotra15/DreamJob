@@ -5,13 +5,11 @@ namespace App\Controller;
 use App\Entity\Roles;
 use App\Entity\Users;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\Id;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 final class RegistrerController extends AbstractController
 {
@@ -20,10 +18,20 @@ final class RegistrerController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager,
         UserPasswordHasherInterface $passwordHasher,
-        ValidatorInterface $validator
     ): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
+
+        $email = $data['Email'];
+
+        // Vérifier si l'utilisateur existe déjà
+        $existingUser = $entityManager->getRepository(Users::class)->findOneBy(['email' => $email]);
+
+        if ($existingUser) {
+            return new JsonResponse([
+                'failure' => false,
+                'message' => 'Email déjà utilisé'],400);
+        }
 
         $user = new Users();
         $user->setNom($data['Nom'] ?? '');
@@ -40,19 +48,6 @@ final class RegistrerController extends AbstractController
         $hashedPassword = $passwordHasher->hashPassword($user, $data['Password']);
         $user->setPassword($hashedPassword);
 
-        $errors = $validator->validate($user);
-        if (count($errors) > 0) {
-            $errorsMessages = [];
-            foreach ($errors as $error) {
-                $errorsMessages[] = $error->getPropertyPath() . ':' . $error->getMessage();
-        }
-
-        return $this->json([
-            'success' => false,
-            'errors' => $errorsMessages,
-        ], 400);
-    }
-
     $entityManager->persist($user);
     $entityManager->flush();
 
@@ -60,7 +55,7 @@ final class RegistrerController extends AbstractController
         'success' => true,
         'messages' => 'User créer avec succès',
         'id' => $user->getId(),
-    ]);
-
-    }
+    ], 200);
+    $this->redirectToRoute('login');
+    } 
 }
