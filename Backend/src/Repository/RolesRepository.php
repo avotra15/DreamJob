@@ -16,6 +16,27 @@ class RolesRepository extends ServiceEntityRepository
         parent::__construct($registry, Roles::class);
     }
 
+    /**
+     * Récupère un rôle par son nom (valeur dans le champ "roles")
+     */
+    public function findByName(array $roleName): ?Roles
+    {
+        return $this->findOneBy(['roles' => $roleName]);
+    }
+
+    
+    /**
+     * Vérifie si un rôle existe
+     */
+
+    public function exists(string $roleName): bool
+    {
+        return (bool) $this->findOneBy(['Roles' => $roleName]);
+    }
+    
+    
+    
+    
     //    /**
     //     * @return Roles[] Returns an array of Roles objects
     //     */

@@ -17,13 +17,13 @@ export class AuthService {
         sessionStorage.setItem('token', response.token);
       })
     );
-  }
-  getToken(): string | null {
-  return sessionStorage.getItem('token');
-  }
+    }
+    getToken(): string | null {
+    return sessionStorage.getItem('token');
+    }
 
-  logout(): void {
-    sessionStorage.removeItem('token')
-  }
+    logout(): void {
+      sessionStorage.removeItem('token')
+    }
 }
 

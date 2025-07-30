@@ -17,6 +17,7 @@ import { ServiceSingleComponent } from './pages/service-single/service-single.co
 import { ServicesComponent } from './pages/services/services.component';
 import { TestimonialsComponent } from './pages/testimonials/testimonials.component';
 import { RegistrerComponent } from './pages/registrer/registrer.component';
+import { AuthGuard } from './auth.guard';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -33,7 +34,7 @@ export const routes: Routes = [
     {path: 'job-single', component: JobSingleComponent},
     {path: 'portfolio', component: PortfolioComponent},
     {path: 'portfolio-single', component: PortfolioSingleComponent},
-    {path: 'post-job', component: PostJobComponent},
+    {path: 'post-job', component: PostJobComponent, canActivate: ([AuthGuard])},
     {path: 'service-single', component: ServiceSingleComponent},
     {path: 'services', component: ServicesComponent},
     {path: 'testimonials', component: TestimonialsComponent},

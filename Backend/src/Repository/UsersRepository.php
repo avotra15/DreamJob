@@ -2,18 +2,47 @@
 
 namespace App\Repository;
 
+use App\Entity\Roles;
 use App\Entity\Users;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 /**
  * @extends ServiceEntityRepository<Users>
  */
 class UsersRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private UserPasswordHasherInterface $userPasswordHasher;
+    private EntityManagerInterface $entityManager;
+
+    public function __construct(ManagerRegistry $registry, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager)
     {
         parent::__construct($registry, Users::class);
+        $this->userPasswordHasher = $userPasswordHasher;
+        $this->entityManager = $entityManager;
+    }
+
+    public function emailExists(string $email): bool 
+    {
+        return(bool) $this->findOneBy(['email' => $email]);
+    }
+
+    public function createUser(array $data, Roles $roles) : Users 
+    {
+            $user = new Users();
+            $user->setNom($data['Nom'] ?? '');
+            $user->setEmail($data['Email'] ?? '');
+            $user->setRole($roles);
+            
+            $hashedPassword = $this->userPasswordHasher->hashPassword($user, $data['Password']);
+            $user->setPassword($hashedPassword);
+
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        return $user;
     }
 
     //    /**

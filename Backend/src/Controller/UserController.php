@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class UserController extends AbstractController
 {
-    #[Route('/user', name: 'users', methods:['GET'])]
+    #[Route('/api/user', name: 'user', methods:['GET'])]
     public function getUsers(
         Request $request,
         UsersRepository $usersRepo,

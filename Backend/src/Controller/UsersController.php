@@ -10,12 +10,12 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class UsersController extends AbstractController
 {
-    #[Route('/users', name: 'users', methods:['GET'])]
+    #[Route('/api/users', name: 'users', methods:['GET'])]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    public function getUsers(UsersRepository $usersRepo): JsonResponse
+    public function getUsers(
+        UsersRepository $usersRepo,
+        ): JsonResponse
     {
-        
-        $user = $this->getUser();
         $userss = $usersRepo->findAll();
 
         $dataUsers = array_map(fn($users) => [
