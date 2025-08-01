@@ -1,16 +1,16 @@
   <div class="col-lg-6 mb-5">
-      <h2 class="mb-4">Sign Up</h2>
+      <h2 class="mb-4">Update User</h2>
       <form #updateForm="ngForm"  (ngSubmit)="onSubmit()" class="p-4 border rounded">
         <div class="row form-group">
           <div class="col-md-12 mb-3 mb-md-0">
             <label class="text-black">Name</label>
-            <input type="text" class="form-control" placeholder="Name" [(ngModel)]="this.newnm" [ngModelOptions]="{standalone: true}" name="nm">
+            <input type="text" class="form-control" placeholder="newnm" [(ngModel)]="newnm" [ngModelOptions]="{standalone: true}" name="nm">
           </div>
         </div>
         <div class="row form-group">
           <div class="col-md-12 mb-3 mb-md-0">
             <label class="text-black">Email</label>
-            <input type="email" class="form-control" placeholder="Email address" name="mail" [(ngModel)]="this.newmail" [ngModelOptions]="{standalone: true}">
+            <input type="email" class="form-control" placeholder="Email address" name="newmail" [(ngModel)]="newmail" [ngModelOptions]="{standalone: true}">
           </div>
         </div>
        <!-- <div class="row form-group">
@@ -25,12 +25,12 @@
         <div class="row form-group">
           <div class="col-md-12 mb-3 mb-md-0">
             <label class="text-black">Password</label>
-            <input type="password" id="password" class="form-control" placeholder="Password" [(ngModel)]="this.newmdp" [ngModelOptions]="{standalone: true}" name="mdp">
+            <input type="password" id="password" class="form-control" placeholder="Password" [(ngModel)]="newmdp" [ngModelOptions]="{standalone: true}" name="mdp">
           </div>
         </div>
         <div class="row form-group">
           <div class="col-md-12">
-            <input type="submit" value="Sign Up" class="btn px-4 btn-primary text-white">
+            <input type="submit" value="Update" class="btn px-4 btn-primary text-white">
           </div>
         </div>
       </form>

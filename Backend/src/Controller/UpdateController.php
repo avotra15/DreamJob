@@ -13,7 +13,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class UpdateController extends AbstractController
 {
-    #[Route('/api/update/{id}', name: 'app_user_update', methods: ['PUT'])]
+    #[Route('/api/update/{id}', name: 'app_user_update', methods: ['PATH'])]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function updateUser(
         int $id,

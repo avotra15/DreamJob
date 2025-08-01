@@ -3,13 +3,13 @@ nelmio_cors:
             allow_credentials: true
             allow_origin: ['http://localhost:4200']
             allow_headers: ['Content-Type', 'Authorization']
-            allow_methods: ['POST', 'PUT', 'GET', 'DELETE']
+            allow_methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
             max_age: 3600
     paths:
         '^/':
             origin_regex: true
             allow_origin: ['http://localhost:4200']
             allow_headers: ['Content-Type', 'Authorization']
-            allow_methods: ['POST', 'PUT', 'GET', 'DELETE']
+            allow_methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
             max_age: 3600
             hosts: ['^\.']

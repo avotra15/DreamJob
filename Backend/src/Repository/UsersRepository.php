@@ -55,7 +55,7 @@ class UsersRepository extends ServiceEntityRepository
             $user->setEmail($data['Email']);
         }
 
-        if (isset($data['Password'])) {
+        if (!empty($data['Password'])) {
             $hashedPassword = $this->userPasswordHasher->hashPassword($user, $data['Password']);
             $user->setPassword($hashedPassword);
         }

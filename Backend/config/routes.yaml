@@ -3,3 +3,7 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+api_update_user:
+    path: /api/update/{id}
+    controller: App\Controller\UpdateController::updateUser
+    methods: [PATCH]

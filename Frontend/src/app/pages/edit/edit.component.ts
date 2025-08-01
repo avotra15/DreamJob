@@ -37,9 +37,9 @@ export class EditComponent implements OnInit {
     this.http.get<any>(`http://127.0.0.1:8000/api/user/${this.id}`, { headers })
       .subscribe({
         next: data => {
-          this.newnm = data.nom;
-          this.newmail = data.email;
-          // this.newmdp = ''; // Mot de passe volontairement non rempli
+          this.newnm = data.user.nom;
+          this.newmail = data.user.email;
+          this.newmdp = data.user.mdp;
         },
         error: err => console.error("Erreur lors du chargement de l'utilisateur :", err)
       });
