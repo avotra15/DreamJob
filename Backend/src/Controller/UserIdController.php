@@ -30,6 +30,7 @@ final class UserIdController extends AbstractController
             'success' => true,
             'user' => [
                 'id' => $user->getId(),
+                'nom' => $user->getNom(),
                 'email' => $user->getEmail(),
                 'roles' => $user->getRoles(),
             ]
