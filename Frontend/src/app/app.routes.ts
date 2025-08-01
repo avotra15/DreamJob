@@ -18,6 +18,8 @@ import { ServicesComponent } from './pages/services/services.component';
 import { TestimonialsComponent } from './pages/testimonials/testimonials.component';
 import { RegistrerComponent } from './pages/registrer/registrer.component';
 import { AuthGuard } from './auth.guard';
+import { UsersComponentComponent } from './pages/users/users-component.component';
+import { EditComponent } from './pages/edit/edit.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -38,4 +40,6 @@ export const routes: Routes = [
     {path: 'service-single', component: ServiceSingleComponent},
     {path: 'services', component: ServicesComponent},
     {path: 'testimonials', component: TestimonialsComponent},
+    {path: 'users', component: UsersComponentComponent, canActivate: ([AuthGuard])},
+    {path: 'edit/:id', component: EditComponent, canActivate: ([AuthGuard])},
 ];

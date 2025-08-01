@@ -51,7 +51,7 @@ class UsersRepository extends ServiceEntityRepository
         if (isset($data['Nom'])) {
             $user->setNom($data['Nom'] ?? '');
         }
-                if (isset($data['Email'])) {
+        if (isset($data['Email'])) {
             $user->setEmail($data['Email']);
         }
 

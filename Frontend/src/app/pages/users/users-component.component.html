@@ -1,0 +1,33 @@
+  <section class="site-section" id="next-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 mb-5 mb-lg-0">
+                <div class="container">
+                <h2 class="mb-4">Liste des utilisateurs</h2>
+
+                <table class="table table-bordered table-striped shadow-sm">
+                <thead class="table-dark">
+                    <tr>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Exemple de ligne -->
+                    <tr *ngFor="let user of usersList">
+                    <td>{{ user.nom }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary me-2" (click)="onEdit(user.id)">Edit</button>
+                        <button class="btn btn-sm btn-danger" (click)="onDelete(user.id)">Delete</button>
+                    </td>
+                    </tr>
+
+                </tbody>
+                </table>
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>

@@ -19,7 +19,10 @@ export class AuthService {
     );
     }
     getToken(): string | null {
-    return sessionStorage.getItem('token');
+        if (typeof window !== 'undefined') {
+            return sessionStorage.getItem('token');
+          }
+          return null;
     }
 
     logout(): void {
