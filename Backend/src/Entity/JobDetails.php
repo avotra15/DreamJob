@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use App\Repository\JobDetailsRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 #[ORM\Entity(repositoryClass: JobDetailsRepository::class)]
 class JobDetails
@@ -15,9 +14,9 @@ class JobDetails
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?UploadedFile $Fichier = null;
+    private ?string $Fichier = null;
 
-    #[ORM\ManyToOne(inversedBy: 'Email')]
+    #[ORM\ManyToOne(inversedBy: 'jobDetails')]
     private ?Users $email = null;
 
     #[ORM\Column(length: 255)]
@@ -27,19 +26,19 @@ class JobDetails
     private ?string $Description = null;
 
     #[ORM\Column(length: 255)]
-    private ?UploadedFile $Logo = null;
+    private ?string $Logo = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getFichier(): ?UploadedFile
+    public function getFichier(): ?string
     {
         return $this->Fichier;
     }
 
-    public function setFichier(?UploadedFile $Fichier): static
+    public function setFichier(?string $Fichier): static
     {
         $this->Fichier = $Fichier;
 
@@ -82,12 +81,12 @@ class JobDetails
         return $this;
     }
 
-    public function getLogo(): ?UploadedFile
+    public function getLogo(): ?string
     {
         return $this->Logo;
     }
 
-    public function setLogo(?UploadedFile $Logo): static
+    public function setLogo(?string $Logo): static
     {
         $this->Logo = $Logo;
 
