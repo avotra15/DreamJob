@@ -3,7 +3,23 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+api_users:
+    path: /api/users
+    controller: App\Controller\UsersController::Users
+    methods: [GET]
+api_userId:
+    path: /api/user/{id}
+    controller: App\Controller\UsersController::UserId
+    methods: [GET]
+api_create:
+    path: /registrer
+    controller: App\Controller\UsersController::createUsers
+    methods: [POST]
 api_update_user:
     path: /api/update/{id}
-    controller: App\Controller\UpdateController::updateUser
+    controller: App\Controller\UsersController::updateUser
     methods: [PATCH]
+api_delete_user:
+    path: /api/delete/{id}
+    controller: App\Controller\UsersController::deleteUser
+    methods: [DELETE]
