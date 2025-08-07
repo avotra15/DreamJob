@@ -2,7 +2,12 @@ vich_uploader:
     db_driver: orm
 
     mappings:
-        jobs:
-            uri_prefix: /images/jobs
-            upload_destination: '%kernel.project_dir%/public/images/jobs'
+        job_files:
+            uri_prefix: /uploads/job_files
+            upload_destination: '%kernel.project_dir%/public/uploads/job_files'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+        job_logos:
+            uri_prefix: /uploads/job_logos
+            upload_destination: '%kernel.project_dir%/public/uploads/job_logos'
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer

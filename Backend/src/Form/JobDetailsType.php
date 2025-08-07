@@ -19,16 +19,10 @@ class JobDetailsType extends AbstractType
                 'class' => Users::class,
                 'choice_label' => 'id',
             ])
-            ->add('Fichier', FileType::class, [
-                'mapped' => false,
-                'required' => false
-            ])
+            ->add('Fichier', FileType::class)
             ->add('Titre')
             ->add('Description')
-            ->add('Logo', FileType::class, [
-                'mapped' => false,
-                'required' => false
-            ])  
+            ->add('Logo', FileType::class)  
         ;
     }
 
