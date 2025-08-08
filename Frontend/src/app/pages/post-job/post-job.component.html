@@ -38,24 +38,26 @@
       </div>
       <div class="row mb-5">
         <div class="col-lg-12">
-          <form class="p-4 p-md-5 border rounded" method="post">
+          <form class="p-4 p-md-5 border rounded" #jobForm="ngForm"  (ngSubmit)="onSubmit()" >
             <h3 class="text-black mb-5 border-bottom pb-2">Job Details</h3>
             
             <div class="form-group">
-              <label for="company-website-tw d-block">Upload Featured Image</label> <br>
+              <label for="company-website-tw d-block">Upload Featured</label> <br>
               <label class="btn btn-primary btn-md btn-file">
-                Browse File<input type="file" hidden>
+                Browse File<input type="file" hidden [(ngModel)]="this.fichierFile" [ngModelOptions]="{standalone: true}" name="fichierFile">
               </label>
             </div>
-
+            <!--
             <div class="form-group">
               <label for="email">Email</label>
               <input type="text" class="form-control" id="email" placeholder="you@yourdomain.com">
             </div>
+            -->
             <div class="form-group">
               <label for="job-title">Job Title</label>
-              <input type="text" class="form-control" id="job-title" placeholder="Product Designer">
+              <input type="text" class="form-control" id="job-title" placeholder="Product Designer" [(ngModel)]="this.titre" [ngModelOptions]="{standalone: true}" name="titre">
             </div>
+            <!--
             <div class="form-group">
               <label for="job-location">Location</label>
               <input type="text" class="form-control" id="job-location" placeholder="e.g. New York">
@@ -83,16 +85,16 @@
                 <option>Full Time</option>
               </select>
             </div>
-
+            -->
 
             <div class="form-group">
               <label for="job-description">Job Description</label>
               <div class="editor" id="editor-1">
-                <textarea name="job-descr" id="job-descr" class="form-control" class="col-lg-12" style="height: 400px"></textarea>
+                <textarea name="job-descr" id="job-descr" class="form-control" class="col-lg-12" style="height: 400px" [(ngModel)]="this.description" [ngModelOptions]="{standalone: true}" name="description"></textarea>
               </div>
             </div>
 
-
+            <!--
             <h3 class="text-black my-5 border-bottom pb-2">Company Details</h3>
             <div class="form-group">
               <label for="company-name">Company Name</label>
@@ -133,15 +135,11 @@
             <div class="form-group">
               <label for="company-website-tw d-block">Upload Logo</label> <br>
               <label class="btn btn-primary btn-md btn-file">
-                Browse File<input type="file" hidden>
+                Browse File<input type="file" hidden [(ngModel)]="this.logoFile" [ngModelOptions]="{standalone: true}" name="logoFile">
               </label>
             </div>
-
-          </form>
-        </div>
-
-       
-      </div>
+       -->
+      
       <div class="row align-items-center mb-5">
         
         <div class="col-lg-4 ml-auto">
@@ -150,10 +148,14 @@
               <a routerLink="/#" class="btn btn-block btn-light btn-md"><span class="icon-open_in_new mr-2"></span>Preview</a>
             </div>
             <div class="col-6">
-              <a routerLink="/#" class="btn btn-block btn-primary btn-md">Save Job</a>
+              <input type="submit" value="Save Job" class="btn px-4 btn-primary text-white">
             </div>
           </div>
         </div>
       </div>
+
+          </form>
+          </div>
+        </div>
     </div>
   </section>

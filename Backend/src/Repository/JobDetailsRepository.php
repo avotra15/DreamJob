@@ -25,16 +25,16 @@ class JobDetailsRepository extends ServiceEntityRepository
 
     public function createFromRequest(Request $request, Users $user): JobDetails
      {
-            $titre = $request->request->get('titre');
-            $description = $request->request->get('description');
             $fichierFile = $request->files->get('fichierFile');
+            $titre = $request->request->get('titre', '');
+            $description = $request->request->get('description', '');
             $logoFile = $request->files->get('logoFile');
 
             $jobdetails = new JobDetails();
             
+            $jobdetails->setFichierFile($fichierFile);
             $jobdetails->setTitre($titre);
             $jobdetails->setDescription($description);
-            $jobdetails->setFichierFile($fichierFile);
             $jobdetails->setLogoFile($logoFile);
             $jobdetails->setEmail($user);
 
