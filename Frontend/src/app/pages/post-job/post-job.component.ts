@@ -10,10 +10,26 @@ import { Router, RouterModule } from '@angular/router';
   templateUrl: './post-job.component.html'
 })
 export class PostJobComponent {
-  fichierFile: File | null = null;
+  fichierFile?: File;
+  onFileSelected(event: Event) {
+  const input = event.target as HTMLInputElement;
+  if (!input.files || input.files.length === 0) {
+    this.fichierFile = undefined;
+    return;
+  }
+  this.fichierFile = input.files[0]
+}
   titre: string = '';
   description: string = '';
-  logoFile: File | null = null;
+  logoFile?: File;
+  onLogoSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+      if (!input.files || input.files.length === 0) {
+      this.logoFile = undefined;
+      return;
+    }
+    this.logoFile = input.files[0];
+}
 
   constructor(private http:HttpClient, private router: Router) {}
 
@@ -41,7 +57,7 @@ export class PostJobComponent {
                 this.router.navigate(['/job-listings']);
               },
               error: err => {
-                console.error("Job enregistrer avec failed:", err);
+                console.error("failed enregistrer du Job:", err);
       }
     })
     }

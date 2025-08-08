@@ -44,7 +44,7 @@
             <div class="form-group">
               <label for="company-website-tw d-block">Upload Featured</label> <br>
               <label class="btn btn-primary btn-md btn-file">
-                Browse File<input type="file" hidden [(ngModel)]="this.fichierFile" [ngModelOptions]="{standalone: true}" name="fichierFile">
+                Browse File<input type="file" hidden name="fichierFile" (change)="onFileSelected($event)" />
               </label>
             </div>
             <!--
@@ -131,14 +131,14 @@
               <label for="company-website-tw">Linkedin Username (Optional)</label>
               <input type="text" class="form-control" id="company-website-tw" placeholder="companyname">
             </div>
-
+            -->
             <div class="form-group">
               <label for="company-website-tw d-block">Upload Logo</label> <br>
               <label class="btn btn-primary btn-md btn-file">
-                Browse File<input type="file" hidden [(ngModel)]="this.logoFile" [ngModelOptions]="{standalone: true}" name="logoFile">
+                Browse File<input type="file" hidden name="logoFile" (change)="onLogoSelected($event)" />
               </label>
             </div>
-       -->
+       
       
       <div class="row align-items-center mb-5">
         
