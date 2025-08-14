@@ -14,14 +14,16 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
  */
 class UsersRepository extends ServiceEntityRepository
 {
-    private UserPasswordHasherInterface $userPasswordHasher;
-    private EntityManagerInterface $entityManager;
+    /*private UserPasswordHasherInterface $userPasswordHasher;
+    private EntityManagerInterface $entityManager;*/
 
-    public function __construct(ManagerRegistry $registry, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager)
+    public function __construct(
+        ManagerRegistry $registry,
+        /*UserPasswordHasherInterface $userPasswordHasher EntityManagerInterface $entityManager*/)
     {
         parent::__construct($registry, Users::class);
-        $this->userPasswordHasher = $userPasswordHasher;
-        $this->entityManager = $entityManager;
+        //$this->userPasswordHasher = $userPasswordHasher;
+        //$this->entityManager = $entityManager;
     }
 
     public function emailExists(string $email): bool 
@@ -29,7 +31,17 @@ class UsersRepository extends ServiceEntityRepository
         return(bool) $this->findOneBy(['email' => $email]);
     }
 
-    public function createUser(array $data, Roles $roles) : Users 
+    public function getUserById(int $id): ?Users
+    {
+        return $this->usersRepository->find($id);
+    }
+
+    public function getAllUsers(): array
+    {
+        return $this->userRepository->findAll();
+    }
+
+    /*public function createUser(array $data, Roles $roles) : Users 
     {
             $user = new Users();
             $user->setNom($data['Nom'] ?? '');
@@ -60,7 +72,7 @@ class UsersRepository extends ServiceEntityRepository
             $user->setPassword($hashedPassword);
         }
 
-        $this->entityManager->persist($user);
+        //$this->entityManager->persist($user);
         $this->entityManager->flush();
 
         return $user;
@@ -71,7 +83,7 @@ class UsersRepository extends ServiceEntityRepository
         $this->entityManager->remove($user);
         $this->entityManager->flush();
     }
-
+    */
     //    /**
     //     * @return Users[] Returns an array of Users objects
     //     */
