@@ -128,11 +128,11 @@ final class UsersController extends AbstractController
         #[IsGranted('IS_AUTHENTICATED_FULLY')]
         public function deleteUser(
             int $id,
-            EntityManagerInterface $entityManager,
+            UsersRepository $userRepository,
             UserServiceInterface $userServiceInterface,
         ): JsonResponse
         {
-            $user = $entityManager->getRepository(Users::class)->find($id);
+            $user = $userRepository->getUserById($id);
 
             if (!$user) {
                 return $this->json([

@@ -33,12 +33,12 @@ class UsersRepository extends ServiceEntityRepository
 
     public function getUserById(int $id): ?Users
     {
-        return $this->usersRepository->find($id);
+        return $this->find($id);
     }
 
     public function getAllUsers(): array
     {
-        return $this->userRepository->findAll();
+        return $this->findAll();
     }
 
     /*public function createUser(array $data, Roles $roles) : Users 
