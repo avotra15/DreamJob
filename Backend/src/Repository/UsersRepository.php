@@ -14,14 +14,11 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
  */
 class UsersRepository extends ServiceEntityRepository
 {
-    private UserPasswordHasherInterface $userPasswordHasher;
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(ManagerRegistry $registry, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager)
+    public function __construct(
+        ManagerRegistry $registry,)
     {
         parent::__construct($registry, Users::class);
-        $this->userPasswordHasher = $userPasswordHasher;
-        $this->entityManager = $entityManager;
+
     }
 
     public function emailExists(string $email): bool 
@@ -29,47 +26,14 @@ class UsersRepository extends ServiceEntityRepository
         return(bool) $this->findOneBy(['email' => $email]);
     }
 
-    public function createUser(array $data, Roles $roles) : Users 
+    public function getUserById(int $id): ?Users
     {
-            $user = new Users();
-            $user->setNom($data['Nom'] ?? '');
-            $user->setEmail($data['Email'] ?? '');
-            $user->setRole($roles);
-            
-            $hashedPassword = $this->userPasswordHasher->hashPassword($user, $data['Password']);
-            $user->setPassword($hashedPassword);
-
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
-
-        return $user;
+        return $this->find($id);
     }
 
-
-    public function updateUser (array $data): Users 
+    public function getAllUsers(): array
     {
-        if (isset($data['Nom'])) {
-            $user->setNom($data['Nom'] ?? '');
-        }
-        if (isset($data['Email'])) {
-            $user->setEmail($data['Email']);
-        }
-
-        if (!empty($data['Password'])) {
-            $hashedPassword = $this->userPasswordHasher->hashPassword($user, $data['Password']);
-            $user->setPassword($hashedPassword);
-        }
-
-        //$this->entityManager->persist($user);
-        $this->entityManager->flush();
-
-        return $user;
-    }
-
-        public function deleteUser(Users $user): void
-    {
-        $this->entityManager->remove($user);
-        $this->entityManager->flush();
+        return $this->findAll();
     }
 
     //    /**

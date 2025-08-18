@@ -3,47 +3,31 @@
 namespace App\Repository;
 
 use App\Entity\JobDetails;
-use App\Entity\Users;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Persistence\ManagerRegistry; 
+
 
 /**
  * @extends ServiceEntityRepository<JobDetails>
  */
 class JobDetailsRepository extends ServiceEntityRepository
 {
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager)
+    public function __construct(
+        ManagerRegistry $registry,)
     {
         parent::__construct($registry, JobDetails::class);
-        $this->entityManager = $entityManager;
     }
 
-
-    public function createFromRequest(Request $request, Users $user): JobDetails
-     {
-            $fichierFile = $request->files->get('fichierFile');
-            $titre = $request->request->get('titre', '');
-            $description = $request->request->get('description', '');
-            $logoFile = $request->files->get('logoFile');
-
-            $jobdetails = new JobDetails();
-            
-            $jobdetails->setFichierFile($fichierFile);
-            $jobdetails->setTitre($titre);
-            $jobdetails->setDescription($description);
-            $jobdetails->setLogoFile($logoFile);
-            $jobdetails->setEmail($user);
-
-            $this->entityManager->persist($jobdetails);
-            $this->entityManager->flush();
-
-            return $jobdetails;
-
+    public function getJobDetailsById(int $id): ?JobDetails
+    {
+        return $this->find($id);
     }
+
+    public function getAllJobDetails(): array
+    {
+        return $this->findAll();
+    }
+
     //    /**
     //     * @return JobDetails[] Returns an array of JobDetails objects
     //     */
