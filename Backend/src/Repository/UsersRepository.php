@@ -46,7 +46,7 @@ class UsersRepository extends ServiceEntityRepository
     }
 
 
-    public function updateUser(Users $user, array $data): Users 
+    public function updateUser (array $data): Users 
     {
         if (isset($data['Nom'])) {
             $user->setNom($data['Nom'] ?? '');
@@ -60,7 +60,7 @@ class UsersRepository extends ServiceEntityRepository
             $user->setPassword($hashedPassword);
         }
 
-        $this->entityManager->persist($user);
+        //$this->entityManager->persist($user);
         $this->entityManager->flush();
 
         return $user;
