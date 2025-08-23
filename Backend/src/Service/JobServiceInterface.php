@@ -5,7 +5,7 @@ use App\Entity\JobDetails;
 use App\Entity\Users;
 use Symfony\Component\HttpFoundation\Request;
 
-interface JobServiceInterface
+interface JobInterface
 {
     public function createJob(Request $request, Users $user): JobDetails;
     /*public function updateJob(Jobs $Job, Request $request): JobDetails;

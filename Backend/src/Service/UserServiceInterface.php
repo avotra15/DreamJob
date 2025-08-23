@@ -4,7 +4,7 @@ namespace App\Service;
 use App\Entity\Roles;
 use App\Entity\Users;
 
-interface UserServiceInterface
+interface UserInterface
 {
     public function createUser(array $data, Roles $roles): Users;
     public function updateUser(Users $user, array $data): Users;

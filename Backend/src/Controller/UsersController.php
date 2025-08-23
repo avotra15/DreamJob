@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Users;
 use App\Repository\RolesRepository;
 use App\Repository\UsersRepository;
-use App\Service\UserServiceInterface;
+use App\Service\UserInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,11 +15,11 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class UsersController extends AbstractController
 {
-    private UserServiceInterface $userServiceInterface;
+    private UserInterface $UserInterface;
 
-    public function __construct(UserServiceInterface $userServiceInterface) 
+    public function __construct(UserInterface $UserInterface) 
     {
-        $this->userServiceInterface = $userServiceInterface;
+        $this->UserInterface = $UserInterface;
     }
     #[Route('/api/users', name: 'users', methods:['GET'])]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
@@ -69,7 +69,7 @@ final class UsersController extends AbstractController
     public function createUser(
         Request $request,
         UsersRepository $usersRepository,
-        UserServiceInterface $userServiceInterface,
+        UserInterface $UserInterface,
         RolesRepository $rolesRepository
     ): JsonResponse
     {
@@ -88,7 +88,7 @@ final class UsersController extends AbstractController
             return $this->json(['success' => false, 'message' => 'Rôle invalide'], 400);
         }
        
-        $user = $userServiceInterface->createUser($data, $role);
+        $user = $UserInterface->createUser($data, $role);
 
             return $this->json([
                 'success' => true,
@@ -103,7 +103,7 @@ final class UsersController extends AbstractController
         public function updateUser(
             int $id,
             Request $request,
-            UserServiceInterface $userServiceInterface
+            UserInterface $UserInterface
         ): JsonResponse
         {
             $user = $usersRepository->getUserById($id);
@@ -115,7 +115,7 @@ final class UsersController extends AbstractController
             }
 
             $data = json_decode($request->getContent(), true);
-            $user = $userServiceInterface->updateUser($user, $data);
+            $user = $UserInterface->updateUser($user, $data);
 
             return $this->json([
                     "success" => true, 
@@ -128,7 +128,7 @@ final class UsersController extends AbstractController
         public function deleteUser(
             int $id,
             UsersRepository $userRepository,
-            UserServiceInterface $userServiceInterface,
+            UserInterface $UserInterface,
         ): JsonResponse
         {
             $user = $userRepository->getUserById($id);
@@ -139,7 +139,7 @@ final class UsersController extends AbstractController
                     "message" => "Utilisateur non trouvé"], 404);
             }
 
-            $user = $userServiceInterface->deleteUser($user);
+            $user = $UserInterface->deleteUser($user);
 
             return $this->json([
                     "success" => true, 
