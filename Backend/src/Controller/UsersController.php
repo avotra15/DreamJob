@@ -24,10 +24,10 @@ final class UsersController extends AbstractController
     #[Route('/api/users', name: 'users', methods:['GET'])]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function Users(
-        UsersRepository $usersRepo,
+        UsersRepository $usersRepository,
         ): JsonResponse
     {
-        $userss = $usersRepo->getAllUsers();
+        $userss = $usersRepository->getAllUsers();
 
         $dataUsers = array_map(fn($users) => [
             'id' => $users->getId(),
@@ -40,12 +40,12 @@ final class UsersController extends AbstractController
     }
 
     #[Route('/api/user/{id}', name: 'app_user_id', methods: ['GET'])]
-        #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
         public function UserId(
             int $id,
-            EntityManagerInterface $entityManager
+            UsersRepository $usersRepository,
         ): JsonResponse {
-            $user = $entityManager->getRepository(Users::class)->find($id);
+            $user = $usersRepository->getUserById($id);
 
             if (!$user) {
                 return $this->json([
@@ -103,11 +103,10 @@ final class UsersController extends AbstractController
         public function updateUser(
             int $id,
             Request $request,
-            UserServiceInterface $userServiceInterface,
-            EntityManagerInterface $entityManager
+            UserServiceInterface $userServiceInterface
         ): JsonResponse
         {
-            $user = $entityManager->getRepository(Users::class)->find($id);
+            $user = $usersRepository->getUserById($id);
 
             if (!$user) {
                 return $this->json([

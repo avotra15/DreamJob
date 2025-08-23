@@ -85,16 +85,16 @@
                 <option>Full Time</option>
               </select>
             </div>
-            -->
+            
 
             <div class="form-group">
               <label for="job-description">Job Description</label>
               <div class="editor" id="editor-1">
-                <textarea name="job-descr" id="job-descr" class="form-control" class="col-lg-12" style="height: 400px" [(ngModel)]="this.description" [ngModelOptions]="{standalone: true}" name="description"></textarea>
+                <textarea name="job-descr" id="job-descr" class="form-control" class="col-lg-12" style="height: 390px" [(ngModel)]="this.description" [ngModelOptions]="{standalone: true}" name="description"></textarea>
               </div>
             </div>
 
-            <!--
+            
             <h3 class="text-black my-5 border-bottom pb-2">Company Details</h3>
             <div class="form-group">
               <label for="company-name">Company Name</label>
@@ -105,14 +105,14 @@
               <label for="company-tagline">Tagline (Optional)</label>
               <input type="text" class="form-control" id="company-tagline" placeholder="e.g. New York">
             </div>
-
+            -->
             <div class="form-group">
               <label for="job-description">Company Description (Optional)</label>
               <div class="editor" id="editor-2">
-                <textarea name="company-descr" id="company-descr" class="form-control" class="col-lg-12" style="height: 380px"></textarea>
+                <textarea name="company-descr" id="company-descr" class="form-control" class="col-lg-12" style="height: 380px" [(ngModel)]="this.description" [ngModelOptions]="{standalone: true}" name="description"></textarea>
               </div>
             </div>
-            
+            <!--
             <div class="form-group">
               <label for="company-website">Website (Optional)</label>
               <input type="text" class="form-control" id="company-website" placeholder="https://">
