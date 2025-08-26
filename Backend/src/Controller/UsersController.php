@@ -15,11 +15,11 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class UsersController extends AbstractController
 {
-    private UserInterface $UserInterface;
+    private UserInterface $userInterface;
 
-    public function __construct(UserInterface $UserInterface) 
+    public function __construct(UserInterface $userInterface) 
     {
-        $this->UserInterface = $UserInterface;
+        $this->UserInterface = $userInterface;
     }
     #[Route('/api/users', name: 'users', methods:['GET'])]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
@@ -69,7 +69,7 @@ final class UsersController extends AbstractController
     public function createUser(
         Request $request,
         UsersRepository $usersRepository,
-        UserInterface $UserInterface,
+        UserInterface $userInterface,
         RolesRepository $rolesRepository
     ): JsonResponse
     {
@@ -88,7 +88,7 @@ final class UsersController extends AbstractController
             return $this->json(['success' => false, 'message' => 'Rôle invalide'], 400);
         }
        
-        $user = $UserInterface->createUser($data, $role);
+        $user = $userInterface->createUser($data, $role);
 
             return $this->json([
                 'success' => true,
@@ -103,7 +103,7 @@ final class UsersController extends AbstractController
         public function updateUser(
             int $id,
             Request $request,
-            UserInterface $UserInterface
+            UserInterface $userInterface
         ): JsonResponse
         {
             $user = $usersRepository->getUserById($id);
@@ -115,7 +115,7 @@ final class UsersController extends AbstractController
             }
 
             $data = json_decode($request->getContent(), true);
-            $user = $UserInterface->updateUser($user, $data);
+            $user = $userInterface->updateUser($user, $data);
 
             return $this->json([
                     "success" => true, 
@@ -128,7 +128,7 @@ final class UsersController extends AbstractController
         public function deleteUser(
             int $id,
             UsersRepository $userRepository,
-            UserInterface $UserInterface,
+            UserInterface $userInterface,
         ): JsonResponse
         {
             $user = $userRepository->getUserById($id);
@@ -139,7 +139,7 @@ final class UsersController extends AbstractController
                     "message" => "Utilisateur non trouvé"], 404);
             }
 
-            $user = $UserInterface->deleteUser($user);
+            $user = $userInterface->deleteUser($user);
 
             return $this->json([
                     "success" => true, 

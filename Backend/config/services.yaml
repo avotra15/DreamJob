@@ -20,7 +20,8 @@ services:
           - '../src/Entity/'
           - '../src/Kernel.php'
     
-    App\Service\UserServiceInterface:
+    
+    App\Service\UserInterface:
         alias: App\Service\UserService
 
 

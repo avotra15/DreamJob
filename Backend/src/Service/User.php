@@ -4,11 +4,12 @@ namespace App\Service;
 
 use App\Entity\Roles;
 use App\Entity\Users;
+use App\Service\UserInterface;
 use App\Repository\UsersRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class UserService implements UserServiceInterface
+class User implements UserInterface
 {
     private UserPasswordHasherInterface $userPasswordHasher;
     private EntityManagerInterface $entityManager;

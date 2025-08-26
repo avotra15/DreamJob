@@ -15,7 +15,7 @@
 
   
   <section class="site-section">
-    <div class="container">
+    <div class="container" *ngFor="let job1 of job">
       <div class="row align-items-center mb-5">
         <div class="col-lg-8 mb-4 mb-lg-0">
           <div class="d-flex align-items-center">
@@ -23,7 +23,7 @@
               <img src="assets/images/job_logo_5.jpg" alt="Image">
             </div>
             <div>
-              <h2>Product Designer</h2>
+              <h2>{{ job1.titre }}</h2>
               <div>
                 <span class="ml-0 mr-2 mb-2"><span class="icon-briefcase mr-2"></span>Puma</span>
                 <span class="m-2"><span class="icon-room mr-2"></span>New York City</span>
@@ -46,10 +46,9 @@
       <div class="row">
         <div class="col-lg-8">
           <div class="mb-5">
-            <figure class="mb-5"><img src="assets/images/job_single_img_1.jpg" alt="Image" class="img-fluid rounded"></figure>
+            <figure class="mb-5"><img [src]="'http://127.0.0.1:8000/uploads/job_logos/' + job1.logo" alt="Image" class="img-fluid rounded"></figure>
             <h3 class="h5 d-flex align-items-center mb-4 text-primary"><span class="icon-align-left mr-3"></span>Job Description</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis illum fuga eveniet. Deleniti asperiores, commodi quae ipsum quas est itaque, ipsa, dolore beatae voluptates nemo blanditiis iste eius officia minus.</p>
-            <p>Velit unde aliquam et voluptas reiciendis non sapiente labore, deleniti asperiores blanditiis nihil quia officiis dolor vero iste dolore vel molestiae saepe. Id nisi, consequuntur sunt impedit quidem, vitae mollitia!</p>
+            <p>{{ job1.descritpion }}</p>
           </div>
           <div class="mb-5">
             <h3 class="h5 d-flex align-items-center mb-4 text-primary"><span class="icon-rocket mr-3"></span>Responsibilities</h3>

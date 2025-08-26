@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Users;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\UsersRepository;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +18,7 @@ final class LoginController extends AbstractController
     public function index(
         Request $request,
         JWTTokenManagerInterface $jwtManager,
-        EntityManagerInterface $entityManager,
+        UsersRepository $UsersRepository,
         UserPasswordHasherInterface $passwordHasher,
     ): JsonResponse
     {
@@ -30,8 +30,7 @@ final class LoginController extends AbstractController
             ], Response::HTTP_BAD_REQUEST);
         }
 
-        $user = $entityManager->getRepository(Users::class)
-            ->findOneBy(['email' => $data['email']]);
+        $user = $UsersRepository->emailExists($email);
 
         if (!$user || !$passwordHasher->isPasswordValid($user, $data['password'])) {
             return $this->json([

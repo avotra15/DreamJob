@@ -10,9 +10,11 @@ use App\Repository\RolesRepository;
 final class RolesController extends AbstractController
 {
     #[Route('/roles', name: 'roles', methods: ['GET'])]
-    public function getRoles(RolesRepository $roleRop): JsonResponse
+    public function getRoles(
+        RolesRepository $roleRop
+        ): JsonResponse
     {
-        $roless = $roleRop->findAll();
+        $roless = $roleRop->getAllRoles();
 
         $data = array_map(fn($roles) => [
             'id' => $roles->getId(),

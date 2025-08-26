@@ -42,9 +42,16 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: JobDetails::class, mappedBy: 'email')]
     private Collection $Titre;
 
+    /**
+     * @var Collection<int, CV>
+     */
+    #[ORM\OneToMany(targetEntity: CV::class, mappedBy: 'email_cand')]
+    private Collection $cVs;
+
     public function __construct()
     {
         $this->Titre = new ArrayCollection();
+        $this->cVs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -141,6 +148,36 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($titre->getEmail() === $this) {
                 $titre->setEmail(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CV>
+     */
+    public function getCVs(): Collection
+    {
+        return $this->cVs;
+    }
+
+    public function addCV(CV $cV): static
+    {
+        if (!$this->cVs->contains($cV)) {
+            $this->cVs->add($cV);
+            $cV->setEmailCand($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCV(CV $cV): static
+    {
+        if ($this->cVs->removeElement($cV)) {
+            // set the owning side to null (unless already changed)
+            if ($cV->getEmailCand() === $this) {
+                $cV->setEmailCand(null);
             }
         }
 

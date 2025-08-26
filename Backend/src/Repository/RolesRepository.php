@@ -33,6 +33,11 @@ class RolesRepository extends ServiceEntityRepository
     {
         return (bool) $this->findOneBy(['Roles' => $roleName]);
     }
+
+    public function getAllRoles(): array
+    {
+        return $this->findAll();
+    }
     
     
     

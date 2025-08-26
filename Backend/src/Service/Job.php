@@ -4,10 +4,11 @@ namespace App\Service;
 
 use App\Entity\JobDetails;
 use App\Entity\Users;
+use App\Service\JobInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class JobService implements JobServiceInterface
+class Job implements JobInterface
 {
     private EntityManagerInterface $entityManager;
 
@@ -33,11 +34,16 @@ class JobService implements JobServiceInterface
             $jobdetails->setLogoFile($logoFile);
             $jobdetails->setEmail($user);
 
-            $this->entityManager->persist($jobdetails);
-            $this->entityManager->flush();
+            $entityManager->persist($jobdetails);
+            $entityManager->flush();
 
             return $jobdetails;
 
+    }
+
+    public function deleteJob (Jobs $job): void {
+            $entityManager->persist($jobdetails);
+            $entityManager->flush();
     }
 }
 ?>

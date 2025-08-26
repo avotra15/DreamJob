@@ -48,7 +48,8 @@ final class JobDetailsController extends AbstractController
          return $this->json($dataJobs);
     }
 
-    #[Route('/job/{id}', name: 'app_job_id', methods: ['GET'])]
+    #[Route('/api/job/{id}', name: 'app_job_id', methods: ['GET'])]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function JobId (
         int $id,
         JobDetailsRepository $JobDetailsRepository,
