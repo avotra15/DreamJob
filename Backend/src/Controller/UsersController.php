@@ -19,7 +19,7 @@ final class UsersController extends AbstractController
 
     public function __construct(UserInterface $userInterface) 
     {
-        $this->UserInterface = $userInterface;
+        $this->userInterface = $userInterface;
     }
     #[Route('/api/users', name: 'users', methods:['GET'])]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
@@ -103,6 +103,7 @@ final class UsersController extends AbstractController
         public function updateUser(
             int $id,
             Request $request,
+            UsersRepository $usersRepository,
             UserInterface $userInterface
         ): JsonResponse
         {

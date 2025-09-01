@@ -13,20 +13,19 @@ class User implements UserInterface
 {
     private UserPasswordHasherInterface $userPasswordHasher;
     private EntityManagerInterface $entityManager;
-    private UsersRepository $usersRepository;
 
         public function __construct (
             UserPasswordHasherInterface $userPasswordHasher, 
             EntityManagerInterface $entityManager,
-            UsersRepository $usersRepository,
             )
     {
         $this->userPasswordHasher = $userPasswordHasher;
         $this->entityManager = $entityManager;
-        $this->usersRepository = $usersRepository;
     }
 
-    public function createUser(array $data, Roles $role) : Users 
+    public function createUser(
+        array $data, 
+        Roles $role) : Users
     {
             $user = new Users();
             $user->setNom($data['Nom'] ?? '');

@@ -24,6 +24,7 @@ class UsersRepository extends ServiceEntityRepository
     public function emailExists(string $email): bool 
     {
         return(bool) $this->findOneBy(['email' => $email]);
+        
     }
 
     public function getUserById(int $id): ?Users

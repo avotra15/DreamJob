@@ -34,16 +34,16 @@ class Job implements JobInterface
             $jobdetails->setLogoFile($logoFile);
             $jobdetails->setEmail($user);
 
-            $entityManager->persist($jobdetails);
-            $entityManager->flush();
+            $this->entityManager->persist($jobdetails);
+            $this->entityManager->flush();
 
             return $jobdetails;
 
     }
 
-    public function deleteJob (Jobs $job): void {
-            $entityManager->persist($jobdetails);
-            $entityManager->flush();
+    public function deleteJob (JobDetails $jobdetails): void {
+            $this->entityManager->persist($jobdetails);
+            $this->entityManager->flush();
     }
 }
 ?>

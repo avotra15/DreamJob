@@ -66,11 +66,11 @@ final class JobDetailsController extends AbstractController
             return $this->json([
                 'success' => true,
                 'job' => [
-                    'id' => $listejob->getId(),
-                    'fichier' => $listejob->getFichier(),
-                    'titre' => $listejob->getTitre(),
-                    'descritpion' => $listejob->getDescription(),
-                    'logo' => $listejob->getLogo(),
+                    'id' => $job->getId(),
+                    'fichier' => $job->getFichier(),
+                    'titre' => $job->getTitre(),
+                    'descritpion' => $job->getDescription(),
+                    'logo' => $job->getLogo(),
                 ]
             ]);
     }

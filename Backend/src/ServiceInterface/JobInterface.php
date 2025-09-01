@@ -9,6 +9,6 @@ interface JobInterface
 {
     public function createJob(Request $request, Users $user): JobDetails;
     /*public function updateJob(Jobs $Job, Request $request): JobDetails;*/
-    public function deleteJob(Jobs $Job): void;
+    public function deleteJob(JobDetails $Job): void;
 }
 ?>
