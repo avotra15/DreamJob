@@ -4,8 +4,9 @@ namespace App\Service;
 
 use App\Entity\Roles;
 use App\Entity\Users;
-use App\Service\UserInterface;
+use App\Repository\RolesRepository;
 use App\Repository\UsersRepository;
+use App\Service\UserInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -13,10 +14,14 @@ class User implements UserInterface
 {
     private UserPasswordHasherInterface $userPasswordHasher;
     private EntityManagerInterface $entityManager;
+    private UsersRepository $usersRepository;
+    private RolesRepository $rolesRepository;
 
         public function __construct (
             UserPasswordHasherInterface $userPasswordHasher, 
             EntityManagerInterface $entityManager,
+            UsersRepository $usersRepository,
+            RolesRepository $rolesRepository,
             )
     {
         $this->userPasswordHasher = $userPasswordHasher;
@@ -30,18 +35,18 @@ class User implements UserInterface
             $user->setEmail($data['Email'] ?? '');
             $user->setRole($role);
 
-            $email = $data['Email'];
-                if ($usersRepository->emailExists($email)) {
-                    return new JsonResponse([
-                        'failure' => false,
-                        'message' => 'Email déjà utilisé'],400);
-                }
+            // Vérifier email unique
+            $email = $data['Email'] ?? null;
+            if (!$email || $this->usersRepository->emailExists($email)) {
+                throw new \InvalidArgumentException("Email déjà utilisé ou invalide");
+            }
 
+            // Vérifier rôle
             $roleName = $data['Roles'] ?? null;
-                $role = $rolesRepository->findByName($roleName);
-                if(!$role) {
-                    return $this->json(['success' => false, 'message' => 'Rôle invalide'], 400);
-                }
+            $roleEntity = $this->rolesRepository->findByName($roleName);
+            if (!$roleEntity) {
+                throw new \InvalidArgumentException("Rôle invalide");
+            }
        
             
             $hashedPassword = $this->userPasswordHasher->hashPassword($user, $data['Password']);
@@ -49,6 +54,8 @@ class User implements UserInterface
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
+
+        return $user;
     }
 
 

@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\Users;
+use App\Entity\Roles;
+use App\Reponse\ApiReponse;
 use App\Repository\UsersRepository;
 use App\Service\UserInterface;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
@@ -13,29 +13,32 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class UsersController extends AbstractController
 {
-    /*private UserInterface $userInterface;
-    private UsersRepository $usersRepository;*/
+    private UserInterface $userInterface;
+    private UsersRepository $usersRepository;
+    private ApiReponse $apiReponse;
 
-    public function __construct(UserInterface $userInterface, UsersRepository $usersRepository) 
+    public function __construct(UserInterface $userInterface, UsersRepository $usersRep, ApiReponse $apiReponse) 
     {
         $this->userInterface = $userInterface;
-        $this->UsersRepository = $usersRepository;
+        $this->usersRepository = $usersRep;
+        $this->apiReponse = $apiReponse;
+
     }
 
     #[Route('/api/users', name: 'users', methods:['GET'])]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function Users()
     {
-        $userss = $usersRepository->getAllUsers();
+        $userss = $this->usersRepository->getAllUsers();
         
-        return $reponse->sucess($userss, 'Listes Utilisateurs');
+        return $this->apiReponse->sucess($userss, 'Listes Utilisateurs');
     }
 
     #[Route('/api/user/{id}', name: 'app_user_id', methods: ['GET'])]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
         public function UserId(int $id) 
         {
-            $user = $usersRepository->getUserById($id);
+            $user = $this->usersRepository->getUserById($id);
 
             return $this->json([
                 'success' => true, $user
@@ -43,9 +46,10 @@ final class UsersController extends AbstractController
         }
 
     #[Route('/registrer', name: 'registrer', methods:['POST'])]
-    public function createUser()
+    public function registrer(Request $request)
     {
-        $user = $userInterface->createUser($data, $role);
+        $data = json_decode($request->getContent(), true);
+        $user = $this->userInterface->createUser($data,  new Roles());
 
         return $this->json([
                 'success' => true, $user
@@ -57,7 +61,7 @@ final class UsersController extends AbstractController
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
         public function updateUser(int $id, Request $request,)
         {
-            $user = $usersRepository->getUserById($id);
+            $user = $this->usersRepository->getUserById($id);
 
             if (!$user) {
                 return $this->json([
@@ -66,7 +70,7 @@ final class UsersController extends AbstractController
             }
 
             $data = json_decode($request->getContent(), true);
-            $user = $userInterface->updateUser($user, $data);
+            $user = $this->userInterface->updateUser($user, $data);
 
             return $this->json([
                     "success" => true, 
@@ -78,7 +82,7 @@ final class UsersController extends AbstractController
         #[IsGranted('IS_AUTHENTICATED_FULLY')]
         public function deleteUser(int $id)
         {
-            $user = $userRepository->getUserById($id);
+            $user = $this->usersRepository->getUserById($id);
 
             if (!$user) {
                 return $this->json([
@@ -86,7 +90,7 @@ final class UsersController extends AbstractController
                     "message" => "Utilisateur non trouvé"], 404);
             }
 
-            $user = $userInterface->deleteUser($user);
+            $user = $this->userInterface->deleteUser($user);
 
             return $this->json([
                     "success" => true, 
