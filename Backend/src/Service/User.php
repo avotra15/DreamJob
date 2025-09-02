@@ -23,22 +23,32 @@ class User implements UserInterface
         $this->entityManager = $entityManager;
     }
 
-    public function createUser(
-        array $data, 
-        Roles $role) : Users
+    public function createUser(array $data, Roles $role) : Users
     {
             $user = new Users();
             $user->setNom($data['Nom'] ?? '');
             $user->setEmail($data['Email'] ?? '');
             $user->setRole($role);
+
+            $email = $data['Email'];
+                if ($usersRepository->emailExists($email)) {
+                    return new JsonResponse([
+                        'failure' => false,
+                        'message' => 'Email déjà utilisé'],400);
+                }
+
+            $roleName = $data['Roles'] ?? null;
+                $role = $rolesRepository->findByName($roleName);
+                if(!$role) {
+                    return $this->json(['success' => false, 'message' => 'Rôle invalide'], 400);
+                }
+       
             
             $hashedPassword = $this->userPasswordHasher->hashPassword($user, $data['Password']);
             $user->setPassword($hashedPassword);
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
-
-        return $user;
     }
 
 
@@ -63,6 +73,7 @@ class User implements UserInterface
 
     public function deleteUser(Users $user): void
     {
+        
         $this->entityManager->remove($user);
         $this->entityManager->flush();
     }

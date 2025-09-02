@@ -3,109 +3,59 @@
 namespace App\Controller;
 
 use App\Entity\Users;
-use App\Repository\RolesRepository;
 use App\Repository\UsersRepository;
 use App\Service\UserInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class UsersController extends AbstractController
 {
-    private UserInterface $userInterface;
+    /*private UserInterface $userInterface;
+    private UsersRepository $usersRepository;*/
 
-    public function __construct(UserInterface $userInterface) 
+    public function __construct(UserInterface $userInterface, UsersRepository $usersRepository) 
     {
         $this->userInterface = $userInterface;
+        $this->UsersRepository = $usersRepository;
     }
+
     #[Route('/api/users', name: 'users', methods:['GET'])]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    public function Users(
-        UsersRepository $usersRepository,
-        ): JsonResponse
+    public function Users()
     {
         $userss = $usersRepository->getAllUsers();
-
-        $dataUsers = array_map(fn($users) => [
-            'id' => $users->getId(),
-            'nom' => $users->getNom(),
-            'roles' => $users->getRoles(),
-            'email' => $users->getEmail()
-        ], $userss);
-
-         return $this->json($dataUsers);
+        
+        return $reponse->sucess($userss, 'Listes Utilisateurs');
     }
 
     #[Route('/api/user/{id}', name: 'app_user_id', methods: ['GET'])]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
-        public function UserId(
-            int $id,
-            UsersRepository $usersRepository,
-        ): JsonResponse {
+        public function UserId(int $id) 
+        {
             $user = $usersRepository->getUserById($id);
 
-            if (!$user) {
-                return $this->json([
-                    'success' => false,
-                    'message' => 'Utilisateur non trouvé.'
-                ], 404);
-            }
-
             return $this->json([
-                'success' => true,
-                'user' => [
-                    'id' => $user->getId(),
-                    'nom' => $user->getNom(),
-                    'email' => $user->getEmail(),
-                    'roles' => $user->getRoles(),
-                ]
-            ]);
+                'success' => true, $user
+            ], 200);
         }
 
     #[Route('/registrer', name: 'registrer', methods:['POST'])]
-    public function createUser(
-        Request $request,
-        UsersRepository $usersRepository,
-        UserInterface $userInterface,
-        RolesRepository $rolesRepository
-    ): JsonResponse
+    public function createUser()
     {
-        $data = json_decode($request->getContent(), true);
-
-        $email = $data['Email'];
-        if ($usersRepository->emailExists($email)) {
-            return new JsonResponse([
-                'failure' => false,
-                'message' => 'Email déjà utilisé'],400);
-        }
-
-        $roleName = $data['Roles'] ?? null;
-        $role = $rolesRepository->findByName($roleName);
-        if(!$role) {
-            return $this->json(['success' => false, 'message' => 'Rôle invalide'], 400);
-        }
-       
         $user = $userInterface->createUser($data, $role);
 
-            return $this->json([
-                'success' => true,
-                'messages' => 'User créer avec succès',
-                'id' => $user->getId(),
-            ], 200);
-            $this->redirectToRoute('login');
-            } 
+        return $this->json([
+                'success' => true, $user
+            ]);
+        $this->redirectToRoute('login');
+    } 
 
-        #[Route('/api/update/{id}', name: 'app_user_update', methods: ['PATH'])]
-        #[IsGranted('IS_AUTHENTICATED_FULLY')]
-        public function updateUser(
-            int $id,
-            Request $request,
-            UsersRepository $usersRepository,
-            UserInterface $userInterface
-        ): JsonResponse
+    #[Route('/api/update/{id}', name: 'app_user_update', methods: ['PATH'])]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+        public function updateUser(int $id, Request $request,)
         {
             $user = $usersRepository->getUserById($id);
 
@@ -126,11 +76,7 @@ final class UsersController extends AbstractController
 
         #[Route('/api/delete/{id}', name: 'app_user_delete', methods: ['DELETE'])] 
         #[IsGranted('IS_AUTHENTICATED_FULLY')]
-        public function deleteUser(
-            int $id,
-            UsersRepository $userRepository,
-            UserInterface $userInterface,
-        ): JsonResponse
+        public function deleteUser(int $id)
         {
             $user = $userRepository->getUserById($id);
 
