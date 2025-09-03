@@ -40,9 +40,7 @@ final class UsersController extends AbstractController
         {
             $user = $this->usersRepository->getUserById($id);
 
-            return $this->json([
-                'success' => true, $user
-            ], 200);
+        return $this->apiReponse->sucess($users, '');
         }
 
     #[Route('/registrer', name: 'registrer', methods:['POST'])]
@@ -51,9 +49,7 @@ final class UsersController extends AbstractController
         $data = json_decode($request->getContent(), true);
         $user = $this->userInterface->createUser($data,  new Roles());
 
-        return $this->json([
-                'success' => true, $user
-            ]);
+        return $this->apiReponse->sucess($user, '');
         $this->redirectToRoute('login');
     } 
 
@@ -64,18 +60,13 @@ final class UsersController extends AbstractController
             $user = $this->usersRepository->getUserById($id);
 
             if (!$user) {
-                return $this->json([
-                    "failure" => false, 
-                    "message" => "Utilisateur non trouvé"], 404);
+                return $this->apiReponse->error('Utilisateur non trouvé');
             }
 
             $data = json_decode($request->getContent(), true);
             $user = $this->userInterface->updateUser($user, $data);
 
-            return $this->json([
-                    "success" => true, 
-                    "message" => "Utilisateur modifié",
-                    'id' => $user->getId()], 202);
+            return $this->apiReponse->sucess($user->getId(), 'Utilisateur modifié');
         }
 
         #[Route('/api/delete/{id}', name: 'app_user_delete', methods: ['DELETE'])] 
@@ -92,8 +83,6 @@ final class UsersController extends AbstractController
 
             $user = $this->userInterface->deleteUser($user);
 
-            return $this->json([
-                    "success" => true, 
-                    "message" => "Utilisateur supprimé"], 202);
+            return $this->apiReponse->sucess('Utilisateur supprimé');
         }
 }
