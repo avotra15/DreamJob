@@ -40,7 +40,7 @@ final class UsersController extends AbstractController
         {
             $user = $this->usersRepository->getUserById($id);
 
-        return $this->apiReponse->sucess($users, '');
+        return $this->apiReponse->sucess($user, '');
         }
 
     #[Route('/registrer', name: 'registrer', methods:['POST'])]
@@ -83,6 +83,6 @@ final class UsersController extends AbstractController
 
             $user = $this->userInterface->deleteUser($user);
 
-            return $this->apiReponse->sucess('Utilisateur supprimé');
+            return $this->apiReponse->sucess($user, 'Utilisateur supprime');
         }
 }

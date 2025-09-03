@@ -8,7 +8,7 @@ use App\Service\JobInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class Job implements JobInterface
+class JobService implements JobInterface
 {
     private EntityManagerInterface $entityManager;
 

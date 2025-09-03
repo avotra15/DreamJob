@@ -8,7 +8,7 @@ use App\ServiceInterface\PostJobInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class PostJob implements PostJobInterface {
+class PostJobService implements PostJobInterface {
     private EntityManagerInterface $entityManager;
 
     public function __construct(

@@ -10,7 +10,7 @@ use App\Service\UserInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class User implements UserInterface
+class UserService implements UserInterface
 {
     private UserPasswordHasherInterface $userPasswordHasher;
     private EntityManagerInterface $entityManager;
@@ -26,6 +26,8 @@ class User implements UserInterface
     {
         $this->userPasswordHasher = $userPasswordHasher;
         $this->entityManager = $entityManager;
+        $this->usersRepository = $usersRepository;
+        $this->rolesRepository = $rolesRepository;
     }
 
     public function createUser(array $data, Roles $role) : Users
@@ -35,13 +37,11 @@ class User implements UserInterface
             $user->setEmail($data['Email'] ?? '');
             $user->setRole($role);
 
-            // Vérifier email unique
             $email = $data['Email'] ?? null;
             if (!$email || $this->usersRepository->emailExists($email)) {
                 throw new \InvalidArgumentException("Email déjà utilisé ou invalide");
             }
 
-            // Vérifier rôle
             $roleName = $data['Roles'] ?? null;
             $roleEntity = $this->rolesRepository->findByName($roleName);
             if (!$roleEntity) {
