@@ -24,6 +24,9 @@ services:
     App\Service\UserInterface:
         alias: App\Service\UserService
 
+    App\Service\PostJobInterface:
+       alias: App\Service\PostJobService
+
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

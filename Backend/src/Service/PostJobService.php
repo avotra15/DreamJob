@@ -4,28 +4,31 @@ namespace App\Service;
 
 use App\Entity\CV;
 use App\Entity\Users;
-use App\ServiceInterface\PostJobInterface;
+use App\Service\PostJobInterface as ServicePostJobInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class PostJobService implements PostJobInterface {
+class PostJobService implements ServicePostJobInterface {
     private EntityManagerInterface $entityManager;
 
     public function __construct(
-        EntityManagerInterface $entityManager)
+        EntityManagerInterface $entityManager
+    )
     {
         $this->entityManager = $entityManager;
     }
 
     public function postjob(Request $req, Users $user): CV {
-        $cv = $req->files->get('CV');
+        $cv = $req->files->get('cv');
 
         $newCV = new CV();
 
         $newCV->setNamecv($cv);
-        $newCV->setEmail($user);
+        $newCV->setEmailCand($user);
 
-        $entityManager->persist($newCV);
-        $entityManager->flush();
+        $this->entityManager->persist($newCV);
+        $this->entityManager->flush();
+
+        return new CV();
     }
 }

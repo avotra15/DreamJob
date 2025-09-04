@@ -15,10 +15,11 @@ use Symfony\Component\Routing\Attribute\Route;
 final class LoginController extends AbstractController
 {
     #[Route('/login', name: 'login', methods: ['POST'])]
+    
     public function index(
         Request $request,
         JWTTokenManagerInterface $jwtManager,
-        UsersRepository $UsersRepository,
+        UsersRepository $usersRepository,
         UserPasswordHasherInterface $passwordHasher,
     ): JsonResponse
     {
@@ -30,9 +31,9 @@ final class LoginController extends AbstractController
             ], Response::HTTP_BAD_REQUEST);
         }
 
-        $user = $UsersRepository->emailExists($email);
+        $email = $usersRepository->emailExists($data['email']);
 
-        if (!$user || !$passwordHasher->isPasswordValid($user, $data['password'])) {
+        if (!$email instanceof Users || !$passwordHasher->isPasswordValid($email, $data['password'])) {
             return $this->json([
                 'message' => 'Invalid credentials',
             ], Response::HTTP_UNAUTHORIZED);
@@ -40,7 +41,7 @@ final class LoginController extends AbstractController
 
         return $this->json([
             'success' => true,
-            'token' => $jwtManager->create($user),
+            'token' => $jwtManager->create($email),
         ], 200);
     }
 }

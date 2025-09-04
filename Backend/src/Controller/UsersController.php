@@ -25,31 +25,13 @@ final class UsersController extends AbstractController
 
     }
 
-    #[Route('/api/users', name: 'users', methods:['GET'])]
-    #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    public function Users()
-    {
-        $userss = $this->usersRepository->getAllUsers();
-        
-        return $this->apiReponse->sucess($userss, 'Listes Utilisateurs');
-    }
-
-    #[Route('/api/user/{id}', name: 'app_user_id', methods: ['GET'])]
-    #[IsGranted('IS_AUTHENTICATED_FULLY')]
-        public function UserId(int $id) 
-        {
-            $user = $this->usersRepository->getUserById($id);
-
-        return $this->apiReponse->sucess($user, '');
-        }
-
     #[Route('/registrer', name: 'registrer', methods:['POST'])]
     public function registrer(Request $request)
     {
         $data = json_decode($request->getContent(), true);
         $user = $this->userInterface->createUser($data,  new Roles());
 
-        return $this->apiReponse->sucess($user, '');
+        return $this->apiReponse->sucess($data, 'Utilisateur enregistre avec sucessée');
         $this->redirectToRoute('login');
     } 
 
@@ -76,13 +58,38 @@ final class UsersController extends AbstractController
             $user = $this->usersRepository->getUserById($id);
 
             if (!$user) {
-                return $this->json([
-                    "failure" => false, 
-                    "message" => "Utilisateur non trouvé"], 404);
+                 return $this->apiReponse->error('Utilisateur non trouvé', 404, $user);
             }
 
             $user = $this->userInterface->deleteUser($user);
 
             return $this->apiReponse->sucess($user, 'Utilisateur supprime');
         }
+
+        #[Route('/api/users', name: 'users', methods:['GET'])]
+        #[IsGranted('IS_AUTHENTICATED_FULLY')]
+        public function Users()
+        {
+            $userss = $this->usersRepository->getAllUsers();
+
+            $userArray = array_map(function($user) {
+                return [
+                    'id'    => $user->getId(),
+                    'email' => $user->getEmail(),
+                    'nom'   => $user->getNom(),
+                ];
+            }, $userss);
+            
+            return $this->apiReponse->sucess($userArray, 'Listes Utilisateurs');
+        }
+
+        #[Route('/api/user/{id}', name: 'app_user_id', methods: ['GET'])]
+        #[IsGranted('IS_AUTHENTICATED_FULLY')]
+            public function UserId(int $id) 
+            {
+                $user = $this->usersRepository->getUserById($id);
+
+            return $this->apiReponse->error('Utilisateur non trouvé', 404, $user);
+            }
+
 }

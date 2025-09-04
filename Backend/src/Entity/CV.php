@@ -4,6 +4,9 @@ namespace App\Entity;
 
 use App\Repository\CVRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CVRepository::class)]
 class CV
@@ -13,8 +16,12 @@ class CV
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $namecv = null;
+    #[Vich\UploadableField(mapping: 'cv_files', fileNameProperty: 'Fichier')]
+    #[Assert\File(
+        maxSize: '1024k',
+        extensions: ['pdf']
+    )]
+    private ?File $namecv = null;
 
     #[ORM\ManyToOne(inversedBy: 'cVs')]
     private ?Users $email_cand = null;
@@ -24,12 +31,12 @@ class CV
         return $this->id;
     }
 
-    public function getNamecv(): ?string
+    public function getNamecv(): ?File
     {
         return $this->namecv;
     }
 
-    public function setNamecv(string $namecv): static
+    public function setNamecv(File $namecv): static
     {
         $this->namecv = $namecv;
 

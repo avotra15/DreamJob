@@ -35,18 +35,19 @@ class UserService implements UserInterface
             $user = new Users();
             $user->setNom($data['Nom'] ?? '');
             $user->setEmail($data['Email'] ?? '');
-            $user->setRole($role);
+            
 
             $email = $data['Email'] ?? null;
             if (!$email || $this->usersRepository->emailExists($email)) {
                 throw new \InvalidArgumentException("Email déjà utilisé ou invalide");
             }
 
-            $roleName = $data['Roles'] ?? null;
+            $roleName = $data['Roles'];
             $roleEntity = $this->rolesRepository->findByName($roleName);
             if (!$roleEntity) {
                 throw new \InvalidArgumentException("Rôle invalide");
             }
+            $user->setRole($roleEntity);
        
             
             $hashedPassword = $this->userPasswordHasher->hashPassword($user, $data['Password']);

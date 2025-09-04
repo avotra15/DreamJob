@@ -8,4 +8,3 @@ use Symfony\Component\HttpFoundation\Request;
 interface PostJobInterface {
     public function postjob(Request $req, Users $user): CV;
 }
-?>

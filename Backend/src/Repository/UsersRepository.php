@@ -34,7 +34,11 @@ class UsersRepository extends ServiceEntityRepository
 
     public function getAllUsers(): array
     {
-        return $this->findAll();
+        //return $this->findAll();
+        return $this->createQueryBuilder('u')
+            ->select('u')
+            ->getQuery()
+            ->getResult();
     }
 
     //    /**

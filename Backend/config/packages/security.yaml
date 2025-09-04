@@ -55,6 +55,8 @@ security:
         - { path: ^/api/user, roles: IS_AUTHENTICATED_FULLY}
         - { path: ^/api/logout, roles: IS_AUTHENTICATED_FULLY}
         - { path: ^/api/newjob, roles: IS_AUTHENTICATED_FULLY}
+        - { path: ^/depotcv, roles: IS_AUTHENTICATED_FULLY}
+
 
 
 when@test:

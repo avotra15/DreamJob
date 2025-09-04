@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-
+use App\Reponse\ApiReponse;
 use App\Service\JobInterface;
 use App\Repository\JobDetailsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,8 +13,15 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class JobDetailsController extends AbstractController
 {
+    private ApiReponse $apiReponse;
+
+        public function __construct(ApiReponse $apiReponse) 
+    {
+        $this->apiReponse = $apiReponse;
+
+    }
    #[Route('/api/newjob', name: 'app_newjob', methods: ['POST'])]
-   #[IsGranted('IS_AUTHENTICATED_FULLY')]
+   #[IsGranted('IS_AUTHENTICATED_FULLY')] 
         public function newForm(
             JobInterface $JobInterface,
             Request $request,
@@ -23,11 +30,7 @@ final class JobDetailsController extends AbstractController
 
             $jobdetails = $JobInterface->createJob($request, $user);
 
-            return new JsonResponse([
-                'success' => true,
-                'message' => 'JobDetails créé avec succès',
-                'id' => $jobdetails->getId(),
-            ], 201);
+            return $this->apiReponse->sucess($jobdetails->getId(), 'JobDetails créé avec succès');
     }
 
     #[Route('/listeJobs', name: 'app_listeJob', methods: ['GET'])]
@@ -45,7 +48,7 @@ final class JobDetailsController extends AbstractController
             'logo' => $listejob->getLogo(),
         ], $listejobs);
 
-         return $this->json($dataJobs);
+        return $this->apiReponse->sucess($dataJobs, 'Listes des Offres');
     }
 
     #[Route('/api/job/{id}', name: 'app_job_id', methods: ['GET'])]
@@ -57,22 +60,10 @@ final class JobDetailsController extends AbstractController
         $job = $JobDetailsRepository->getJobDetailsById($id);
 
          if (!$job) {
-                return $this->json([
-                    'success' => false,
-                    'message' => 'Offrer non trouvé.'
-                ], 404);
+            return $this->apiReponse->error('Offre non trouvé', 404, $job);
             }
 
-            return $this->json([
-                'success' => true,
-                'job' => [
-                    'id' => $job->getId(),
-                    'fichier' => $job->getFichier(),
-                    'titre' => $job->getTitre(),
-                    'descritpion' => $job->getDescription(),
-                    'logo' => $job->getLogo(),
-                ]
-            ]);
+        return $this->apiReponse->sucess($job, 'Offre trouvé');
     }
 
 
