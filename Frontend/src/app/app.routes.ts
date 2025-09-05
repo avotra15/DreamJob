@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './componenets/home/home.component';
-import { AppComponent } from './app.component';
 import { AboutComponent } from './pages/about/about.component';
 import { BlogComponent } from './pages/blog/blog.component';
 import { BlogSingleComponent } from './pages/blog-single/blog-single.component';
@@ -20,6 +19,9 @@ import { RegistrerComponent } from './pages/registrer/registrer.component';
 import { AuthGuard } from './auth.guard';
 import { UsersComponentComponent } from './pages/users/users-component.component';
 import { EditComponent } from './pages/edit/edit.component';
+import { RolesManagementComponent } from './pages/roles-management/roles-management.component';
+import { GroupManagementComponent } from './pages/group-management/group-management.component';
+import { AddRoleComponent } from './pages/add-role/add-role.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -42,4 +44,7 @@ export const routes: Routes = [
     {path: 'testimonials', component: TestimonialsComponent},
     {path: 'users', component: UsersComponentComponent, canActivate: ([AuthGuard])},
     {path: 'edit/:id', component: EditComponent, canActivate: ([AuthGuard])},
+    {path: 'roles-management', component: RolesManagementComponent},
+    {path: 'group-management', component: GroupManagementComponent},
+    {path: 'add-role', component: AddRoleComponent},
 ];

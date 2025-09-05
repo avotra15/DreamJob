@@ -1,0 +1,83 @@
+<section class="section-hero overlay inner-page bg-image" style="background-image: url('/assets/images/hero_1.jpg');" id="home-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-7">
+          <h1 class="text-white font-weight-bold">Permission Acceess</h1>
+          <div class="custom-breadcrumbs">
+            <a routerLink="/home">Home</a> <span class="mx-2 slash">/</span>
+            <span class="text-white"><strong>Permission Acceess</strong></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="site-section">
+    <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1 class="h4 mb-0">Add User</h1>
+                </div>
+
+                <!-- Card Form -->
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                    <h2 class="h6 mb-3">Enter User Details</h2>
+
+                    <form>
+                        <!-- Avatar -->
+                        <div class="d-flex align-items-center mb-4">
+                        <div class="position-relative">
+                            <img src="https://via.placeholder.com/100" class="rounded-circle avatar-lg" alt="User">
+                            <button type="button" class="btn btn-sm btn-light position-absolute bottom-0 end-0 rounded-circle shadow">
+                            <i class="bi bi-pencil"></i>
+                            </button>
+                        </div>
+                        </div>
+
+                        <!-- Personal Details -->
+                        <h3 class="h6 mb-2 text-muted">Personal Details</h3>
+                        <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" id="name" class="form-control" placeholder="Full Name" value="Pranav Sharma">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" id="email" class="form-control" placeholder="example@mail.com" value="pranav@gmail.com">
+                        </div>
+                        </div>
+
+                        <!-- Professional Details -->
+                        <h3 class="h6 mb-2 text-muted">Professional Details</h3>
+                        <div class="row g-3 mb-4">
+                        <div class="col-md-4">
+                            <label for="designation" class="form-label">Designation</label>
+                            <input type="text" id="designation" class="form-control" value="Product Manager">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="team" class="form-label">Team</label>
+                            <input type="text" id="team" class="form-control" value="Product">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="role" class="form-label">Role</label>
+                            <select id="role" class="form-select">
+                            <option selected>Manager</option>
+                            <option>Admin</option>
+                            <option>User</option>
+                            </select>
+                        </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary">Add User</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</section>

@@ -1,0 +1,94 @@
+<section class="section-hero overlay inner-page bg-image" style="background-image: url('/assets/images/hero_1.jpg');" id="home-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-7">
+          <h1 class="text-white font-weight-bold">Role</h1>
+
+          <div class="custom-breadcrumbs">
+            <a routerLink="/home">Home</a> <span class="mx-2 slash">/</span>
+            <span class="text-white"><strong>Roles &amp; Permission</strong></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="site-section">
+    <div class="container">
+
+<div class="container py-4">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+      <h1 class="h4 mb-1">Roles &amp; Permission</h1>
+      <p class="text-muted small mb-0">Create, view &amp; modify your roles &amp; permission</p>
+    </div>
+    <button class="btn btn-primary">Add Role</button>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-body">
+
+      <!-- Toolbar -->
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="h6 mb-0">Roles</h2>
+        <div class="d-flex gap-2">
+          <input type="search" class="form-control form-control-sm" placeholder="Search">
+          <button class="btn btn-outline-secondary btn-sm">Filters</button>
+        </div>
+      </div>
+
+      <!-- Table si on a des rôles -->
+      <table *ngIf="users.length > 0" class="table table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Role Name</th>
+            <th>Role Description</th>
+            <th>Last Modified</th>
+            <th>Entity Type</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let u of users">
+            <td>{{ u.email }}</td>
+            <td>{{ u.nom }}</td>
+            <td>{{ u.modified }}</td>
+            <td>{{ u.roles }}</td>
+            <td>
+              <span class="badge">
+                {{ u.status }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!--
+      //Empty state 
+      <div class="text-center py-5">
+        <div class="display-3 text-secondary mb-3">🔍</div>
+        <h3 class="h6 fw-semibold text-dark">No Roles Present</h3>
+        <p class="text-muted small mb-3">
+          Click on Add Role button to start adding new roles
+        </p>
+        <button class="btn btn-primary btn-sm">Add Role</button>
+      </div>
+
+      //Loader
+      <div class="text-center py-5">
+        Loading...
+      </div>
+      --> 
+
+    </div>
+  </div>
+</div>
+</div>
+
+
+</section>
+<!-- Bootstrap JS (optionnel pour les composants interactifs) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

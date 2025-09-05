@@ -1,0 +1,17 @@
+body {
+  font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+}
+
+.avatar-lg {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.card {
+  border-radius: 0.75rem;
+}
+
+.breadcrumb a {
+  text-decoration: none;
+}
