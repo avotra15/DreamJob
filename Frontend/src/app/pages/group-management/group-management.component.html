@@ -6,7 +6,7 @@
 
           <div class="custom-breadcrumbs">
             <a routerLink="/home">Home</a> <span class="mx-2 slash">/</span>
-            <span class="text-white"><strong>Roles &amp; Permission</strong></span>
+            <span class="text-white"><strong>User &Management</strong></span>
           </div>
         </div>
       </div>
@@ -41,30 +41,31 @@
       </div>
 
       <!-- Table si on a des rôles -->
-      <table *ngIf="users.length > 0" class="table table-hover align-middle">
-        <thead class="table-light">
-          <tr>
-            <th>Role Name</th>
-            <th>Role Description</th>
-            <th>Last Modified</th>
-            <th>Entity Type</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let u of users">
-            <td>{{ u.email }}</td>
-            <td>{{ u.nom }}</td>
-            <td>{{ u.modified }}</td>
-            <td>{{ u.roles }}</td>
-            <td>
-              <span class="badge">
-                {{ u.status }}
-              </span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <table *ngIf="users.length" class="table table-hover align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>User</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>More</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let u of users">
+          <td>{{ u.nom }}</td>
+          <td>{{ u.email }}</td>
+          <td>{{ u.role }}</td>
+          <td>
+            <button (click)="onSubmit(u.id)" class="btn p-1 d-flex flex-column align-items-center justify-content-center" aria-label="Options">
+              <span class="bg-dark rounded-circle mb-1" style="width:4px;height:4px;"></span>
+              <span class="bg-dark rounded-circle mb-1" style="width:4px;height:4px;"></span>
+              <span class="bg-dark rounded-circle" style="width:4px;height:4px;"></span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
 
       <!--
       //Empty state 

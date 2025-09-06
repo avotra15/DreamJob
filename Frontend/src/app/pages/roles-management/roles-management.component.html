@@ -23,15 +23,25 @@
     <main class="col">
       <div class="d-flex justify-content-between align-items-center mb-3">
         <h4 class="mb-0">Permission Acceess</h4>
-        <button class="btn btn-sm btn-primary">+ rôle</button>
+        <button class="btn btn-sm btn-primary">Add Module</button>
       </div>
+
+        <div class="row form-group">
+          <div class="col-md-12 mb-3 mb-md-0">
+            <label class="text-black">Roles</label>
+                <select [(ngModel)]="selectedRoleId" name="rls" class="form-select">
+                  <option *ngFor="let role of rolesList" [value]=" role.name " name="rl">{{ role.roles }}</option>
+                </select>
+          </div>
+        </div>
+
 
       <div class="table-responsive">
         <table class="table table-bordered align-middle">
           <thead class="table-light">
-            <tr [(ngModel)]="this.roles" name="roles">
+            <tr name="roles">
               <th style="width: 20%;">Module</th>
-              <th class="text-center" *ngFor="let role of roles">{{ role.roles }}</th>
+              <th class="text-center" *ngFor="let rl of rolesList">{{ rl.name }}</th>
             </tr>
           </thead>
           <tbody>

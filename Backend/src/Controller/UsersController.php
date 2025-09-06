@@ -66,8 +66,8 @@ final class UsersController extends AbstractController
             return $this->apiReponse->sucess($user, 'Utilisateur supprime');
         }
 
-        #[Route('/api/users', name: 'users', methods:['GET'])]
-        #[IsGranted('IS_AUTHENTICATED_FULLY')]
+        #[Route('/users', name: 'users', methods:['GET'])]
+        //#[IsGranted('IS_AUTHENTICATED_FULLY')]
         public function Users()
         {
             $userss = $this->usersRepository->getAllUsers();
@@ -77,19 +77,23 @@ final class UsersController extends AbstractController
                     'id'    => $user->getId(),
                     'email' => $user->getEmail(),
                     'nom'   => $user->getNom(),
+                    'role' => $user->getRoles(),
                 ];
             }, $userss);
             
             return $this->apiReponse->sucess($userArray, 'Listes Utilisateurs');
         }
 
-        #[Route('/api/user/{id}', name: 'app_user_id', methods: ['GET'])]
-        #[IsGranted('IS_AUTHENTICATED_FULLY')]
+        #[Route('/user/{id}', name: 'app_user_id', methods: ['GET'])]
+        //#[IsGranted('IS_AUTHENTICATED_FULLY')]
             public function UserId(int $id) 
             {
                 $user = $this->usersRepository->getUserById($id);
 
-            return $this->apiReponse->error('Utilisateur non trouvé', 404, $user);
+                if(!$user) {
+                    return $this->apiReponse->error('Utilisateur non trouvé', 404, $user);
+                }
+                return $this->apiReponse->sucess($user, 'Utilisateur trouvé');
             }
 
 }

@@ -5,7 +5,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ApiReponse extends JsonResponse
 {
-    public function sucess($data = null, string $message, int $code = 200 ): JsonResponse
+    public function sucess($data = null || [], string $message, int $code = 200 ): JsonResponse
     {
         return new JsonResponse([
             'status' => 'success',

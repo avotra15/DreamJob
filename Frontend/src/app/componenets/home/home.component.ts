@@ -14,32 +14,37 @@ export class HomeComponent implements OnInit {
   countrys: any[] = [];
   times: any[] = [];
 
+  selectedcountry: string = '';
+  selectedtimes: string = '';
+
   constructor (private http:HttpClient, private router:Router) {}
 
   ngOnInit(): void{
     this.loadJobs(),
-    this.loadCountry(),
+    this.loadCountry()
     this.loadTime()
   }
 
     loadJobs(): void {    
-      this.http.get<any[]>('http://127.0.0.1:8000/listeJobs')
-        .subscribe((data) => {
-        this.listejobs  = data;
-      });
+      this.http.get<any>('http://127.0.0.1:8000/listeJobs')
+        .subscribe((response) => {
+          console.log(response);
+          this.listejobs = Array.isArray(response) ? response : response.data ?? [];
+        });
     }
 
     loadCountry(): void {    
-    this.http.get<any[]>('http://127.0.0.1:8000/country')
-      .subscribe((data) => {
-      this.countrys  = data;
-    });
-  }
+      this.http.get<any>('http://127.0.0.1:8000/country')
+        .subscribe((response) => {
+          this.countrys = Array.isArray(response) ? response : response.data ?? [];
+        });
+    }
 
-  loadTime(): void {    
-    this.http.get<any[]>('http://127.0.0.1:8000/time')
-      .subscribe((data) => {
-      this.times  = data;
-    });
-  }
+    loadTime(): void {    
+      this.http.get<any>('http://127.0.0.1:8000/time')
+        .subscribe((response) => {
+          this.times = Array.isArray(response) ? response : response.data ?? [];
+        });
+}
+
 }

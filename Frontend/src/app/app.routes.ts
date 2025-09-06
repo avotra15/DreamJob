@@ -44,7 +44,7 @@ export const routes: Routes = [
     {path: 'testimonials', component: TestimonialsComponent},
     {path: 'users', component: UsersComponentComponent, canActivate: ([AuthGuard])},
     {path: 'edit/:id', component: EditComponent, canActivate: ([AuthGuard])},
-    {path: 'roles-management', component: RolesManagementComponent},
+    {path: 'roles-management/user/:id', component: RolesManagementComponent},
     {path: 'group-management', component: GroupManagementComponent},
     {path: 'add-role', component: AddRoleComponent},
 ];
