@@ -14,21 +14,21 @@ class Permission
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $fonction = null;
+    private ?string $namePerm = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getFonction(): ?string
+    public function getNamePerm(): ?string
     {
-        return $this->fonction;
+        return $this->namePerm;
     }
 
-    public function setFonction(string $fonction): static
+    public function setNamePerm(string $namePerm): static
     {
-        $this->fonction = $fonction;
+        $this->namePerm = $namePerm;
 
         return $this;
     }

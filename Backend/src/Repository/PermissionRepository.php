@@ -15,6 +15,15 @@ class PermissionRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Permission::class);
     }
+        public function getPermissionById(int $id): ?Permission
+    {
+        return $this->find($id);
+    }
+
+    public function getAllPermission(): array
+    {
+        return $this->findAll();
+    }
 
     //    /**
     //     * @return Permission[] Returns an array of Permission objects

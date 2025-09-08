@@ -2,38 +2,37 @@
 
 namespace App\Service;
 
+use App\Entity\Permission;
 use App\Interface\PermissionInterface;
-use App\Repository\PermissionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
-class PermissionService implements PermissionInterface
+class PermissionService implements PermissionInterface 
 {
-    private EntityManagerInterface $entityManager;
-    private PermissionRepository $permissionRepository;
-
-    public function __construct (
-            EntityManagerInterface $entityManager,
-            PermissionRepository $permissionRepository,
-        )
+    private EntityManagerInterface $em;
+    
+    public function __construct(
+        EntityManagerInterface $em)
     {
-        $this->entityManager = $entityManager;
-        $this->permissionRepository = $permissionRepository;
-    }
-    public function createPermission(array $data): Permission
-    {
-        $fonctionPer = new Permission();
-        $fonctionPer->setFonction($data['FonctionPer'] ?? '');
-
-        $this->entityManager->persist($fonctionPer);
-        $this->entityManager->flush();
-
-        return $fonctionPer;
+        $this->em = $em;
     }
 
-    public function deletePermission(Permission $Permission): void
+    public function createPerm(array $data, Permission $permission): Permission 
     {
-        $this->entityManager->remove($fonctionPer);
-        $this->entityManager->flush();
+        
+            $permission = new Permission();
+
+            $permission->setNamePerm($data['Perm']);
+
+            $this->em->persist($permission);
+            $this->em->flush();
+
+            return $permission;
+    }
+
+    public function deletePerm(Permission $permission): void
+    {
+        $this->em->remove($permission);
+        $this->em->flush();
     }
 }
 ?>

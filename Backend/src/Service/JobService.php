@@ -4,11 +4,11 @@ namespace App\Service;
 
 use App\Entity\JobDetails;
 use App\Entity\Users;
-use App\Interface\JobInterface;
+use App\Interface\JobInterface as InterfaceJobInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class JobService implements JobInterface
+class JobService implements InterfaceJobInterface
 {
     private EntityManagerInterface $entityManager;
 
