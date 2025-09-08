@@ -23,7 +23,6 @@ export class GroupManagementComponent {
       this.http.get<any>('http://127.0.0.1:8000/users')
         .subscribe({
           next: (res) => {
-            // on va chercher la clé "data" renvoyée par l’API
             this.users = res.data ?? [];
           },
           error: (err) => {

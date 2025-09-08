@@ -1,5 +1,5 @@
 <?php
-namespace App\Service;
+namespace App\Interface;
 
 use App\Entity\Roles;
 use App\Entity\Users;

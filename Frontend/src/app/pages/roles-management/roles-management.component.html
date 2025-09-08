@@ -41,80 +41,21 @@
           <thead class="table-light">
             <tr name="roles">
               <th style="width: 20%;">Module</th>
-              <th class="text-center" *ngFor="let rl of rolesList">{{ rl.name }}</th>
+              <th class="text-center" *ngFor="let role of rolesList">{{ role.roles }}</th>
             </tr>
           </thead>
           <tbody>
             <!-- Exemple ligne -->
-            <tr>
-              <td><strong>Curriculum Vitae</strong></td>
-              <td class="text-center">
+            <tr *ngFor="let p of permisionList">
+              <th>{{ p.nomPerm }}</th>
+              <td class="text-center" *ngFor="let role of rolesList">
                 <div class="d-flex flex-wrap gap-2 justify-content-center">
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="admin-client-lire" checked>
-                    <label class="form-check-label small" for="admin-client-lire">Lire</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="admin-client-ajouter" checked>
-                    <label class="form-check-label small" for="admin-client-ajouter">Ajouter</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="admin-client-modifier" checked>
-                    <label class="form-check-label small" for="admin-client-modifier">Modifier</label>
-                  </div>
-                  <!-- Ajoute Supprimer, Exporter, Importer si besoin -->
-                </div>
-              </td>
-              <td class="text-center">
-                <div class="d-flex flex-wrap gap-2 justify-content-center">
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="manager-client-lire" checked>
-                    <label class="form-check-label small" for="manager-client-lire">Lire</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="manager-client-ajouter">
-                    <label class="form-check-label small" for="manager-client-ajouter">Ajouter</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="manager-client-modifier">
-                    <label class="form-check-label small" for="manager-client-modifier">Modifier</label>
+                    <input class="form-check-input" type="checkbox" [id]="'perm-' + p.id + '-role-' + role.id" checked>
                   </div>
                 </div>
-              </td>
-               <td class="text-center">
-                <div class="d-flex flex-wrap gap-2 justify-content-center">
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="manager-client-lire" checked>
-                    <label class="form-check-label small" for="manager-client-lire">Lire</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="manager-client-ajouter">
-                    <label class="form-check-label small" for="manager-client-ajouter">Ajouter</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="manager-client-modifier">
-                    <label class="form-check-label small" for="manager-client-modifier">Modifier</label>
-                  </div>
-                </div>
-              </td>
-               <td class="text-center">
-                <div class="d-flex flex-wrap gap-2 justify-content-center">
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="manager-client-lire" checked>
-                    <label class="form-check-label small" for="manager-client-lire">Lire</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="manager-client-ajouter">
-                    <label class="form-check-label small" for="manager-client-ajouter">Ajouter</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="manager-client-modifier">
-                    <label class="form-check-label small" for="manager-client-modifier">Modifier</label>
-                  </div>
-                </div>
-              </td>
+                </td>
             </tr>
-            <!-- Répète pour chaque module -->
           </tbody>
         </table>
       </div>

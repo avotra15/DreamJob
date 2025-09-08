@@ -13,6 +13,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 export class RolesManagementComponent {
 
   rolesList: any[] = [];
+  permisionList: any[] = [];
   userId!: number;
   selectedRoleId!: number;
   selectedRole: string = '';
@@ -26,6 +27,7 @@ export class RolesManagementComponent {
       this.loadUserRole(this.userId);
     }
     this.loadRoles();
+    this.loadPermission();
   }
 
   loadUserRole(id: number): void {
@@ -47,7 +49,33 @@ export class RolesManagementComponent {
         next: (response) => {
           this.rolesList = Array.isArray(response) ? response : response ?? [];
         },
-        error: (err) => console.error('Erreur lors du chargement des rôles:', err)
+          error: (err) => {
+            console.error('Erreur lors du chargement des users:', err);
+            this.rolesList = [];
+          }
       });
   }
+
+    loadPermission(): void {
+    this.http.get<any>('http://127.0.0.1:8000/permissions')
+      .subscribe({
+        next: (res) => {
+        const list = Array.isArray(res.data) ? res.data : [];
+            this.permisionList = list.map((p: any) => ({ ...p, checked: false }));
+        },
+          error: (err) => {
+            console.error('Erreur lors du chargement des users:', err);
+            this.permisionList = [];
+          }
+      });
+  }
+/*
+      saveSelectedPermissions(): void {
+      const selected = this.permisionList
+        .filter(p => p.checked)
+        .map(p => p.idPerm);
+
+      console.log('IDs cochés :', selected);
+  }
+*/
 }

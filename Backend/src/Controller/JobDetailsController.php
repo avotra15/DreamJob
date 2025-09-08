@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
+use App\Interface\JobInterface as InterfaceJobInterface;
 use App\Reponse\ApiReponse;
-use App\Service\JobInterface;
 use App\Repository\JobDetailsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,7 +23,7 @@ final class JobDetailsController extends AbstractController
    #[Route('/api/newjob', name: 'app_newjob', methods: ['POST'])]
    #[IsGranted('IS_AUTHENTICATED_FULLY')] 
         public function newForm(
-            JobInterface $JobInterface,
+            InterfaceJobInterface $JobInterface,
             Request $request,
         ): JsonResponse {
             $user = $this->getUser();
