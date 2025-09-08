@@ -6,7 +6,7 @@ use App\Entity\Roles;
 use App\Entity\Users;
 use App\Repository\RolesRepository;
 use App\Repository\UsersRepository;
-use App\Service\UserInterface;
+use App\Interface\UserInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -81,7 +81,6 @@ class UserService implements UserInterface
 
     public function deleteUser(Users $user): void
     {
-        
         $this->entityManager->remove($user);
         $this->entityManager->flush();
     }

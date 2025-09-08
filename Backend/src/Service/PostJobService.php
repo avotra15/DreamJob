@@ -4,7 +4,7 @@ namespace App\Service;
 
 use App\Entity\CV;
 use App\Entity\Users;
-use App\Service\PostJobInterface as ServicePostJobInterface;
+use App\Interface\PostJobInterface as ServicePostJobInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 

@@ -4,7 +4,7 @@ namespace App\Service;
 
 use App\Entity\JobDetails;
 use App\Entity\Users;
-use App\Service\JobInterface;
+use App\Interface\JobInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 

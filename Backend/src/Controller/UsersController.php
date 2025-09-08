@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Roles;
 use App\Reponse\ApiReponse;
 use App\Repository\UsersRepository;
-use App\Service\UserInterface;
+use App\Interface\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
@@ -56,13 +56,10 @@ final class UsersController extends AbstractController
         public function deleteUser(int $id)
         {
             $user = $this->usersRepository->getUserById($id);
-
             if (!$user) {
                  return $this->apiReponse->error('Utilisateur non trouvé', 404, $user);
             }
-
             $user = $this->userInterface->deleteUser($user);
-
             return $this->apiReponse->sucess($user, 'Utilisateur supprime');
         }
 

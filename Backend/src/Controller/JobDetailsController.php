@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Reponse\ApiReponse;
-use App\Service\JobInterface;
+use App\Interface\JobInterface;
 use App\Repository\JobDetailsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
