@@ -70,7 +70,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getRole(): Roles
+    public function getRole(): ?Roles
     {
         return $this->role;
     }
@@ -121,7 +121,9 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     // ✅ Méthode requise par UserInterface
     public function getRoles(): array
     {
-        return [$this->role?->getRoles() ?? 'ROLE_USER'];
+        //return [$this->role?->getRoles()?? 'ROLE_CANDIDAT'];
+        $role = $this->role?->getRoles();
+            return $role ? [$role] : ['ROLE_CANDIDAT'];
     }
 
     /**

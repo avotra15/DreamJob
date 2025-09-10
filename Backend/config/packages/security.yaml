@@ -51,11 +51,13 @@ security:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/login, roles: PUBLIC_ACCESS }
-        - { path: ^/api/users, roles: IS_AUTHENTICATED_FULLY}
-        - { path: ^/api/user, roles: IS_AUTHENTICATED_FULLY}
-        - { path: ^/api/logout, roles: IS_AUTHENTICATED_FULLY}
-        - { path: ^/api/newjob, roles: IS_AUTHENTICATED_FULLY}
-        - { path: ^/depotcv, roles: IS_AUTHENTICATED_FULLY}
+        # - { path: ^/api/logout, roles: PUBLIC_ACCESS}
+        # - { path: ^/api/users, roles: ROLE_ADMIN}
+        # - { path: ^/api/registrer, roles: ROLE_ADMIN}
+        # - { path: ^/delete/, roles: ROLE_ADMIN}
+        # - { path: ^/api/user, roles: ROLE_ADMIN}
+        # - { path: ^/api/newjob, roles: ROLE_RH}
+        # - { path: ^/depotcv, roles: ROLE_CANDIDAT}
 
 
 
