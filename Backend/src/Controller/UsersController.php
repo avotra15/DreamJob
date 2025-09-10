@@ -58,16 +58,17 @@ final class UsersController extends AbstractController
         public function deleteUser(int $id)
         {
             $user = $this->usersRepository->getUserById($id);
+<<<<<<< HEAD
 
             $this->denyAccessUnlessGranted('DELETE', $user);
 
 
+=======
+>>>>>>> 4d93e00ed1b6fe2321fe69be0af2b7b04020df3e
             if (!$user) {
                  return $this->apiReponse->error('Utilisateur non trouvé', 404, $user);
             }
-
             $user = $this->userInterface->deleteUser($user);
-
             return $this->apiReponse->sucess($user, 'Utilisateur supprime');
         }
 

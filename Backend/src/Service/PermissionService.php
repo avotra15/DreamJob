@@ -35,5 +35,4 @@ class PermissionService implements PermissionInterface
         $this->em->flush();
     }
 }
-
 ?>

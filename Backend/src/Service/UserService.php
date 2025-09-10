@@ -81,7 +81,6 @@ class UserService implements InterfaceUserInterface
 
     public function deleteUser(Users $user): void
     {
-        
         $this->entityManager->remove($user);
         $this->entityManager->flush();
     }

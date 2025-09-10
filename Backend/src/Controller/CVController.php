@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Users;
 use App\Reponse\ApiReponse;
-use App\Service\PostJobInterface;
+use App\Interface\PostJobInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
