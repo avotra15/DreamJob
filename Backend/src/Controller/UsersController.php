@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Roles;
+use App\Entity\Users;
 use App\Reponse\ApiReponse;
 use App\Repository\UsersRepository;
 use App\Interface\UserInterface;
@@ -10,6 +11,7 @@ use App\Security\Voter\UserVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class UsersController extends AbstractController
 {
@@ -25,28 +27,26 @@ final class UsersController extends AbstractController
 
     }
 
-    #[Route('/api/registrer', name: 'registrer', methods:['POST'])]
-    #[IsGranted(UserVoter::CREATE)]
+    #[Route('/api/register', name: 'register', methods:['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function registrer(Request $request)
     {
-        //$this->denyAccessUnlessGranted(UserVoter::CREATE);
 
         $data = json_decode($request->getContent(), true);
         $newUser = $this->userInterface->createUser($data,  new Roles());
 
         return $this->apiReponse->sucess($newUser, 'Utilisateur enregistre avec sucessée');
-        $this->redirectToRoute('login');
     } 
 
-    #[Route('/api/updateUser/{id}', name: 'app_user_update', methods: ['PATH'])]
+    #[Route('/api/updateUser/{id}', name: 'app_user_update', methods: ['PATCH'])]
         public function updateUser(int $id, Request $request,)
         {
             $user = $this->usersRepository->getUserById($id);
 
-            $this->denyAccessUnlessGranted('EDIT', $user);
+            $this->denyAccessUnlessGranted(UserVoter::EDIT, $user);
 
             if (!$user) {
-                return $this->apiReponse->error('Utilisateur non trouvé');
+                return $this->apiReponse->error('Utilisateur non trouvé', 404);
             }
 
             $data = json_decode($request->getContent(), true);
@@ -59,19 +59,20 @@ final class UsersController extends AbstractController
         public function deleteUser(int $id)
         {
             $user = $this->usersRepository->getUserById($id);
-            $this->denyAccessUnlessGranted('DELETE', $user);
+
+            $this->denyAccessUnlessGranted(UserVoter::DELETE, $user);
+
             if (!$user) {
-                 return $this->apiReponse->error('Utilisateur non trouvé', 404, $user);
+                 return $this->apiReponse->error('Utilisateur non trouvé', 404);
             }
             $user = $this->userInterface->deleteUser($user);
             return $this->apiReponse->sucess($user, 'Utilisateur supprime');
         }
 
         #[Route('/api/users', name: 'users', methods:['GET'])]
+        #[IsGranted('ROLE_ADMIN')]
         public function Users()
-        {
-            $this->denyAccessUnlessGranted('Admin');
-            
+        {          
             $userss = $this->usersRepository->getAllUsers();
 
             $userArray = array_map(function($user) {
@@ -94,7 +95,7 @@ final class UsersController extends AbstractController
                 $this->denyAccessUnlessGranted('VIEW', $user);
 
                 if(!$user) {
-                    return $this->apiReponse->error('Utilisateur non trouvé', 404, $user);
+                    return $this->apiReponse->error('Utilisateur non trouvé', 404);
                 }
                 return $this->apiReponse->sucess($user, 'Utilisateur trouvé');
             }
