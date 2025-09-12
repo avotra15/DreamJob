@@ -27,7 +27,7 @@ export const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: 'home', component: HomeComponent},
     {path: 'login', component: LoginComponent},
-    {path: 'registrer', component: RegistrerComponent},
+    {path: 'registrer', component: RegistrerComponent, canActivate: ([AuthGuard])},
     {path: 'about', component: AboutComponent},
     {path: 'blog', component: BlogComponent},
     {path: 'blog-single', component: BlogSingleComponent},

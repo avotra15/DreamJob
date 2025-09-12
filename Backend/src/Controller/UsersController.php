@@ -26,9 +26,10 @@ final class UsersController extends AbstractController
     }
 
     #[Route('/api/registrer', name: 'registrer', methods:['POST'])]
+    #[IsGranted(UserVoter::CREATE)]
     public function registrer(Request $request)
     {
-        $this->denyAccessUnlessGranted(UserVoter::CREATE);
+        //$this->denyAccessUnlessGranted(UserVoter::CREATE);
 
         $data = json_decode($request->getContent(), true);
         $newUser = $this->userInterface->createUser($data,  new Roles());
@@ -58,13 +59,7 @@ final class UsersController extends AbstractController
         public function deleteUser(int $id)
         {
             $user = $this->usersRepository->getUserById($id);
-<<<<<<< HEAD
-
             $this->denyAccessUnlessGranted('DELETE', $user);
-
-
-=======
->>>>>>> 4d93e00ed1b6fe2321fe69be0af2b7b04020df3e
             if (!$user) {
                  return $this->apiReponse->error('Utilisateur non trouvé', 404, $user);
             }

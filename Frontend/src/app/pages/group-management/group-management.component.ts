@@ -47,4 +47,8 @@ export class GroupManagementComponent {
       }
     });
   }
+
+  onSubmit2(): void {
+    this.router.navigate(['/registrer']);
+  }
 }
