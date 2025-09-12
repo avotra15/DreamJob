@@ -17,7 +17,6 @@ import { ServicesComponent } from './pages/services/services.component';
 import { TestimonialsComponent } from './pages/testimonials/testimonials.component';
 import { RegistrerComponent } from './pages/registrer/registrer.component';
 import { AuthGuard } from './auth.guard';
-import { UsersComponentComponent } from './pages/users/users-component.component';
 import { EditComponent } from './pages/edit/edit.component';
 import { RolesManagementComponent } from './pages/roles-management/roles-management.component';
 import { GroupManagementComponent } from './pages/group-management/group-management.component';
@@ -42,9 +41,8 @@ export const routes: Routes = [
     {path: 'service-single', component: ServiceSingleComponent},
     {path: 'services', component: ServicesComponent},
     {path: 'testimonials', component: TestimonialsComponent},
-    {path: 'users', component: UsersComponentComponent, canActivate: ([AuthGuard])},
     {path: 'edit/:id', component: EditComponent, canActivate: ([AuthGuard])},
     {path: 'roles-management/user/:id', component: RolesManagementComponent},
-    {path: 'group-management', component: GroupManagementComponent},
+    {path: 'group-management', component: GroupManagementComponent, canActivate: ([AuthGuard])},
     {path: 'add-role', component: AddRoleComponent},
 ];

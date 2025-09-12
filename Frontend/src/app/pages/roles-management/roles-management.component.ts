@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -31,7 +31,10 @@ export class RolesManagementComponent {
   }
 
   loadUserRole(id: number): void {
-    this.http.get<any>(`http://127.0.0.1:8000/user/${id}`)
+      const token = sessionStorage.getItem('token');
+
+      const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` });
+    this.http.get<any>(`http://127.0.0.1:8000/user/${id}`, { headers })
       .subscribe({
         next: res => {
           if (res.role) {
@@ -44,7 +47,11 @@ export class RolesManagementComponent {
   }
 
   loadRoles(): void {
-    this.http.get<any[]>('http://127.0.0.1:8000/roles')
+      const token = sessionStorage.getItem('token');
+
+      const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` });
+
+    this.http.get<any[]>('http://127.0.0.1:8000/roles', { headers })
       .subscribe({
         next: (response) => {
           this.rolesList = Array.isArray(response) ? response : response ?? [];
@@ -57,7 +64,11 @@ export class RolesManagementComponent {
   }
 
     loadPermission(): void {
-    this.http.get<any>('http://127.0.0.1:8000/permissions')
+      const token = sessionStorage.getItem('token');
+
+      const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` });
+
+    this.http.get<any>('http://127.0.0.1:8000/permissions', { headers })
       .subscribe({
         next: (res) => {
         const list = Array.isArray(res.data) ? res.data : [];

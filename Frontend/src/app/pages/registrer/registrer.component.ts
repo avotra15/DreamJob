@@ -36,6 +36,8 @@ export class RegistrerComponent {
     }
 
     onSubmit(): void {
+      const token = sessionStorage.getItem('token');
+
       const registrerData = {
               Nom: this.nm,
               Email: this.mail,
@@ -43,9 +45,9 @@ export class RegistrerComponent {
               Password: this.mdp
       };
 
-       const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` });
 
-           this.http.post('http://127.0.0.1:8000/registrer', registrerData, { headers })
+           this.http.post('http://127.0.0.1:8000/api/register', registrerData, { headers })
               .subscribe({
               next: res => {
                 console.log("Registrer success", res);

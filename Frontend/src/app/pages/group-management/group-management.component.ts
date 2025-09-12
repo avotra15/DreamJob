@@ -20,7 +20,11 @@ export class GroupManagementComponent {
     }
 
     loadUsers(): void {
-      this.http.get<any>('http://127.0.0.1:8000/users')
+      const token = sessionStorage.getItem('token');
+
+      const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` });
+
+      this.http.get<any>('http://127.0.0.1:8000/api/users', { headers })
         .subscribe({
           next: (res) => {
             this.users = res.data ?? [];
@@ -33,9 +37,11 @@ export class GroupManagementComponent {
     }
 
     onSubmit(id:number): void {
-      const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      const token = sessionStorage.getItem('token');
 
-      this.http.get<any>(`http://127.0.0.1:8000/user/${id}`, { headers })
+      const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` });
+
+      this.http.get<any>(`http://127.0.0.1:8000/api/user/${id}`, { headers })
               .subscribe({
               next: res => {
                 console.log(res);

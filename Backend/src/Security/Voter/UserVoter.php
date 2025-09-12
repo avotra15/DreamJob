@@ -23,10 +23,6 @@ final class UserVoter extends Voter
      * @param Users || null $subject
      */
 
-    public function __construct(private AccessDecisionManagerInterface $accessDecisionManager) 
-    {
-    }
-
  protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
 {
     $user = $token->getUser();
@@ -39,15 +35,12 @@ final class UserVoter extends Voter
 
     switch ($attribute) {
         case self::VIEW:
-            // Un utilisateur peut voir son propre profil ou les admins peuvent tout voir
-            return $subject === $user || in_array('ROLE_ADMIN', $userRoles);
+            return $user->getId() === $subject->getId();
 
         case self::EDIT:
-            // Un utilisateur peut modifier son propre profil ou les admins peuvent tout modifier
-            return $subject === $user || in_array('ROLE_ADMIN', $userRoles);
+            return $user->getId() === $subject->getId() || in_array('ROLE_ADMIN', $userRoles);
 
         case self::DELETE:
-            // Seuls les admins peuvent supprimer des utilisateurs
             return in_array('ROLE_ADMIN', $userRoles) || in_array('ROLE_CANDIDAT', $userRoles);
 
         default:
