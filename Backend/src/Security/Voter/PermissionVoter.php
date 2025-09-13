@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Security\Voter;
+
+use App\Entity\Permission;
+use App\Entity\Users;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+use Symfony\Component\Security\Core\User\UserInterface;
+
+final class PermissionVoter extends Voter
+{
+    public const EDIT = 'POST_EDIT';
+    public const VIEW = 'POST_VIEW';
+
+    protected function supports(string $attribute, mixed $subject): bool
+    {
+        return in_array($attribute, [self::EDIT, self::VIEW])
+            && $subject instanceof Permission;
+    }
+
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
+    {
+        $user = $token->getUser();
+
+        if (!$user instanceof Users) {
+            return false;
+        }
+   
+        switch ($attribute) {
+            case self::EDIT:
+                break;
+
+            case self::VIEW:
+                break;
+        }
+
+        return false;
+    }
+}
