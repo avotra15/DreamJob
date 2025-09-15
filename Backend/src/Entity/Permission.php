@@ -27,6 +27,9 @@ class Permission
     #[ORM\Column(length: 500)]
     private ?string $description = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $category = null;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -84,6 +87,18 @@ class Permission
     public function setDescription(string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(string $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }

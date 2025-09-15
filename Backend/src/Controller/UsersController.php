@@ -43,8 +43,6 @@ final class UsersController extends AbstractController
                 return $this->apiReponse->error('Utilisateur non trouvé', 404);
             }
 
-            $this->denyAccessUnlessGranted(UserVoter::EDIT, $user);
-
             $data = json_decode($request->getContent(), true);
             $user = $this->userInterface->updateUser($user, $data);
 
@@ -59,7 +57,6 @@ final class UsersController extends AbstractController
             if (!$user) {
                  return $this->apiReponse->error('Utilisateur non trouvé', 404);
             }
-            $this->denyAccessUnlessGranted(UserVoter::DELETE, $user);
             
             $user = $this->userInterface->deleteUser($user);
             return $this->apiReponse->sucess($user, 'Utilisateur supprime');
@@ -91,8 +88,6 @@ final class UsersController extends AbstractController
                 if(!$user) {
                     return $this->apiReponse->error('Utilisateur non trouvé', 404);
                 }
-
-                $this->denyAccessUnlessGranted(UserVoter::VIEW, $user);
 
                 return $this->apiReponse->sucess($user, 'Utilisateur trouvé');
             }

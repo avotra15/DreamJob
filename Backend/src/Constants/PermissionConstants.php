@@ -30,5 +30,13 @@ class PermissionConstants
         ],
     ];
 
+    /**
+     * Récupérer toutes les permissions disponibles
+     */
+    public static function getAllPermissions(): array
+    {
+        return self::PERMISSIONS;
+    }
+
 }
 ?>
