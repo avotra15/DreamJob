@@ -10,24 +10,30 @@ class PermissionConstants
 {
     public const PERMISSIONS = [
          self::USER_LIST => [
-            'name' => self::USER_LIST,
-            'description' => 'Voir la liste de tous les utilisateurs',
-            'category' => self::CATEGORY_USER
+            'name' => self::USER_LIST,'description' => 'Voir la liste de tous les utilisateurs','category' => self::CATEGORY_USER
+        ],
+
+         self::USER_CREATE => [
+            'name' => self::USER_CREATE,'description' => 'Créer un nouvelle utilisateur interne','category' => self::CATEGORY_USER
         ],
 
     ];
 
     // Permissions individuelles - Gestion des Utilisateurs
     public const USER_LIST = 'user.list';
+    public const USER_CREATE = 'user.create';
+
 
     // Catégories de permissions
     public const CATEGORY_USER = 'user';
 
-        // Groupes de permissions prédéfinies
+    // Groupes de permissions prédéfinies
     public const PERMISSION_GROUPS = [
-        'ADMIN' => [
+        'ROLE_ADMIN' => [
             self::USER_LIST,
+            self::USER_CREATE,
         ],
+
     ];
 
     /**

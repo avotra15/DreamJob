@@ -24,7 +24,6 @@ class PermissionRepository extends ServiceEntityRepository
     {
         return $this->findAll();
     }
-
     //    /**
     //     * @return Permission[] Returns an array of Permission objects
     //     */

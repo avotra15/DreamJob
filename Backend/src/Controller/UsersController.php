@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Constants\PermissionConstants;
 use App\Entity\Roles;
 use App\Entity\Users;
 use App\Reponse\ApiReponse;
@@ -63,6 +64,7 @@ final class UsersController extends AbstractController
         }
 
         #[Route('/api/users', name: 'users', methods:['GET'])]
+        #[IsGranted(PermissionConstants::USER_LIST)]
         public function Users()
         {      
             $this->denyAccessUnlessGranted('ROLE_ADMIN');
