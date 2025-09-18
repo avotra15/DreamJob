@@ -25,7 +25,7 @@ final class UsersController extends AbstractController
     }
 
     #[Route('/api/register', name: 'register', methods:['POST'])]
-    #[IsGranted('ROLE_ADMIN')]
+    #[IsGranted(PermissionConstants::USER_CREATE)]
     public function registrer(Request $request)
     {
 
@@ -67,7 +67,6 @@ final class UsersController extends AbstractController
         #[IsGranted(PermissionConstants::USER_LIST)]
         public function Users()
         {      
-            $this->denyAccessUnlessGranted('ROLE_ADMIN');
             $userss = $this->usersRepository->getAllUsers();
 
             $userArray = array_map(function($user) {

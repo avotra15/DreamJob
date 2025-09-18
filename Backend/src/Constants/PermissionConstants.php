@@ -34,6 +34,9 @@ class PermissionConstants
             self::USER_CREATE,
         ],
 
+        'ROLE_CANDIDAT' => [
+            self::USER_CREATE,
+        ],
     ];
 
     /**
