@@ -69,6 +69,14 @@ class UserService implements InterfaceUserInterface
             $user->setEmail($data['Email']);
         }
 
+        /*if (!empty($data['Roles'])) {
+            $roleEntity = $this->rolesRepository->findByName($roleName);
+            if (!$roleEntity) {
+                throw new \InvalidArgumentException("Rôle invalide");
+            }
+             $user->setRole($roleEntity);
+        }*/
+
         if (!empty($data['Password'])) {
             $hashedPassword = $this->userPasswordHasher->hashPassword($user, $data['Password']);
             $user->setPassword($hashedPassword);

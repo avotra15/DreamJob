@@ -68,7 +68,7 @@ export class RolesManagementComponent {
 
       const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` });
 
-    this.http.get<any>('http://127.0.0.1:8000/permissions', { headers })
+    this.http.get<any>('http://127.0.0.1:8000/voirpermission', { headers })
       .subscribe({
         next: (res) => {
         const list = Array.isArray(res.data) ? res.data : [];
