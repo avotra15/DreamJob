@@ -8,17 +8,7 @@ namespace App\Constants;
  */
 class PermissionConstants
 {
-    public const PERMISSIONS = [
-         self::USER_LIST => [
-            'name' => self::USER_LIST,'description' => 'Voir la liste de tous les utilisateurs','category' => self::CATEGORY_USER
-        ],
-
-         self::USER_CREATE => [
-            'name' => self::USER_CREATE,'description' => 'Créer un nouvelle utilisateur interne','category' => self::CATEGORY_USER
-        ],
-
-    ];
-
+    
     // Permissions individuelles - Gestion des Utilisateurs
     public const USER_LIST = 'user.list';
     public const USER_CREATE = 'user.create';
@@ -37,6 +27,17 @@ class PermissionConstants
         'ROLE_CANDIDAT' => [
             self::USER_CREATE,
         ],
+    ];
+    
+    public const PERMISSIONS = [
+         self::USER_LIST => [
+            'name' => self::USER_LIST,'description' => 'Voir la liste de tous les utilisateurs','category' => self::CATEGORY_USER
+        ],
+
+         self::USER_CREATE => [
+            'name' => self::USER_CREATE,'description' => 'Créer un nouvelle utilisateur interne','category' => self::CATEGORY_USER
+        ],
+
     ];
 
     /**

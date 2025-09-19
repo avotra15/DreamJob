@@ -30,7 +30,7 @@ class UserService implements InterfaceUserInterface
         $this->rolesRepository = $rolesRepository;
     }
 
-    public function createUser(array $data, Roles $role) : Users
+    public function createUser(array $data) : Users
     {
             $user = new Users();
             $user->setNom($data['Nom'] ?? '');
@@ -45,9 +45,9 @@ class UserService implements InterfaceUserInterface
             $roleName = $data['Roles'];
             $roleEntity = $this->rolesRepository->findByName($roleName);
             if (!$roleEntity) {
-                throw new \InvalidArgumentException("Rôle invalide");
+                throw new \InvalidArgumentException("Rôle invalide" . $roleName);
             }
-            $user->setRole($roleEntity);
+            $user->addRole($roleEntity);
        
             
             $hashedPassword = $this->userPasswordHasher->hashPassword($user, $data['Password']);
@@ -69,13 +69,14 @@ class UserService implements InterfaceUserInterface
             $user->setEmail($data['Email']);
         }
 
-        /*if (!empty($data['Roles'])) {
+        $roleName = $data['Roles'];
+        if (!empty($data['Roles'])) {
             $roleEntity = $this->rolesRepository->findByName($roleName);
             if (!$roleEntity) {
                 throw new \InvalidArgumentException("Rôle invalide");
             }
-             $user->setRole($roleEntity);
-        }*/
+             $user->hasRole($roleName);
+        }
 
         if (!empty($data['Password'])) {
             $hashedPassword = $this->userPasswordHasher->hashPassword($user, $data['Password']);

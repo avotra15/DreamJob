@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Users implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy:  'AUTO')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
@@ -23,9 +23,12 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank]
     private ?string $nom = null;
 
+    /**
+     * @var Collection<int, Roles>
+     */
     #[ORM\ManyToMany(targetEntity: Roles::class)]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Roles $role = null;
+    #[ORM\JoinTable(name: 'user_roles')]
+    private Collection $roles;
 
     #[ORM\Column(length: 255, unique: true)]
     #[Assert\NotBlank]
@@ -56,6 +59,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
+        $this->roles = new ArrayCollection();
         $this->Titre = new ArrayCollection();
         $this->cVs = new ArrayCollection();
         $this->permission = new ArrayCollection();
@@ -77,15 +81,36 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getRole(): ?Roles
+    /**
+     * @return Collection<int, Roles>
+     */
+    public function getUserRoles(): Collection
     {
-        return $this->role;
+        return $this->roles;
     }
 
-    public function setRole(?Roles $role): static
+    public function addRole(Roles $role): static
     {
-        $this->role = $role;
+        if (!$this->roles->contains($role)) {
+            $this->roles->add($role);
+        }
         return $this;
+    }
+
+    public function removeRole(Roles $role): static
+    {
+        $this->roles->removeElement($role);
+        return $this;
+    }
+
+    public function hasRole(string $rolenm): bool
+    {
+        foreach ($this->roles as $role) {
+            if ($role->getRole() === $rolenm) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public function getEmail(): ?string
@@ -125,12 +150,28 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->getUserIdentifier();
     }
 
-    // ✅ Méthode requise par UserInterface
+    /**
+     * Méthode requise par UserInterface - retourne un tableau de chaînes
+     */
     public function getRoles(): array
     {
-        //return [$this->role?->getRoles()?? 'ROLE_CANDIDAT'];
-        $role = $this->role?->getRoles();
-            return $role ? [$role] : ['ROLE_CANDIDAT'];
+        $roles = [];
+        
+        // Récupérer tous les rôles de l'utilisateur
+        foreach ($this->roles as $role) {
+            $rolenm = $role->getRole();
+            if ($rolenm) {
+                $roles[] = $rolenm;
+            }
+        }
+        
+        // Assurer qu'il y a au moins un rôle par défaut
+        if (empty($roles)) {
+            $roles[] = 'ROLE_CANDIDAT';
+        }
+        
+        // Retourner des rôles uniques
+        return array_unique($roles);
     }
 
     /**
