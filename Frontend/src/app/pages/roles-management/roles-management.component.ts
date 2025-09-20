@@ -14,23 +14,23 @@ export class RolesManagementComponent {
 
   rolesList: any[] = [];
   permisionList: any[] = [];
-  userId!: number;
+  /*userId!: number;
   selectedRoleId!: number;
-  selectedRole: string = '';
+  selectedRole: string = '';*/
 
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    const idParam = this.route.snapshot.paramMap.get('id');
+    /*const idParam = this.route.snapshot.paramMap.get('id');
     if (idParam) {
       this.userId = +idParam;
-      this.loadUserRole(this.userId);
-    }
+      //this.loadUserRole(this.userId);
+    }*/
     this.loadRoles();
     this.loadPermission();
   }
 
-  loadUserRole(id: number): void {
+  /*loadUserRole(id: number): void {
       const token = sessionStorage.getItem('token');
 
       const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` });
@@ -44,7 +44,7 @@ export class RolesManagementComponent {
         },
         error: err => console.error('Erreur chargement rôle:', err)
       });
-  }
+  }*/
 
   loadRoles(): void {
       const token = sessionStorage.getItem('token');
