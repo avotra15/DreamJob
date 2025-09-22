@@ -21,11 +21,9 @@ final class PermissionController extends AbstractController
      #[Route('/voirpermission', name: 'voir_permissions', methods: ['GET'])]
     public function voirpermission()
     {        
-        $permission = $this->permissionConstants->getAllPermissions();
+        $Allpermission = $this->permissionConstants->getAllPermissions();
 
-        return $this->apiReponse->sucess($permission, 'Permission trouvé');
-
-        
+        return $this->apiReponse->sucess($Allpermission, 'Permission trouvé');
     }
     
 }
