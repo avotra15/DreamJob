@@ -33,11 +33,6 @@ class PermissionConstants
          self::USER_LIST => [
             'name' => self::USER_LIST,'description' => 'Voir la liste de tous les utilisateurs','category' => self::CATEGORY_USER
         ],
-
-         self::USER_CREATE => [
-            'name' => self::USER_CREATE,'description' => 'Créer un nouvelle utilisateur interne','category' => self::CATEGORY_USER
-        ],
-
     ];
 
     /**

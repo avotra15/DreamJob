@@ -155,23 +155,20 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getRoles(): array
     {
-        $roles = [];
-        
-        // Récupérer tous les rôles de l'utilisateur
+        $roleNames = [];
+
         foreach ($this->roles as $role) {
-            $rolenm = $role->getRole();
+            $rolenm = $role->getRole();   // ⚡ corrigé
             if ($rolenm) {
-                $roles[] = $rolenm;
+                $roleNames[] = $rolenm;
             }
         }
-        
-        // Assurer qu'il y a au moins un rôle par défaut
-        if (empty($roles)) {
-            $roles[] = 'ROLE_CANDIDAT';
+
+        if (empty($roleNames)) {
+            $roleNames[] = 'ROLE_CANDIDAT';
         }
-        
-        // Retourner des rôles uniques
-        return array_unique($roles);
+
+        return array_unique($roleNames);
     }
 
     /**

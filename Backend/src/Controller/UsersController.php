@@ -25,7 +25,7 @@ final class UsersController extends AbstractController
     }
 
     #[Route('/api/register', name: 'register', methods:['POST'])]
-    //#[IsGranted(PermissionConstants::USER_CREATE)]
+    #[IsGranted(PermissionConstants::USER_CREATE)]
     public function registrer(Request $request)
     {
 
@@ -63,11 +63,11 @@ final class UsersController extends AbstractController
             return $this->apiReponse->sucess($user, 'Utilisateur supprime');
         }
 
-        #[Route('/api/users', name: 'user.list', methods:['GET'])]
-        //#[IsGranted(PermissionConstants::USER_LIST)]
+        #[Route('/api/users', name: 'users', methods:['GET'])]
+        #[IsGranted(PermissionConstants::USER_LIST)]
         public function Users()
         {      
-            $users = $this->usersRepository->getAllUsers();
+            $userss = $this->usersRepository->getAllUsers();
 
             $userArray = array_map(function($user) {
                 return [
@@ -76,9 +76,9 @@ final class UsersController extends AbstractController
                     'nom'   => $user->getNom(),
                     'role' => $user->getRoles(),
                 ];
-            }, $users);
+            }, $userss); 
             
-            return $this->apiReponse->sucess($userArray, 'Listes Utilisateurs dans le BDD');
+            return $this->apiReponse->sucess($userArray, 'Listes Utilisateurs');
         }
 
         #[Route('/api/user/{id}', name: 'app_user_id', methods: ['GET'])]
