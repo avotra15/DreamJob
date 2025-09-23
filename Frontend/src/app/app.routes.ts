@@ -18,9 +18,10 @@ import { TestimonialsComponent } from './pages/testimonials/testimonials.compone
 import { RegistrerComponent } from './pages/registrer/registrer.component';
 import { AuthGuard } from './auth.guard';
 import { EditComponent } from './pages/edit/edit.component';
-import { RolesManagementComponent } from './pages/roles-management/roles-management.component';
 import { GroupManagementComponent } from './pages/group-management/group-management.component';
 import { AddRoleComponent } from './pages/add-role/add-role.component';
+import { PermissionAccessComponent } from './pages/permission-access/permission-access';
+import { ResultatComponent } from './pages/resultat/resultat.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -42,7 +43,9 @@ export const routes: Routes = [
     {path: 'services', component: ServicesComponent},
     {path: 'testimonials', component: TestimonialsComponent},
     {path: 'edit/:id', component: EditComponent, canActivate: ([AuthGuard])},
-    {path: 'roles-management/user/:id', component: RolesManagementComponent},
+    {path: 'resultat', component: ResultatComponent, canActivate: ([AuthGuard])},
     {path: 'group-management', component: GroupManagementComponent, canActivate: ([AuthGuard])},
+    {path: 'permission-access', component: PermissionAccessComponent, canActivate: ([AuthGuard])},
     {path: 'add-role', component: AddRoleComponent},
+
 ];

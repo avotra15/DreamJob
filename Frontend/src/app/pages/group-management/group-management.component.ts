@@ -46,7 +46,6 @@ export class GroupManagementComponent {
               next: res => {
                 console.log(res);
                 this.selectedRole = res.role;
-                this.router.navigate(['/roles-management/user', id]);
               },
               error: err => {
                 console.error("Diriger failed:", err);

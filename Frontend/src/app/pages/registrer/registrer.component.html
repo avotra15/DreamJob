@@ -1,6 +1,23 @@
-  <div class="col-lg-6 mb-5">
-      <h2 class="mb-4">Sign Up</h2>
-      <form #registerForm="ngForm"  (ngSubmit)="onSubmit()" class="p-4 border rounded">
+    <section class="section-hero overlay inner-page bg-image" style="background-image: url('/assets/images/hero_1.jpg');" id="home-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-7">
+            <h1 class="text-white font-weight-bold">Sign Up</h1>
+            <div class="custom-breadcrumbs">
+              <a routerLink="/home">Home</a> <span class="mx-2 slash">/</span>
+              <span class="text-white"><strong>Sign Up</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="site-section"> 
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 mb-5">
+
+      <form #registerForm="ngForm"  (ngSubmit)="onSubmit()" class="p-4 border rounded mb-3">
         <div class="row form-group">
           <div class="col-md-12 mb-3 mb-md-0">
             <label class="text-black">Name</label>
@@ -35,3 +52,6 @@
         </div>
       </form>
   </div>
+        </div>
+      </div>
+    </section>

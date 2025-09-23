@@ -18,7 +18,7 @@ final class RolesController extends AbstractController
 
         $data = array_map(fn($roles) => [
             'id' => $roles->getId(),
-            'roles' => $roles->getRoles()
+            'roles' => $roles->getRole()
         ], $roless);
 
          return $this->json($data);

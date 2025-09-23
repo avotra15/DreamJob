@@ -12,6 +12,7 @@ class PermissionConstants
     // Permissions individuelles - Gestion des Utilisateurs
     public const USER_LIST = 'user.list';
     public const USER_CREATE = 'user.create';
+    public const USER_EDIT = 'user.edit';
 
 
     // Catégories de permissions
@@ -22,6 +23,7 @@ class PermissionConstants
         'ROLE_ADMIN' => [
             self::USER_LIST,
             self::USER_CREATE,
+            self::USER_EDIT,
         ],
 
         'ROLE_CANDIDAT' => [
@@ -33,6 +35,11 @@ class PermissionConstants
          self::USER_LIST => [
             'name' => self::USER_LIST,'description' => 'Voir la liste de tous les utilisateurs','category' => self::CATEGORY_USER
         ],
+
+         self::USER_CREATE => [
+            'name' => self::USER_CREATE,'description' => 'Créer un nouvelle utilisateur interne','category' => self::CATEGORY_USER
+        ],
+
     ];
 
     /**
