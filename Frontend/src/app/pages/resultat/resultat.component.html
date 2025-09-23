@@ -1,0 +1,42 @@
+<section class="section-hero overlay inner-page bg-image" style="background-image: url('/assets/images/hero_1.jpg');" id="home-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-7">
+          <h1 class="text-white font-weight-bold">Permission Acceess</h1>
+          <div class="custom-breadcrumbs">
+            <a routerLink="/home">Home</a> <span class="mx-2 slash">/</span>
+            <span class="text-white"><strong>Permission Acceess</strong></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="site-section">
+    <div class="container">
+
+            <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                <th>Permission</th>
+                <th *ngFor="let role of rolesList">{{ role.name }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let p of permisionList">
+                <td>{{ p.description }}</td>
+                <td *ngFor="let role of rolesList" class="text-center">
+                    <span [ngClass]="{
+                    'text-success fw-bold': hasRole(p, role.name),
+                    'text-danger': !hasRole(p, role.name)
+                    }">
+                    {{ hasRole(p, role.name) ? 'View' : 'False' }}
+                    </span>
+                </td>
+                </tr>
+            </tbody>
+            </table>
+
+    </div>
+ </section>

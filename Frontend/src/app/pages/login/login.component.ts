@@ -2,12 +2,11 @@ import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { RegistrerComponent } from '../registrer/registrer.component';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, RouterModule, RegistrerComponent],
+  imports: [FormsModule, RouterModule],
   templateUrl: './login.component.html'
 })
 export class LoginComponent {
@@ -28,7 +27,7 @@ export class LoginComponent {
     .subscribe({
       next: res => {
         sessionStorage.setItem('token', res.token);
-        this.router.navigate(['/post-job']);
+        //this.router.navigate(['/post-job']);
         console.log("Login success", res);
       },
       error: err => {

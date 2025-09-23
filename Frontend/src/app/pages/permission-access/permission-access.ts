@@ -11,7 +11,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
   styleUrl: './permission-access.scss'
 })
 export class PermissionAccessComponent {
-rolesList: any[] = [];
+  rolesList: any[] = [];
   permisionList: any[] = [];
 
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {}
@@ -51,6 +51,7 @@ rolesList: any[] = [];
         
               this.permisionList = list.map((p: any) => ({ 
                 ...p, 
+                //roles: p.roles ?? [],
                 checked: false 
               }));
         },
@@ -61,11 +62,25 @@ rolesList: any[] = [];
       });
   }
 
+   togglePermission(idPerm: number, roleName: string, event: any): void {
+    const perm = this.permisionList.find(p => p.idPerm === idPerm);
+    if (!perm) return;
+
+     //perm.roles = perm.roles ?? [];
+
+    if (event.target.checked) {
+      if (!perm.roles.includes(roleName)) {
+        perm.roles.push(roleName);
+      }
+    } else {
+      perm.roles = perm.roles.filter((r: string) => r !== roleName);
+    }
+  }
+
       saveSelectedPermissions(): void {
-      const selected = this.permisionList
+      this.permisionList
         .filter(p => p.checked)
         .map(p => p.idPerm);
-
-      console.log('IDs cochés :', selected);
+        this.router.navigate(['/resultat']);
   }
 }
