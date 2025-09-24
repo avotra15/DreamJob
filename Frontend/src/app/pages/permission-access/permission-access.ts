@@ -66,7 +66,7 @@ export class PermissionAccessComponent {
     const perm = this.permisionList.find(p => p.idPerm === idPerm);
     if (!perm) return;
 
-     //perm.roles = perm.roles ?? [];
+     perm.roles = perm.roles ?? [];
 
     if (event.target.checked) {
       if (!perm.roles.includes(roleName)) {
