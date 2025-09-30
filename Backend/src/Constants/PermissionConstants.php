@@ -40,10 +40,6 @@ class PermissionConstants
             'name' => self::USER_CREATE,'description' => 'Créer un nouvelle utilisateur interne','category' => self::CATEGORY_USER
         ],
 
-        self::USER_EDIT => [
-            'name' => self::USER_EDIT,'description' => 'Modifier un utilisateur interne','category' => self::CATEGORY_USER
-        ],
-
     ];
 
     /**
