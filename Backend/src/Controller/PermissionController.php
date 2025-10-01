@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Constants\PermissionConstants;
 use App\Reponse\ApiReponse;
+use App\Repository\PermissionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -12,7 +13,7 @@ final class PermissionController extends AbstractController
 
 
     public function __construct(
-        private PermissionConstants $permissionConstants,
+        private PermissionRepository $permRepo,
         private ApiReponse $apiReponse,
     )
     {
@@ -21,9 +22,16 @@ final class PermissionController extends AbstractController
      #[Route('/voirpermission', name: 'voir_permissions', methods: ['GET'])]
     public function voirpermission()
     {        
-        $Allpermission = $this->permissionConstants->getAllPermissions();
+        $Allpermission = $this->permRepo->getAllPermission();
 
-        return $this->apiReponse->sucess($Allpermission, 'Permission trouvé');
+        $data = array_map(fn($Allpermission) => [
+            'id' => $Allpermission->getId(),
+            'nom' => $Allpermission->getNamePerm(),
+            'description' => $Allpermission->getDescription(),
+        ], $Allpermission);
+        
+        //return $this->json($data);
+        return $this->apiReponse->sucess($data, 'Permission trouvé');
     }
     
 }

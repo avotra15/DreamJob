@@ -45,13 +45,12 @@ export class PermissionAccessComponent {
 
     this.http.get<any>('http://127.0.0.1:8000/voirpermission', { headers })
       .subscribe({
-        next: (res) => {
-        const permissions = res.data || [];
-                const list = Array.isArray(permissions) ? permissions : Object.values(permissions);
-        
+        next: (res) => {      
+          const permissions = res.data || [];
+            const list = Array.isArray(permissions) ? permissions : Object.values(permissions);
               this.permisionList = list.map((p: any) => ({ 
                 ...p, 
-                //roles: p.roles ?? [],
+                roles: p.roles ?? [],
                 checked: false 
               }));
         },
