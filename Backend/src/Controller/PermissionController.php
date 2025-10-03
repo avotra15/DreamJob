@@ -14,7 +14,7 @@ final class PermissionController extends AbstractController
 
     public function __construct(
         private PermissionRepository $permRepo,
-        private ApiReponse $apiReponse,
+        private ApiReponse $apiReponse,        
     )
     {
     }
@@ -33,5 +33,11 @@ final class PermissionController extends AbstractController
         //return $this->json($data);
         return $this->apiReponse->sucess($data, 'Permission trouvé');
     }
-    
+
+     #[Route('/checkedPermission', name: 'checked_permissions', methods: ['POST'])]
+     public function checkedPermission() {
+        $checked = $this->PermissionService->permissionRole();
+        return $this->apiReponse->sucess($checked, 'Relation mise à jour avec succès');
+     }
+
 }
