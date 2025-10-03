@@ -67,11 +67,8 @@ export class PermissionAccessComponent {
     if (!permission || !permission.roles) return false;
     return permission.roles.some((role: any) => role.id === idRole);
   }
-
   togglePermission(idPerm: number, idRole: number, event: any): void {
       const isChecked = event.target.checked;
       this.permissionService.updatePermissionRole(idPerm, idRole, isChecked)
   }
-
-  
 }

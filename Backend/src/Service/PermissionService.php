@@ -3,15 +3,18 @@
 namespace App\Service;
 
 use App\Entity\Permission;
+use App\Entity\Roles;
 use App\Constants\PermissionConstants;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class PermissionService
 {
     public function __construct(
         private EntityManagerInterface $em,
-        private LoggerInterface $logger
+        private LoggerInterface $logger,
+        private Request $req
     ) {}
 
     /**
@@ -72,6 +75,30 @@ class PermissionService
             'updated' => $updatedCount,
             'total' => count($codePerms)
         ];
+    }
+
+    /**
+     * Recevra les données envoyées par Angular
+     */
+    public function permissionRole() 
+    {
+        $data = json_decode($req->getContent(), true);
+
+        $idPrem = $data['p_id'] ?? null;
+        $idRole = $data['r_id'] ?? null;
+        $isChecked = $data['isChecked'] ?? null;
+
+        $perm = $em->getRepository(Permission::class)->find($idPerm);
+        $role = $em->getRepository(Roles::class)->find($idRole);
+
+        if ($isChecked === true) {
+            $perm->addRole($idRole);
+        } else {
+            $perm->addRole($idRole);
+        }
+
+        $em->persist($perm);
+        $em->flush();
     }
     
     /**
