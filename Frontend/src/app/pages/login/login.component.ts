@@ -27,7 +27,7 @@ export class LoginComponent {
     .subscribe({
       next: res => {
         sessionStorage.setItem('token', res.token);
-        //this.router.navigate(['/post-job']);
+        this.router.navigate(['/permission-access']);
         console.log("Login success", res);
       },
       error: err => {

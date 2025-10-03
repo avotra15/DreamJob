@@ -29,7 +29,7 @@
               <div class="row form-group">
                 <div class="col-md-12 mb-3 mb-md-0">
                   <label class="text-black">Roles</label>
-                      <select [(ngModel)]="selectedRoleId" name="rls" class="form-select">
+                      <select [(ngModel)]="selectedidRole" name="rls" class="form-select">
                         <option *ngFor="let role of rolesList" [value]=" role.name " name="rl">{{ role.roles }}</option>
                       </select>
                 </div>
@@ -51,10 +51,13 @@
                   <!-- Exemple ligne -->
                   <tr *ngFor="let p of permisionList">
                     <th>{{ p.description }}</th>
-                    <td class="text-center" *ngFor="let role of rolesList">
+                    <td class="text-center" *ngFor="let r of rolesList">
                       <div class="d-flex flex-wrap gap-2 justify-content-center">
                         <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="checkbox" [checked]="p.roles?.includes(role.name)" (change)="togglePermission(p.idPerm, role.name, $event)">
+                          <input class="form-check-input" type="checkbox" 
+                          [id]="'perm-' + p.idPerm + '-role-' + r.idRole"
+                          [checked]="isPermissionAssigned(p, r.idRole)" 
+                          (change)="togglePermission(p.idPerm, r.idRole, $event)">
                         </div>
                       </div>
                       </td>
@@ -64,7 +67,7 @@
             </div>
 
             <div class="text-end mt-3">
-              <button class="btn btn-success" (click)="saveSelectedPermissions()">Enregistrer</button>
+              <button class="btn btn-success">Enregistrer</button>
             </div>
           </main>
         </div>

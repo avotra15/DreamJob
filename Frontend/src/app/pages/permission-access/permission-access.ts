@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { PermissionService } from '../../services/permission.service';
 
 @Component({
   selector: 'permission-access',
@@ -14,7 +15,7 @@ export class PermissionAccessComponent {
   rolesList: any[] = [];
   permisionList: any[] = [];
 
-  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {}
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private permissionService: PermissionService) {}
 
   ngOnInit(): void {
     this.loadRoles();
@@ -61,25 +62,16 @@ export class PermissionAccessComponent {
       });
   }
 
-   togglePermission(idPerm: number, roleName: string, event: any): void {
-    const perm = this.permisionList.find(p => p.idPerm === idPerm);
-    if (!perm) return;
-
-     perm.roles = perm.roles ?? [];
-
-    if (event.target.checked) {
-      if (!perm.roles.includes(roleName)) {
-        perm.roles.push(roleName);
-      }
-    } else {
-      perm.roles = perm.roles.filter((r: string) => r !== roleName);
-    }
+  // Vérifier si une permission est assignée à un rôle
+  isPermissionAssigned(permission: any, idRole: number): boolean {
+    if (!permission || !permission.roles) return false;
+    return permission.roles.some((role: any) => role.id === idRole);
   }
 
-      saveSelectedPermissions(): void {
-      this.permisionList
-        .filter(p => p.checked)
-        .map(p => p.idPerm);
-        this.router.navigate(['/resultat']);
+  togglePermission(idPerm: number, idRole: number, event: any): void {
+      const isChecked = event.target.checked;
+      this.permissionService.updatePermissionRole(idPerm, idRole, isChecked)
   }
+
+  
 }
