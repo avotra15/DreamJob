@@ -45,13 +45,12 @@ export class PermissionAccessComponent {
 
     this.http.get<any>('http://127.0.0.1:8000/voirpermission', { headers })
       .subscribe({
-        next: (res) => {
-        const permissions = res.data || [];
-                const list = Array.isArray(permissions) ? permissions : Object.values(permissions);
-        
+        next: (res) => {      
+          const permissions = res.data || [];
+            const list = Array.isArray(permissions) ? permissions : Object.values(permissions);
               this.permisionList = list.map((p: any) => ({ 
                 ...p, 
-                //roles: p.roles ?? [],
+                roles: p.roles ?? [],
                 checked: false 
               }));
         },
@@ -66,7 +65,7 @@ export class PermissionAccessComponent {
     const perm = this.permisionList.find(p => p.idPerm === idPerm);
     if (!perm) return;
 
-     //perm.roles = perm.roles ?? [];
+     perm.roles = perm.roles ?? [];
 
     if (event.target.checked) {
       if (!perm.roles.includes(roleName)) {
@@ -76,11 +75,12 @@ export class PermissionAccessComponent {
       perm.roles = perm.roles.filter((r: string) => r !== roleName);
     }
   }
-
+  /*
       saveSelectedPermissions(): void {
       this.permisionList
         .filter(p => p.checked)
         .map(p => p.idPerm);
         this.router.navigate(['/resultat']);
   }
+        */
 }

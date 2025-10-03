@@ -10,7 +10,8 @@ class PermissionConstants
 {  
     public const PERMISSIONS = [
         ['NamePerm' => 'user.list','Description' => 'Voir la liste de tous les utilisateurs'],
-        ['NamePerm' => 'user.creat','Description' => 'Créer un nouvelle utilisateur interne'],
+        ['NamePerm' => 'user.create','Description' => 'Créer un nouvelle utilisateur interne'],
+        ['NamePerm' => 'user.delete','Description' => 'Supprimer un utilisateur interne'],
     ];
     /*
     public static function getAllPermissions(): array

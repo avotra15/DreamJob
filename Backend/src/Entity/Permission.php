@@ -27,12 +27,16 @@ class Permission
     #[ORM\Column(length: 500)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $category = null;
+    /**
+     * @var Collection<int, Roles>
+     */
+    #[ORM\ManyToMany(targetEntity: Roles::class, inversedBy: 'permissions')]
+    private Collection $idRole;
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->idRole = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -91,14 +95,26 @@ class Permission
         return $this;
     }
 
-    public function getCategory(): ?string
+    /**
+     * @return Collection<int, Roles>
+     */
+    public function getIdRole(): Collection
     {
-        return $this->category;
+        return $this->idRole;
     }
 
-    public function setCategory(string $category): static
+    public function addIdRole(Roles $idRole): static
     {
-        $this->category = $category;
+        if (!$this->idRole->contains($idRole)) {
+            $this->idRole->add($idRole);
+        }
+
+        return $this;
+    }
+
+    public function removeIdRole(Roles $idRole): static
+    {
+        $this->idRole->removeElement($idRole);
 
         return $this;
     }

@@ -16,27 +16,74 @@
   <section class="site-section">
     <div class="container">
 
-            <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                <th>Permission</th>
-                <th *ngFor="let role of rolesList">{{ role.name }}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let p of permisionList">
-                <td>{{ p.description }}</td>
-                <td *ngFor="let role of rolesList" class="text-center">
-                    <span [ngClass]="{
-                    'text-success fw-bold': hasRole(p, role.name),
-                    'text-danger': !hasRole(p, role.name)
-                    }">
-                    {{ hasRole(p, role.name) ? 'View' : 'False' }}
-                    </span>
-                </td>
-                </tr>
-            </tbody>
-            </table>
+<div class="permission-summary-container">
+  <!-- Header -->
+  <div class="header">
+    <h1>Résumé des Permissions par Rôle</h1>
+    <div class="actions">
+      <button (click)="refreshData()">Actualiser</button>
+      <button (click)="editPermissions()">Modifier</button>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="loading">
+    <p>Chargement...</p>
+  </div>
+
+  <!-- Content -->
+  <div *ngIf="!isLoading" class="content">
+    
+    <!-- Statistics -->
+    <div class="stats">
+      <div class="stat-item">
+        <span class="number">{{ rolesList.length }}</span>
+        <span class="label">Rôles</span>
+      </div>
+      <div class="stat-item">
+        <span class="number">{{ permissionsList.length }}</span>
+        <span class="label">Permissions</span>
+      </div>
+    </div>
+
+    <!-- Permissions List -->
+    <div class="permissions-list">
+      <div 
+        *ngFor="let permission of permissionsList; let i = index" 
+        class="permission-item">
+        
+        <!-- Permission Name -->
+        <div class="permission-header">
+          <h3>{{ i + 1 }}. {{ getPermissionName(permission) }}</h3>
+          <span class="permission-id">ID: {{ permission.idPerm }}</span>
+        </div>
+
+        <!-- Roles Status -->
+        <div class="roles-status">
+          <span 
+            *ngFor="let role of rolesList"
+            class="role-status">
+            <strong>{{ getRoleName(role) }}</strong> : 
+            <span 
+              class="status"
+              [class.granted]="hasPermission(permission, getRoleName(role))"
+              [class.denied]="!hasPermission(permission, getRoleName(role))">
+              {{ getPermissionStatus(permission, getRoleName(role)) }}
+            </span>
+          </span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="permissionsList.length === 0" class="empty-state">
+      <p>Aucune permission trouvée</p>
+      <button (click)="editPermissions()">Configurer les permissions</button>
+    </div>
+
+  </div>
+</div>
 
     </div>
  </section>
