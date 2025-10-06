@@ -11,11 +11,18 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PermissionService
 {
-    public function __construct(
-        private EntityManagerInterface $em,
-        private LoggerInterface $logger,
-        private Request $req
-    ) {}
+    private EntityManagerInterface $em;
+    private LoggerInterface $logger;
+    private Request $req;
+
+        public function __construct(
+            EntityManagerInterface $em,
+            LoggerInterface $logger,  
+        ) 
+        {
+            $this->em = $em;
+            $this->logger = $logger;
+        }
 
     /**
      * Synchronise les permissions depuis PermissionConstants vers la base de données
@@ -82,23 +89,22 @@ class PermissionService
      */
     public function permissionRole() 
     {
-        $data = json_decode($req->getContent(), true);
+        $data = json_decode($this->req->getContent(), true);
 
-        $idPrem = $data['p_id'] ?? null;
+        $idPerm = $data['p_id'] ?? null;
         $idRole = $data['r_id'] ?? null;
         $isChecked = $data['isChecked'] ?? null;
 
-        $perm = $em->getRepository(Permission::class)->find($idPerm);
-        $role = $em->getRepository(Roles::class)->find($idRole);
+        $perm = $this->em->getRepository(Permission::class)->find($idPerm);
+        $role = $this->em->getRepository(Roles::class)->find($idRole);
 
         if ($isChecked === true) {
             $perm->addRole($idRole);
-        } else {
-            $perm->addRole($idRole);
+            $role->addRole($idPerm);
         }
 
-        $em->persist($perm);
-        $em->flush();
+        $this->em->persist($perm);
+        $this->em->flush();
     }
     
     /**
