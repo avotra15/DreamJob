@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use App\Entity\Roles;
 use App\Entity\Users;
 use App\Interface\UserInterface as InterfaceUserInterface;
 use App\Repository\RolesRepository;

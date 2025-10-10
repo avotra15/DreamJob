@@ -12,6 +12,7 @@ class PermissionConstants
         ['NamePerm' => 'user.list','Description' => 'Voir la liste de tous les utilisateurs'],
         ['NamePerm' => 'user.create','Description' => 'Créer un nouvelle utilisateur interne'],
         ['NamePerm' => 'user.delete','Description' => 'Supprimer un utilisateur interne'],
+        ['NamePerm' => 'user.test','Description' => 'PageA'],
     ];
     /*
     public static function getAllPermissions(): array

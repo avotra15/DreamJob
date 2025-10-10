@@ -11,11 +11,17 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PermissionService
 {
+    private EntityManagerInterface $em;
+    private LoggerInterface $logger;
+
     public function __construct(
-        private EntityManagerInterface $em,
-        private LoggerInterface $logger,
-        private Request $req
-    ) {}
+        EntityManagerInterface $em,
+        LoggerInterface $logger,
+    ) 
+    {
+        $this->em = $em;
+        $this->logger = $logger;
+    }
 
     /**
      * Synchronise les permissions depuis PermissionConstants vers la base de données
@@ -80,16 +86,16 @@ class PermissionService
     /**
      * Recevra les données envoyées par Angular
      */
-    public function permissionRole() 
+    public function permissionRole(Request $req) 
     {
         $data = json_decode($req->getContent(), true);
 
-        $idPrem = $data['p_id'] ?? null;
+        $idPerm = $data['p_id'] ?? null;
         $idRole = $data['r_id'] ?? null;
         $isChecked = $data['isChecked'] ?? null;
 
-        $perm = $em->getRepository(Permission::class)->find($idPerm);
-        $role = $em->getRepository(Roles::class)->find($idRole);
+        $perm = $this->em->getRepository(Permission::class)->find($idPerm);
+        $role = $this->em->getRepository(Roles::class)->find($idRole);
 
         if ($isChecked === true) {
             $perm->addRole($idRole);
@@ -97,8 +103,8 @@ class PermissionService
             $perm->addRole($idRole);
         }
 
-        $em->persist($perm);
-        $em->flush();
+        $this->em->persist($perm);
+        $this->em->flush();
     }
     
     /**
