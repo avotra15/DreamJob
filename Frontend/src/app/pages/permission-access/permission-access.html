@@ -49,15 +49,15 @@
                 <tbody>
                   
                   <!-- Exemple ligne -->
-                  <tr *ngFor="let p of permisionList">
-                    <th>{{ p.description }}</th>
+                  <tr *ngFor="let pg of pagesList">
+                    <th>{{ pg.nompage }}</th>
                     <td class="text-center" *ngFor="let r of rolesList">
                       <div class="d-flex flex-wrap gap-2 justify-content-center">
                         <div class="form-check form-check-inline">
                           <input class="form-check-input" type="checkbox" 
-                          [id]="'perm-' + p.idPerm + '-role-' + r.idRole"
-                          [checked]="isPermissionAssigned(p, r.idRole)" 
-                          (change)="togglePermission(p.idPerm, r.idRole, $event)">
+                          [id]="'perm-' + pg.nompage + '-role-' + r.idRole"
+                          [checked]="isPageRoleChecked(pg, r.idRole)"
+                          (change)="onCheckboxChange($event, pg.nompage, r.idRole)">
                         </div>
                       </div>
                       </td>
