@@ -25,11 +25,12 @@ final class PagesController extends AbstractController
     public function createPage(Request $request) 
     {
         $newPage = $this->pageServ->create($request);
-        if ($newPage === null) {
-            return $this->apiReponse->error('Erreur lors de la création de la page', 404);
+        if (isset($newPage['error'])) {
+            return $this->apiReponse->error($newPage['error'], 400);
         }
+        $newPage = json_decode($request->getContent(), true);
         return $this->apiReponse->sucess($newPage, 'Page créée avec succès');
-        }
+    }
 
 
     #[Route('/pages', name: 'app_pages', methods:['GET'])]

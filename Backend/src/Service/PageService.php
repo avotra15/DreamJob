@@ -1,7 +1,6 @@
 <?php
 namespace App\Service;
 
-use App\Reponse\ApiReponse;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,10 +43,10 @@ class PageService
 
         $filePath = $this->pagesDirectory . '/' . $nomPage;
 
-        // Vérifier si le fichier existe déjà
-        
+        // Vérifier si le fichier existe déjà   
         if ($this->filesystem->exists($filePath)) {
-            throw new \RuntimeException('Cette page existe déjà');
+            return ['error' => 'Cette page existe déjà'];
+            //throw new \RuntimeException('Cette page existe déjà');
         }
         
         $this->filesystem->dumpFile($filePath, $contenu);
