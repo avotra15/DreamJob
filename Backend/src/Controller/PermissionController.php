@@ -2,24 +2,23 @@
 
 namespace App\Controller;
 
-use App\Constants\PermissionConstants;
 use App\Reponse\ApiReponse;
 use App\Repository\PermissionRepository;
+use App\Service\PermissionService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class PermissionController extends AbstractController
 {
-
-
     public function __construct(
         private PermissionRepository $permRepo,
-        private ApiReponse $apiReponse,        
-    )
+        private ApiReponse $apiReponse,
+        private PermissionService $permServ    
+        )
     {
     }
 
-     #[Route('/voirpermission', name: 'voir_permissions', methods: ['GET'])]
+    #[Route('/voirpermission', name: 'voir_permissions', methods: ['GET'])]
     public function voirpermission()
     {        
         $Allpermission = $this->permRepo->getAllPermission();
@@ -29,15 +28,14 @@ final class PermissionController extends AbstractController
             'nom' => $Allpermission->getNamePerm(),
             'description' => $Allpermission->getDescription(),
         ], $Allpermission);
-        
-        //return $this->json($data);
+
         return $this->apiReponse->sucess($data, 'Permission trouvé');
     }
 
-     #[Route('/checkedPermission', name: 'checked_permissions', methods: ['POST'])]
-     public function checkedPermission() {
-        $checked = $this->PermissionService->permissionRole();
-        return $this->apiReponse->sucess($checked, 'Relation mise à jour avec succès');
-     }
+    #[Route('/permission/checked', name: 'checked_permissions', methods: ['POST'])]
+    public function permissionChecked() {
+        $checked = $this->permServ->permissionRole();
+        return $this->apiReponse->sucess($checked, 'Permission trouvé');
+    }
 
 }

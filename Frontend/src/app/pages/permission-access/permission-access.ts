@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { PageService } from '../../services/PageService';
 
 @Component({
   selector: 'permission-access',
@@ -12,13 +13,13 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 })
 export class PermissionAccessComponent {
   rolesList: any[] = [];
-  permisionList: any[] = [];
+  pagesList: any[] = [];
 
-  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {}
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private pageService: PageService) {}
 
   ngOnInit(): void {
     this.loadRoles();
-    this.loadPermission();
+    this.loadPages();
   }
 
   loadRoles(): void {
@@ -38,49 +39,51 @@ export class PermissionAccessComponent {
       });
   }
 
-    loadPermission(): void {
+    loadPages(): void {
       const token = sessionStorage.getItem('token');
 
       const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` });
 
-    this.http.get<any>('http://127.0.0.1:8000/voirpermission', { headers })
+    this.http.get<any>('http://127.0.0.1:8000/pages', { headers })
       .subscribe({
         next: (res) => {      
-          const permissions = res.data || [];
-            const list = Array.isArray(permissions) ? permissions : Object.values(permissions);
-              this.permisionList = list.map((p: any) => ({ 
-                ...p, 
-                roles: p.roles ?? [],
+          const pages = res.data || [];
+            const list = Array.isArray(pages) ? pages : Object.values(pages);
+            //const list = Array.isArray(res) ? res : res ?? [];
+              this.pagesList = list.map((pg: any) => ({ 
+                ...pg, 
+                roles: pg.roles ?? [],
                 checked: false 
               }));
         },
           error: (err) => {
             console.error('Erreur lors du chargement des users:', err);
-            this.permisionList = [];
+            this.pagesList = [];
           }
       });
   }
 
-   togglePermission(idPerm: number, roleName: string, event: any): void {
-    const perm = this.permisionList.find(p => p.idPerm === idPerm);
-    if (!perm) return;
-
-     perm.roles = perm.roles ?? [];
-
-    if (event.target.checked) {
-      if (!perm.roles.includes(roleName)) {
-        perm.roles.push(roleName);
-      }
-    } else {
-      perm.roles = perm.roles.filter((r: string) => r !== roleName);
+      // Vérifie si une page a un rôle spécifique
+    isPageRoleChecked(page: any, roleId: number): boolean {
+      return page.roles.some((role: any) => role.idRole === roleId || role.id === roleId);
     }
-  }
-  /*
-      saveSelectedPermissions(): void {
-      this.permisionList
-        .filter(p => p.checked)
-        .map(p => p.idPerm);
-        this.router.navigate(['/resultat']);
-  }
-        */
+
+    // Gère le changement de checkbox
+    onCheckboxChange(event: any, nompage: string, idRole: number) {
+      const isChecked = event.target.checked;
+      
+      this.pageService.updateDroitPage(nompage, idRole, isChecked).subscribe({
+        next: (res) => {
+          console.log('Permission mise à jour avec succès');
+          // Recharger les pages pour mettre à jour l'affichage
+          this.loadPages();
+        },
+        error: (err) => {
+          console.error('Erreur mise à jour permission:', err);
+          // Revenir à l'état précédent en cas d'erreur
+          event.target.checked = !isChecked;
+        }
+      });
+
+    }
 }

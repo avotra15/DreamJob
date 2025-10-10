@@ -13,15 +13,16 @@ class PermissionService
 {
     private EntityManagerInterface $em;
     private LoggerInterface $logger;
+    private Request $req;
 
-    public function __construct(
-        EntityManagerInterface $em,
-        LoggerInterface $logger,
-    ) 
-    {
-        $this->em = $em;
-        $this->logger = $logger;
-    }
+        public function __construct(
+            EntityManagerInterface $em,
+            LoggerInterface $logger,  
+        ) 
+        {
+            $this->em = $em;
+            $this->logger = $logger;
+        }
 
     /**
      * Synchronise les permissions depuis PermissionConstants vers la base de données
@@ -88,7 +89,7 @@ class PermissionService
      */
     public function permissionRole(Request $req) 
     {
-        $data = json_decode($req->getContent(), true);
+        $data = json_decode($this->req->getContent(), true);
 
         $idPerm = $data['p_id'] ?? null;
         $idRole = $data['r_id'] ?? null;
@@ -99,8 +100,7 @@ class PermissionService
 
         if ($isChecked === true) {
             $perm->addRole($idRole);
-        } else {
-            $perm->addRole($idRole);
+            $role->addRole($idPerm);
         }
 
         $this->em->persist($perm);

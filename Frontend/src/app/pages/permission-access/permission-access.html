@@ -29,7 +29,7 @@
               <div class="row form-group">
                 <div class="col-md-12 mb-3 mb-md-0">
                   <label class="text-black">Roles</label>
-                      <select [(ngModel)]="selectedRoleId" name="rls" class="form-select">
+                      <select [(ngModel)]="selectedidRole" name="rls" class="form-select">
                         <option *ngFor="let role of rolesList" [value]=" role.name " name="rl">{{ role.roles }}</option>
                       </select>
                 </div>
@@ -49,12 +49,15 @@
                 <tbody>
                   
                   <!-- Exemple ligne -->
-                  <tr *ngFor="let p of permisionList">
-                    <th>{{ p.description }}</th>
-                    <td class="text-center" *ngFor="let role of rolesList">
+                  <tr *ngFor="let pg of pagesList">
+                    <th>{{ pg.nompage }}</th>
+                    <td class="text-center" *ngFor="let r of rolesList">
                       <div class="d-flex flex-wrap gap-2 justify-content-center">
                         <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="checkbox" [checked]="p.roles?.includes(role.name)" (change)="togglePermission(p.idPerm, role.name, $event)">
+                          <input class="form-check-input" type="checkbox" 
+                          [id]="'perm-' + pg.nompage + '-role-' + r.idRole"
+                          [checked]="isPageRoleChecked(pg, r.idRole)"
+                          (change)="onCheckboxChange($event, pg.nompage, r.idRole)">
                         </div>
                       </div>
                       </td>
