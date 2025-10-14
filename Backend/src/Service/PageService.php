@@ -50,6 +50,9 @@ class PageService
         }
         
         $this->filesystem->dumpFile($filePath, $contenu);
+
+        $this->filesystem->chgrp($filePath, 'www-data');
+        $this->filesystem->chmod($filePath, 0664);
     }
 
     /**
@@ -143,4 +146,6 @@ class PageService
         $filename = preg_replace('/[^a-zA-Z0-9_\-\.]/', '_', $filename);
         return $filename;
     }
+
+    
 }

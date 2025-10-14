@@ -40,6 +40,7 @@ class SearchPageService
     /**
      * Recevra les données envoyées par Angular
      */
+    
     public function permissionPage(Request $req) 
     {
         $data = json_decode($req->getContent(), true);
