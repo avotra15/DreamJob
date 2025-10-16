@@ -50,9 +50,14 @@ class PageService
         }
         
         $this->filesystem->dumpFile($filePath, $contenu);
-
-        $this->filesystem->chgrp($filePath, 'www-data');
-        $this->filesystem->chmod($filePath, 0664);
+        /*
+            // Appliquer les permissions uniquement sur Unix/Linux
+            if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN')
+            {
+                $this->filesystem->chgrp($filePath, 'nginx');
+                $this->filesystem->chmod($filePath, 0600);
+            }
+        */
     }
 
     /**

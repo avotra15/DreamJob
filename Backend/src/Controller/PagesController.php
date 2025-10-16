@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Reponse\ApiReponse;
 use App\Service\PageService;
 use App\Service\SearchPageService;
+use App\Service\FilesystemService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
@@ -43,6 +44,18 @@ final class PagesController extends AbstractController
         }
 
         return $this->apiReponse->sucess($Allpages, 'Pages trouvé');
+    }
+
+    #[Route('/pages/checked', name: 'app_pages_checked', methods:['POST'])]
+    public function permissionpage(FilesystemService $filesystemService, Request $req)
+    {
+        $permissions = $filesystemService->updatePermission($req);
+
+        if(isset($permissions)) {
+            return $this->apiReponse->error('Aucun Permission trouvé', 404);
+        }
+
+        return $this->apiReponse->sucess($permissions, 'Permission trouvé');
     }
 
 }

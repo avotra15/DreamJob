@@ -1,28 +1,29 @@
 <?php
-namespace Service;
+namespace App\Service;
 
+use App\Entity\Roles;
 use App\Service\PageService;
 use App\Service\SearchPageService;
+use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use Symfony\Component\Filesystem\Exception\IOException;
-
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class FilesystemService
 {
-    private PageService $pgSrv;
-    private SearchPageService $srchPSrv;
-     private static ?string $lastError = null;
+    private static ?string $lastError = null;
 
     public function __construct(
-        PageService $pgSrv,
-        SearchPageService $srchPSrv,
+        private PageService $pgSrv,
+        private SearchPageService $srchPSrv,
+        private EntityManagerInterface $em
     )
     {
-        $this->pgSrv = $pgSrv;
-        $this->srchPSrv = $srchPSrv;
+        /*$this->pgSrv = $pgSrv;
+        $this->srchPSrv = $srchPSrv;*/
     }
 
-        public function chgrp(?iterable $files = null, string|int $group, bool $recursive = false): void
+    public function chgrp(?iterable $files = null, string|int $group, bool $recursive = false): void
     {
         $files = $this->srchPSrv->filesearch();
 
@@ -43,6 +44,57 @@ class FilesystemService
             }
         }
     }
+    // 🔹 Lecture du fichier JSON
+    public function getPermissions(): array
+    {
+        $jsonPath = dirname(__DIR__, 1) . '/Security/Filepermission.json';
 
+        if (!file_exists($jsonPath)) {
+            file_put_contents($jsonPath, json_encode([], JSON_PRETTY_PRINT));
+        }
+        return json_decode(file_get_contents($jsonPath), true) ?? [];
+    }
+
+    public function updatePermission(Request $req)
+    {
+        $data = json_decode($req->getContent(), true);
+        $jsonPath = dirname(__DIR__, 1) . '/Security/Filepermission.json';
+        if (!file_exists($jsonPath)) {
+            file_put_contents($jsonPath, json_encode([], JSON_PRETTY_PRINT));
+        }
+        return json_decode(file_get_contents($jsonPath), true) ?? [];
+
+        $filename = $data['nom_page'] ?? null;
+        $idRole = $data['role_id'] ?? null;
+        $isChecked = $data['action'] ?? null;
+
+        $idRole = $this->em->getRepository(Roles::class)->find($idRole);
+        
+        $files = $this->srchPSrv->filesearch();
+        foreach ($files as $file) {
+            if ($file['nom'] === $filename) {
+                return $file;
+            } else {
+                return new JsonResponse(['error' => 'Page introuvable'], 404);
+            }
+        }
+
+         $permissions = json_decode(file_get_contents($jsonPath), true) ?? [];
+
+        // Initialiser si non présent
+            if (!isset($permissions[$filename])) {
+                $permissions[$filename] = [];
+            }
+
+            // Ajouter ou retirer le rôle
+            if ($isChecked) {
+                if (!in_array($idRole, $permissions[$filename])) {
+                    $permissions[$filename][] = $idRole;
+                }
+            } else {
+                $permissions[$filename] = array_values(array_diff($permissions[$filename], [$idRole]));
+            }
+
+            file_put_contents($jsonPath, json_encode($permissions, JSON_PRETTY_PRINT));
+        }
 }
-?>
