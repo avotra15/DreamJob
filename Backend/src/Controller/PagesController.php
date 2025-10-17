@@ -16,7 +16,8 @@ final class PagesController extends AbstractController
     public function __construct(
         private ApiReponse $apiReponse,
         private SearchPageService $searchPageService,
-        private PageService $pageServ
+        private PageService $pageServ,
+        private FilesystemService $filesystemService
         )
     {
     }
@@ -46,10 +47,10 @@ final class PagesController extends AbstractController
         return $this->apiReponse->sucess($Allpages, 'Pages trouvé');
     }
 
-    #[Route('/page/checked', name: 'app_pages_checked', methods:['POST'])]
-    public function permissionpage(FilesystemService $filesystemService, Request $req)
+    #[Route('/page/checked', name: 'app_page_checked', methods:['POST'])]
+    public function permissionpage(Request $request)
     {
-        $permissions = $filesystemService->updatePermission($req);
+        $permissions = $this->filesystemService->updatePermission($request);
 
         if(!$permissions) {
             return $this->apiReponse->error('Aucun Permission trouvé', 404);

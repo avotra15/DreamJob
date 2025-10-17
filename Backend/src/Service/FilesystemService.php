@@ -45,20 +45,11 @@ class FilesystemService
             }
         }
     }
-    // 🔹 Lecture du fichier JSON
-    public function getPermissions(): array
-    {
-        $jsonPath = dirname(__DIR__, 1) . '/Security/Filepermission.json';
-
-        if (!file_exists($jsonPath)) {
-            file_put_contents($jsonPath, json_encode([], JSON_PRETTY_PRINT));
-        }
-        return json_decode(file_get_contents($jsonPath), true) ?? [];
-    }
-
     public function updatePermission(Request $req)
     {
         $data = json_decode($req->getContent(), true);
+
+        // Créer le fichier s'il n'existe pas
         $jsonPath = dirname(__DIR__, 1) . '/Security/Filepermission.json';
         if (!file_exists($jsonPath)) {
             file_put_contents($jsonPath, json_encode([], JSON_PRETTY_PRINT));
@@ -73,17 +64,26 @@ class FilesystemService
         if (!$role) {
             return new JsonResponse(['error' => 'Rôle introuvable'], 404);
         }
-        
+
+        // ✅ Vérifier que la page existe - CORRECTION ICI
         $files = $this->srchPSrv->filesearch();
+        $pageExists = false;
         foreach ($files as $file) {
             if ($file['nom'] === $filename) {
-                return $file;
-            } else {
-                return new JsonResponse(['error' => 'Page introuvable'], 404);
+                $pageExists = true;
+                break;
             }
         }
 
-         $permissions = json_decode(file_get_contents($jsonPath), true) ?? [];
+        if (!$pageExists) {
+            return new JsonResponse(['error' => 'Page introuvable'], 404);
+        }
+
+            // Charger le contenu actuel du fichier JSON
+            $permissions = json_decode(file_get_contents($jsonPath), true);
+            if (!is_array($permissions)) {
+                $permissions = [];
+            }
 
         // Initialiser si non présent
             if (!isset($permissions[$filename])) {
@@ -99,8 +99,9 @@ class FilesystemService
                 $permissions[$filename] = array_values(array_diff($permissions[$filename], [$idRole]));
             }
 
-            file_put_contents($jsonPath, json_encode($permissions, JSON_PRETTY_PRINT));
-
-            //return json_decode(file_get_contents($jsonPath), true) ?? [];
-        }
+            // ✅ Sauvegarder les permissions mises à jour
+            if (file_put_contents($jsonPath, json_encode($permissions, JSON_PRETTY_PRINT)) === false) {
+                    return new JsonResponse(['error' => 'Erreur d\'écriture du fichier'], 500);
+                }
+            } 
 }

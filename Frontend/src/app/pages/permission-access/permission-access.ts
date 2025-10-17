@@ -24,7 +24,6 @@ export class PermissionAccessComponent {
 
   loadRoles(): void {
       const token = sessionStorage.getItem('token');
-
       const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` });
 
     this.http.get<any[]>('http://127.0.0.1:8000/roles', { headers })
@@ -71,12 +70,12 @@ export class PermissionAccessComponent {
     // Gère le changement de checkbox
     onCheckboxChange(event: any, nom: string, id: number) {
       const isChecked = event.target.checked;
-  
+
       this.pageService.updateDroitPage(nom, id, isChecked).subscribe({
         next: (res) => {
           console.log('Permission mise à jour avec succès');
           // Recharger les pages pour mettre à jour l'affichage
-          this.loadPages();
+          //this.loadPages();
         },
         error: (err) => {
           console.error('Erreur mise à jour permission:', err);
@@ -84,6 +83,5 @@ export class PermissionAccessComponent {
           event.target.checked = !isChecked;
         }
       });
-
     }
 }

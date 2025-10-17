@@ -18,7 +18,7 @@ import { Injectable } from '@angular/core';
                 nom_page: nom,
                 role_id: id,
                 action: isChecked,
-              } 
+              }
 
               return this.http.post('http://127.0.0.1:8000/page/checked', body, { headers });
         }
