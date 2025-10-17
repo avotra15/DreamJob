@@ -16,6 +16,11 @@ class RolesRepository extends ServiceEntityRepository
         parent::__construct($registry, Roles::class);
     }
 
+        public function getRoleById(int $id): ?Roles
+    {
+        return $this->find($id);
+    }
+
     /**
      * Récupère un rôle par son nom (valeur dans le champ "roles")
      */

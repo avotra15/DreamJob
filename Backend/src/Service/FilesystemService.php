@@ -1,7 +1,7 @@
 <?php
 namespace App\Service;
 
-use App\Entity\Roles;
+use App\Repository\RolesRepository;
 use App\Service\PageService;
 use App\Service\SearchPageService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -11,12 +11,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class FilesystemService
 {
-    private static ?string $lastError = null;
+    //private static ?string $lastError = null;
 
     public function __construct(
         private PageService $pgSrv,
         private SearchPageService $srchPSrv,
-        private EntityManagerInterface $em
+        private EntityManagerInterface $em,
+        private RolesRepository $rolesRepo
     )
     {
         /*$this->pgSrv = $pgSrv;
@@ -62,13 +63,16 @@ class FilesystemService
         if (!file_exists($jsonPath)) {
             file_put_contents($jsonPath, json_encode([], JSON_PRETTY_PRINT));
         }
-        return json_decode(file_get_contents($jsonPath), true) ?? [];
 
         $filename = $data['nom_page'] ?? null;
         $idRole = $data['role_id'] ?? null;
         $isChecked = $data['action'] ?? null;
 
-        $idRole = $this->em->getRepository(Roles::class)->find($idRole);
+        // ✅ Vérifier que le rôle existe
+        $role = $this->rolesRepo->find($idRole);
+        if (!$role) {
+            return new JsonResponse(['error' => 'Rôle introuvable'], 404);
+        }
         
         $files = $this->srchPSrv->filesearch();
         foreach ($files as $file) {
@@ -96,5 +100,7 @@ class FilesystemService
             }
 
             file_put_contents($jsonPath, json_encode($permissions, JSON_PRETTY_PRINT));
+
+            //return json_decode(file_get_contents($jsonPath), true) ?? [];
         }
 }

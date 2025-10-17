@@ -69,10 +69,10 @@ export class PermissionAccessComponent {
     }
 
     // Gère le changement de checkbox
-    onCheckboxChange(event: any, nompage: string, idRole: number) {
+    onCheckboxChange(event: any, nom: string, id: number) {
       const isChecked = event.target.checked;
-      
-      this.pageService.updateDroitPage(nompage, idRole, isChecked).subscribe({
+  
+      this.pageService.updateDroitPage(nom, id, isChecked).subscribe({
         next: (res) => {
           console.log('Permission mise à jour avec succès');
           // Recharger les pages pour mettre à jour l'affichage
