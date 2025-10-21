@@ -19,10 +19,7 @@ class FilesystemService
         private EntityManagerInterface $em,
         private RolesRepository $rolesRepo
     )
-    {
-        /*$this->pgSrv = $pgSrv;
-        $this->srchPSrv = $srchPSrv;*/
-    }
+    {}
 
     public function chgrp(?iterable $files = null, string|int $group, bool $recursive = false): void
     {
@@ -103,5 +100,5 @@ class FilesystemService
             if (file_put_contents($jsonPath, json_encode($permissions, JSON_PRETTY_PRINT)) === false) {
                     return new JsonResponse(['error' => 'Erreur d\'écriture du fichier'], 500);
                 }
-            } 
+        } 
 }

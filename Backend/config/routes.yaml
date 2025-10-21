@@ -23,3 +23,7 @@ api_delete_user:
     path: /api/delete/{id}
     controller: App\Controller\UsersController::deleteUser
     methods: [DELETE]
+app_page_checked:
+    path: /page_checked
+    controller: App\Controller\PagesController::permissionpage
+    methods: [POST]

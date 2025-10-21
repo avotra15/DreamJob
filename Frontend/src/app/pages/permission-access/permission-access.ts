@@ -71,17 +71,18 @@ export class PermissionAccessComponent {
     onCheckboxChange(event: any, nom: string, id: number) {
       const isChecked = event.target.checked;
 
-      this.pageService.updateDroitPage(nom, id, isChecked).subscribe({
-        next: (res) => {
-          console.log('Permission mise à jour avec succès');
-          // Recharger les pages pour mettre à jour l'affichage
-          //this.loadPages();
-        },
-        error: (err) => {
-          console.error('Erreur mise à jour permission:', err);
-          // Revenir à l'état précédent en cas d'erreur
-          event.target.checked = !isChecked;
-        }
-      });
+      this.pageService.updateDroitPage(nom, id, isChecked)
+      .subscribe({
+                next: (res) => {
+                  console.log('Permission mise à jour avec succès', res);
+                  // Recharger les pages pour mettre à jour l'affichage
+                  //this.loadPages();
+                },
+                error: (err) => {
+                  console.error('Erreur mise à jour permission:', err);
+                  // Revenir à l'état précédent en cas d'erreur
+                  //event.target.checked = !isChecked;
+                }
+              });
     }
 }

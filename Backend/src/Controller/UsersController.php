@@ -25,7 +25,7 @@ final class UsersController extends AbstractController
     }
 
     #[Route('/api/register', name: 'register', methods:['POST'])]
-    #[IsGranted(PermissionConstants::USER_CREATE)]
+    //#[IsGranted(PermissionConstants::USER_CREATE)]
     public function registrer(Request $request)
     {
 
@@ -64,7 +64,7 @@ final class UsersController extends AbstractController
         }
 
         #[Route('/api/users', name: 'users', methods:['GET'])]
-        #[IsGranted(PermissionConstants::USER_LIST)]
+        //#[IsGranted(PermissionConstants::USER_LIST)]
         public function Users()
         {      
             $userss = $this->usersRepository->getAllUsers();
