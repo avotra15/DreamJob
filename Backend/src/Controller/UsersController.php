@@ -2,17 +2,12 @@
 
 namespace App\Controller;
 
-use App\Constants\PermissionConstants;
-use App\Entity\Roles;
-use App\Entity\Users;
 use App\Reponse\ApiReponse;
 use App\Repository\UsersRepository;
 use App\Interface\UserInterface;
-use App\Security\Voter\UserVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class UsersController extends AbstractController
 {

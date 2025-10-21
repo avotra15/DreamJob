@@ -98,7 +98,14 @@ class FilesystemService
 
             // ✅ Sauvegarder les permissions mises à jour
             if (file_put_contents($jsonPath, json_encode($permissions, JSON_PRETTY_PRINT)) === false) {
-                    return new JsonResponse(['error' => 'Erreur d\'écriture du fichier'], 500);
-                }
+                return new JsonResponse(['error' => 'Erreur d\'écriture du fichier'], 500);
+            }
+
+            // ✅ Retourner une réponse claire
+            return new JsonResponse([
+                'success' => true,
+                'message' => 'Permission mise à jour avec succès',
+                'permissions' => $permissions
+            ], 200);
         } 
 }
