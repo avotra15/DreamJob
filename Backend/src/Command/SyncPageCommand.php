@@ -1,8 +1,7 @@
 <?php
-
 namespace App\Command;
 
-use App\Service\PermissionService;
+use App\Service\SearchPageService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -10,32 +9,32 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
-    name: 'app:sync-permissions',
-    description: 'Synchronise les permissions depuis PermissionConstants vers la base de données'
+    name: 'app:sync-page',
+    description: 'Synchronise les pages depuis Dossier Pages vers la base de données'
 )]
-class SyncPermissionsCommand extends Command
+class SyncPageCommand extends Command
 {
-    public function __construct(private PermissionService $permissionService)
+    public function __construct(private SearchPageService $searchPageService)
     {
         parent::__construct();
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): int
+        protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         
-        $io->title('Synchronisation des permissions');
+        $io->title('Synchronisation des pages');
         
         try {
-            $result = $this->permissionService->synchronizePermissions();
+            $result = $this->searchPageService->synchronizePages();
             
             $io->success('Synchronisation terminée avec succès !');
             $io->table(
                 ['Statut', 'Nombre'],
                 [
-                    ['Permissions ajoutées', $result['added']],
-                    ['Permissions mises à jour', $result['updated']],
-                    ['Total dans PermissionConstants', $result['total']]
+                    ['Pages ajoutées', $result['added']],
+                    ['Pages mises à jour', $result['updated']],
+                    ['Total dans Pages', $result['total']]
                 ]
             );
             

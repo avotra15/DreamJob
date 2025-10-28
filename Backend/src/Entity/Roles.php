@@ -25,15 +25,16 @@ class Roles
     private Collection $users;
 
     /**
-     * @var Collection<int, Permission>
+     * @var Collection<int, PagePerm>
      */
-    #[ORM\ManyToMany(targetEntity: Permission::class, mappedBy: 'idRole')]
-    private Collection $permissions;
+    #[ORM\ManyToMany(targetEntity: PagePerm::class, mappedBy: 'id_role')]
+    private Collection $pagePerms;
+
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
-        $this->permissions = new ArrayCollection();
+        $this->pagePerms = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -83,29 +84,30 @@ class Roles
     }
 
     /**
-     * @return Collection<int, Permission>
+     * @return Collection<int, PagePerm>
      */
-    public function getPermissions(): Collection
+    public function getPagePerms(): Collection
     {
-        return $this->permissions;
+        return $this->pagePerms;
     }
 
-    public function addPermission(Permission $permission): static
+    public function addPagePerm(PagePerm $pagePerm): static
     {
-        if (!$this->permissions->contains($permission)) {
-            $this->permissions->add($permission);
-            $permission->addIdRole($this);
+        if (!$this->pagePerms->contains($pagePerm)) {
+            $this->pagePerms->add($pagePerm);
+            $pagePerm->addIdRole($this);
         }
 
         return $this;
     }
 
-    public function removePermission(Permission $permission): static
+    public function removePagePerm(PagePerm $pagePerm): static
     {
-        if ($this->permissions->removeElement($permission)) {
-            $permission->removeIdRole($this);
+        if ($this->pagePerms->removeElement($pagePerm)) {
+            $pagePerm->removeIdRole($this);
         }
 
         return $this;
     }
+
 }

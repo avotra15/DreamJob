@@ -2,30 +2,36 @@
 
 namespace App\Repository;
 
-use App\Entity\Permission;
+use App\Entity\Pages;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Permission>
+ * @extends ServiceEntityRepository<Pages>
  */
-class PermissionRepository extends ServiceEntityRepository
+class PagesRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Permission::class);
+        parent::__construct($registry, Pages::class);
     }
-        public function getPermissionById(int $id): ?Permission
+
+    public function getPageById(int $id): ?Pages
     {
         return $this->find($id);
     }
 
-    public function getAllPermission(): array
+    /**
+     * Récupère un page par son nom (valeur dans le champ "page")
+     */
+    public function findByName(array $pageName): ?Pages
     {
-        return $this->findAll();
+        return $this->findOneBy(['page' => $pageName]);
     }
+
+
     //    /**
-    //     * @return Permission[] Returns an array of Permission objects
+    //     * @return Pages[] Returns an array of Pages objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -39,7 +45,7 @@ class PermissionRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Permission
+    //    public function findOneBySomeField($value): ?Pages
     //    {
     //        return $this->createQueryBuilder('p')
     //            ->andWhere('p.exampleField = :val')

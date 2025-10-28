@@ -51,18 +51,12 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: CV::class, mappedBy: 'email_cand')]
     private Collection $cVs;
 
-    /**
-     * @var Collection<int, Permission>
-     */
-    #[ORM\ManyToMany(targetEntity: Permission::class, inversedBy: 'users')]
-    private Collection $permission;
 
     public function __construct()
     {
         $this->roles = new ArrayCollection();
         $this->Titre = new ArrayCollection();
         $this->cVs = new ArrayCollection();
-        $this->permission = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -227,30 +221,6 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
                 $cV->setEmailCand(null);
             }
         }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Permission>
-     */
-    public function getPermission(): Collection
-    {
-        return $this->permission;
-    }
-
-    public function addPermission(Permission $permission): static
-    {
-        if (!$this->permission->contains($permission)) {
-            $this->permission->add($permission);
-        }
-
-        return $this;
-    }
-
-    public function removePermission(Permission $permission): static
-    {
-        $this->permission->removeElement($permission);
 
         return $this;
     }
