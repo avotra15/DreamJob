@@ -1,4 +1,4 @@
-name: PHP Code Quality
+name: PHP Quality
 
 on:
   push:
@@ -11,21 +11,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
-          tools: composer
+          tools: composer, phpcs, phpmd
           coverage: none
 
       - name: Install dependencies
         run: composer install --no-interaction --prefer-dist
 
-      - name: Run PHPCS
-        run: vendor/bin/phpcs --standard=phpcs.xml
+      - name: Run PHPCS (PSR-12)
+        run: vendor/bin/phpcs --standard=phpcs.xml src tests
 
       - name: Run PHPMD
         run: vendor/bin/phpmd src text phpmd.xml
