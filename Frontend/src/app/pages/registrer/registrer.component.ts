@@ -45,7 +45,7 @@ export class RegistrerComponent {
               Password: this.mdp
       };
 
-      const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` });
+      const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
            this.http.post('http://127.0.0.1:8000/api/register', registrerData, { headers })
               .subscribe({

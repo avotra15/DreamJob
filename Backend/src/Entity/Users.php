@@ -26,7 +26,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Roles>
      */
-    #[ORM\ManyToMany(targetEntity: Roles::class)]
+    #[ORM\ManyToMany(targetEntity: Roles::class,  inversedBy: 'users')]
     #[ORM\JoinTable(name: 'user_roles')]
     private Collection $roles;
 
@@ -40,11 +40,11 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     /**
-     * @var Collection<int, JobDetails>
-     */
-    #[ORM\OneToMany(targetEntity: JobDetails::class, mappedBy: 'email')]
+     @var Collection<int, JobDetails>
+     
+    #[ORM\OneToMany(targetEntity: JobDetails::class, mappedBy: 'users')]
     private Collection $Titre;
-
+    **/
     /**
      * @var Collection<int, CV>
      */
@@ -55,7 +55,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->roles = new ArrayCollection();
-        $this->Titre = new ArrayCollection();
+        //$this->Titre = new ArrayCollection();
         $this->cVs = new ArrayCollection();
     }
 
@@ -166,8 +166,8 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, JobDetails>
-     */
+    @return Collection<int, JobDetails>
+    
     public function getTitre(): Collection
     {
         return $this->Titre;
@@ -194,7 +194,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
+    **/
     /**
      * @return Collection<int, CV>
      */

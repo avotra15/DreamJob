@@ -24,8 +24,8 @@ class JobDetails
     #[Assert\File()]
     private ?File $FichierFile = null;
 
-    #[ORM\ManyToOne(inversedBy: 'jobDetails')]
-    private ?Users $email = null;
+    /*#[ORM\ManyToOne(inversedBy: 'Titre')]
+    private ?Users $email = null;*/
 
     #[ORM\Column(length: 255)]
     private ?string $Titre = null;
@@ -69,18 +69,18 @@ class JobDetails
         return $this;
     }
 
-    public function getEmail(): ?Users
+    /*public function getEmail(): ?Users
     {
         return $this->email;
     }
-
+    
     public function setEmail(?Users $email): static
     {
         $this->email = $email;
 
         return $this;
     }
-
+    */
     public function getTitre(): ?string
     {
         return $this->Titre;

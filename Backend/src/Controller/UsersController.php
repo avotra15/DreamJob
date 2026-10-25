@@ -54,7 +54,7 @@ final class UsersController extends AbstractController
                  return $this->apiReponse->error('Utilisateur non trouvé', 404);
             }
             
-            $user = $this->userInterface->deleteUser($user);
+            //$user = $this->userInterface->deleteUser($user);
             return $this->apiReponse->sucess($user, 'Utilisateur supprime');
         }
 
