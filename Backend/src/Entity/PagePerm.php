@@ -16,21 +16,21 @@ class PagePerm
     private ?int $id = null;
 
     /**
-     * @var Collection<int, roles>
+     * @var Collection<int, Roles>
      */
-    #[ORM\ManyToMany(targetEntity: roles::class, inversedBy: 'pagePerms')]
+    #[ORM\ManyToMany(targetEntity: Roles::class, inversedBy: 'pagePerms')]
     private Collection $id_role;
 
     /**
-     * @var Collection<int, pages>
+     * @var Collection<int, Pages>
      */
-    #[ORM\ManyToMany(targetEntity: pages::class, inversedBy: 'pagePerms')]
+    #[ORM\ManyToMany(targetEntity: Pages::class, inversedBy: 'pagePerms')]
     private Collection $id_page;
 
     /**
-     * @var Collection<int, permissions>
+     * @var Collection<int, Permissions>
      */
-    #[ORM\ManyToMany(targetEntity: permissions::class, inversedBy: 'pagePerms')]
+    #[ORM\ManyToMany(targetEntity: Permissions::class, inversedBy: 'pagePerms')]
     private Collection $id_perm;
 
     public function __construct()
@@ -46,14 +46,14 @@ class PagePerm
     }
 
     /**
-     * @return Collection<int, roles>
+     * @return Collection<int, Roles>
      */
     public function getIdRole(): Collection
     {
         return $this->id_role;
     }
 
-    public function addIdRole(roles $idRole): static
+    public function addIdRole(Roles $idRole): static
     {
         if (!$this->id_role->contains($idRole)) {
             $this->id_role->add($idRole);
@@ -62,7 +62,7 @@ class PagePerm
         return $this;
     }
 
-    public function removeIdRole(roles $idRole): static
+    public function removeIdRole(Roles $idRole): static
     {
         $this->id_role->removeElement($idRole);
 
@@ -70,14 +70,14 @@ class PagePerm
     }
 
     /**
-     * @return Collection<int, pages>
+     * @return Collection<int, Pages>
      */
     public function getIdPage(): Collection
     {
         return $this->id_page;
     }
 
-    public function addIdPage(pages $idPage): static
+    public function addIdPage(Pages $idPage): static
     {
         if (!$this->id_page->contains($idPage)) {
             $this->id_page->add($idPage);
@@ -86,7 +86,7 @@ class PagePerm
         return $this;
     }
 
-    public function removeIdPage(pages $idPage): static
+    public function removeIdPage(Pages $idPage): static
     {
         $this->id_page->removeElement($idPage);
 
@@ -94,14 +94,14 @@ class PagePerm
     }
 
     /**
-     * @return Collection<int, permissions>
+     * @return Collection<int, Permissions>
      */
     public function getIdPerm(): Collection
     {
         return $this->id_perm;
     }
 
-    public function addIdPerm(permissions $idPerm): static
+    public function addIdPerm(Permissions $idPerm): static
     {
         if (!$this->id_perm->contains($idPerm)) {
             $this->id_perm->add($idPerm);
@@ -110,7 +110,7 @@ class PagePerm
         return $this;
     }
 
-    public function removeIdPerm(permissions $idPerm): static
+    public function removeIdPerm(Permissions $idPerm): static
     {
         $this->id_perm->removeElement($idPerm);
 

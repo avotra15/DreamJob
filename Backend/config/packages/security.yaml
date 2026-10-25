@@ -53,7 +53,7 @@ security:
         - { path: ^/login, roles: PUBLIC_ACCESS }
         # - { path: ^/api/logout, roles: PUBLIC_ACCESS}
         # - { path: ^/api/users, roles: ROLE_ADMIN}
-        # - { path: ^/api/register, roles: ROLE_ADMIN}
+        - { path: ^/api/register, roles: PUBLIC_ACCESS }
         # - { path: ^/delete/, roles: ROLE_ADMIN}
         # - { path: ^/api/user, roles: ROLE_ADMIN}
         # - { path: ^/api/newjob, roles: ROLE_RH}
