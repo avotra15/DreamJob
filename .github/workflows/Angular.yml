@@ -1,0 +1,41 @@
+name: Angular CI
+
+on:
+  push:
+    branches: [ "main", "feature/develop" ]
+  pull_request:
+    branches: [ "main", "feature/develop" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: frontend   # ← adaptez ou supprimez si Angular est à la racine
+
+    steps:
+      - name: Récupération du code
+        uses: actions/checkout@v4
+
+      - name: Installation de Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Installation des dépendances
+        run: npm ci
+
+      - name: Lint du projet
+        run: npm run lint
+
+      - name: Tests unitaires
+        run: npm run test -- --watch=false --browsers=ChromeHeadless
+
+      - name: Build Angular
+        run: npm run build -- --configuration=production
