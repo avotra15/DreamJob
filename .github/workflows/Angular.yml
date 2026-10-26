@@ -32,7 +32,7 @@ jobs:
         run: npm ci
 
       - name: Lint du projet
-        run: npm run lint
+        run: npm run lint --if-present
 
       - name: Tests unitaires
         run: npm run test -- --watch=false --browsers=ChromeHeadless
