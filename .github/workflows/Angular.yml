@@ -15,7 +15,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: frontend   # ← adaptez ou supprimez si Angular est à la racine
+        working-directory: Frontend   # ← adaptez ou supprimez si Angular est à la racine
 
     steps:
       - name: Récupération du code
