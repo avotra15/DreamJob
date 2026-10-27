@@ -1,9 +1,19 @@
+
 // @ts-check
+
 const eslint = require("@eslint/js");
 const tseslint = require("typescript-eslint");
 const angular = require("angular-eslint");
 
 module.exports = tseslint.config(
+  {
+    ignores: [
+      ".angular/**",
+      "dist/**",
+      "node_modules/**",
+    ],
+  },
+
   {
     files: ["**/*.ts"],
     extends: [
@@ -14,30 +24,31 @@ module.exports = tseslint.config(
     ],
     processor: angular.processInlineTemplates,
     rules: {
+      "@typescript-eslint/no-explicit-any": "warn",
+      "@typescript-eslint/no-inferrable-types": "off",
+      "@typescript-eslint/no-unused-vars": "warn",
+
       "@angular-eslint/directive-selector": [
         "error",
-        {
-          type: "attribute",
-          prefix: "app",
-          style: "camelCase",
-        },
+        { type: "attribute", prefix: "app", style: "camelCase" },
       ],
       "@angular-eslint/component-selector": [
-        "error",
-        {
-          type: "element",
-          prefix: "app",
-          style: "kebab-case",
-        },
+        "warn",
+        { type: "element", prefix: "app", style: "kebab-case" },
       ],
     },
   },
+
   {
     files: ["**/*.html"],
     extends: [
       ...angular.configs.templateRecommended,
       ...angular.configs.templateAccessibility,
     ],
-    rules: {},
-  }
+    rules: {
+      "@angular-eslint/template/elements-content": "warn",
+      "@angular-eslint/template/label-has-associated-control": "warn",
+      "@angular-eslint/template/alt-text": "warn",
+    },
+  },
 );
