@@ -30,8 +30,8 @@ class RegistrerController extends AbstractController
 
             $nom      = $data['Nom'] ?? $data['nom'] ?? null;
             $email    = $data['Email'] ?? $data['email'] ?? null;
-            $password = $data['Password'] ?? $data['password'] ?? null;
             $roles    = $data['Roles'] ?? $data['roles'] ?? [];
+            $password = $data['Password'] ?? $data['password'] ?? null;
 
             if (!$nom || !$email || !$password) {
                 return $this->json(
@@ -50,8 +50,8 @@ class RegistrerController extends AbstractController
                 $user = $userService->createUser([
                     'nom'      => $nom,
                     'email'    => $email,
-                    'password' => $password,
                     'roles'    => $roles,
+                    'password' => $password,
                 ]);
             } catch (\DomainException $e) {
                 return $this->json(['error' => $e->getMessage()], Response::HTTP_CONFLICT);

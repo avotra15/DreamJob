@@ -2,12 +2,9 @@
 
 namespace App\Repository;
 
-use App\Entity\Roles;
 use App\Entity\Users;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 /**
  * @extends ServiceEntityRepository<Users>
@@ -36,6 +33,7 @@ class UsersRepository extends ServiceEntityRepository
     {
         //return $this->findAll();
         return $this->createQueryBuilder('u')
+            ->where('u')
             ->select('u')
             ->getQuery()
             ->getResult();

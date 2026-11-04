@@ -32,16 +32,19 @@ class UserService implements InterfaceUserInterface
     public function createUser(array $data) : Users
     {
             $user = new Users();
-            $user->setNom($data['Nom'] ?? '');
-            $user->setEmail($data['Email'] ?? '');
-            
+            $user->setNom($data['nom'] ?? '');
+            $user->setEmail($data['email'] ?? '');
+            $user->setPassword($data['password'] ?? '');
 
-            $email = $data['Email'] ?? null;
+            $email = $data['email'] ?? null;
+            if (!$email){
+                throw new \InvalidArgumentException("Email vide");
+            }
             if (!$email || $this->usersRepository->emailExists($email)) {
                 throw new \InvalidArgumentException("Email déjà utilisé ou invalide");
             }
 
-            $roleName = $data['Roles'];
+            $roleName = $data['roles'];
             $roleEntity = $this->rolesRepository->findByName($roleName);
             if (!$roleEntity) {
                 throw new \InvalidArgumentException("Rôle invalide" . $roleName);
@@ -49,7 +52,7 @@ class UserService implements InterfaceUserInterface
             $user->addRole($roleEntity);
        
             
-            $hashedPassword = $this->userPasswordHasher->hashPassword($user, $data['Password']);
+            $hashedPassword = $this->userPasswordHasher->hashPassword($user, $data['password'] ?? '');
             $user->setPassword($hashedPassword);
 
         $this->entityManager->persist($user);
@@ -68,8 +71,8 @@ class UserService implements InterfaceUserInterface
             $user->setEmail($data['Email']);
         }
 
-        $roleName = $data['Roles'];
-        if (!empty($data['Roles'])) {
+        $roleName = $data['Role'] ?? null;
+        if (!empty($roleName)) {
             $roleEntity = $this->rolesRepository->findByName($roleName);
             if (!$roleEntity) {
                 throw new \InvalidArgumentException("Rôle invalide");
