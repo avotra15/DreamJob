@@ -20,9 +20,9 @@ export class HomeComponent implements OnInit {
   constructor (private http:HttpClient, private router:Router) {}
 
   ngOnInit(): void{
-    this.loadJobs(),
-    this.loadCountry()
-    this.loadTime()
+    this.loadJobs();
+    this.loadCountry();
+    this.loadTime();
   }
 
     loadJobs(): void {    

@@ -10,7 +10,7 @@ import { Injectable } from '@angular/core';
 
       constructor(private http:HttpClient) { }
 
-        updateDroitPage(nom: string , id: number, isChecked: Boolean){
+        updateDroitPage(nom: string , id: number, isChecked: boolean){
           
           const token = sessionStorage.getItem('token');
 

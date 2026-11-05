@@ -26,7 +26,7 @@ class RolesRepository extends ServiceEntityRepository
      */
     public function findByName(array $roleName): ?Roles
     {
-        return $this->findOneBy(['roles' => $roleName]);
+        return $this->findOneBy(['role' => $roleName]);
     }
 
     
